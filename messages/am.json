@@ -1,0 +1,335 @@
+{
+  "nav": {
+    "browseJobs": "ስራዎችን ያስሱ",
+    "findFreelancers": "ፍሪላንሰሮችን ያግኙ",
+    "howItWorks": "እንዴት እንደሚሰራ",
+    "postJob": "ስራ ይለጥፉ",
+    "signIn": "ግባ",
+    "signUp": "ይመዝገቡ",
+    "dashboard": "ዳሽቦርድ",
+    "messages": "መልዕክቶች",
+    "profileSettings": "የመገለጫ ቅንብሮች",
+    "adminPanel": "የአስተዳዳሪ ፓነል",
+    "signOut": "ውጣ",
+    "searchPlaceholder": "ስራዎችን ፈልግ...",
+    "searchGo": "ፈልግ",
+    "notifications": "ማሳወቂያዎች",
+    "notificationsNew": "{count} አዲስ",
+    "noNotifications": "እስካሁን ማሳወቂያ የለም።",
+    "darkMode": "ጨለማ ገጽታ",
+    "lightMode": "ብርሃን ገጽታ",
+    "categories": {
+      "itSoftware": "አይቲ እና ሶፍትዌር",
+      "designCreative": "ዲዛይን እና ፈጠራ",
+      "writingContent": "የይዘት ጽሑፍ",
+      "localServices": "የአካባቢ አገልግሎቶች",
+      "ngoRemote": "NGO እና የርቀት ስራ",
+      "dataEntry": "የውሂብ ግቤት",
+      "tutoring": "የግል ትምህርት",
+      "governmentTasks": "የመንግስት ተግባራት"
+    }
+  },
+
+  "footer": {
+    "tagline": "የኢትዮጵያ ቀዳሚ የፍሪላንስ ገበያ። ብቁ ባለሙያዎችን ከደንበኞች ጋር በመላ ሀገሪቱ ያገናኛል።",
+    "forClients": "ለደንበኞች",
+    "forFreelancers": "ለፍሪላንሰሮች",
+    "contactUs": "ያግኙን",
+    "address": "ቦሌ መንገድ፣ አዲስ አበባ፣ ኢትዮጵያ",
+    "phone": "+251 911 000 000",
+    "email": "support@ethiofreelance.et",
+    "paymentPartner": "የክፍያ አጋር",
+    "copyright": "© 2025 EthioFreelance. መብቶቹ በሙሉ የተጠበቁ ናቸው።",
+    "privacyPolicy": "የግላዊነት ፖሊሲ",
+    "termsOfService": "የአገልግሎት ውሎች",
+    "cookiePolicy": "የኩኪ ፖሊሲ",
+    "madeIn": "🇪🇹 በኢትዮጵያ የተሰራ",
+    "clientLinks": {
+      "postJob": "ስራ ይለጥፉ",
+      "findFreelancers": "ፍሪላንሰሮችን ያግኙ",
+      "browseCategories": "ምድቦችን ያስሱ",
+      "howToHire": "እንዴት መቅጠር እንደሚቻል",
+      "enterprise": "የድርጅት መፍትሄዎች"
+    },
+    "freelancerLinks": {
+      "findJobs": "ስራዎችን ያግኙ",
+      "createProfile": "መገለጫ ይፍጠሩ",
+      "skillTests": "የክህሎት ፈተናዎች",
+      "resources": "የፍሪላንሰር መረጃዎች",
+      "stories": "የስኬት ታሪኮች"
+    }
+  },
+
+  "hero": {
+    "badge": "🇪🇹 የኢትዮጵያ #1 የፍሪላንስ መድረክ",
+    "headline": "ምርጥ ኢትዮጵያዊ",
+    "headlineAccent": "የፍሪላንስ ባለሙያዎችን ያግኙ",
+    "sub": "በመላ ኢትዮጵያ ካሉ ብቁ ባለሙያዎች ጋር ይገናኙ። ስራ ይለጥፉ፣ ማመልከቻዎችን ይቀበሉ እና በChapa በደህንነት ይክፈሉ።",
+    "tabJobs": "ስራዎችን ያግኙ",
+    "tabFreelancers": "ፍሪላንሰሮችን ያግኙ",
+    "searchJobPlaceholder": "ስራዎችን፣ ክህሎቶችን ወይም ምድቦችን ፈልግ...",
+    "searchFreelancerPlaceholder": "ፍሪላንሰሮችን ወይም ክህሎቶችን ፈልግ...",
+    "locationAll": "መላ ኢትዮጵያ",
+    "locationAddis": "አዲስ አበባ",
+    "locationDire": "ድሬዳዋ",
+    "locationHawassa": "ሀዋሳ",
+    "locationMekelle": "መቀሌ",
+    "searchButton": "ፈልግ",
+    "popularSearches": "ተወዳጅ:",
+    "popularItems": "ዌብ ልማት፣ ግራፊክ ዲዛይን፣ የይዘት ጽሑፍ፣ የውሂብ ግቤት፣ የሞባይል መተግበሪያ",
+    "trustBadge1": "✓ የተረጋገጡ ፍሪላንሰሮች",
+    "trustBadge2": "🔒 ደህንነቱ የተጠበቀ Escrow ክፍያ",
+    "trustBadge3": "⭐ ከፍተኛ ደረጃ ያላቸው ባለሙያዎች"
+  },
+
+  "stats": {
+    "freelancers": "ፍሪላንሰሮች",
+    "jobsPosted": "የተለጠፉ ስራዎች",
+    "completedJobs": "የተጠናቀቁ ስራዎች",
+    "successRate": "የስኬት መጠን",
+    "successRateValue": "98%"
+  },
+
+  "categories": {
+    "sectionTitle": "በምድብ ያስሱ",
+    "sectionSub": "በኢትዮጵያ በጣም ተፈላጊ በሆኑ የክህሎት ዘርፎች ትክክለኛውን ባለሙያ ያግኙ",
+    "viewAll": "ሁሉንም ምድቦች ይመልከቱ",
+    "jobsCount": "{count} ስራዎች",
+    "items": {
+      "itSoftware": "አይቲ እና ሶፍትዌር",
+      "designCreative": "ዲዛይን እና ፈጠራ",
+      "writingContent": "የይዘት ጽሑፍ",
+      "localServices": "የአካባቢ አገልግሎቶች",
+      "ngoRemote": "NGO እና የርቀት ስራ",
+      "dataEntry": "የውሂብ ግቤት",
+      "tutoring": "የግል ትምህርት",
+      "governmentTasks": "የመንግስት ተግባራት",
+      "marketing": "ማርኬቲንግ",
+      "finance": "ፋይናንስ እና ሂሳብ",
+      "legal": "ሕግ",
+      "engineering": "ምህንድስና"
+    }
+  },
+
+  "featuredJobs": {
+    "sectionTitle": "ተመራጭ ስራዎች",
+    "sectionSub": "በተረጋገጡ ኢትዮጵያዊ ደንበኞች የተለጠፉ አዳዲስ እድሎች",
+    "viewAll": "ሁሉንም ስራዎች ይመልከቱ",
+    "badge": "ክፍት",
+    "proposals": "{count} ማመልከቻዎች",
+    "applyNow": "አሁን ያመልክቱ",
+    "empty": "በአሁኑ ጊዜ ክፍት ስራ የለም። በኋላ ይመለሱ!"
+  },
+
+  "featuredFreelancers": {
+    "sectionTitle": "ከፍተኛ ፍሪላንሰሮች",
+    "sectionSub": "በሚቀጥለው ፕሮጀክትዎ ላይ ለመስራት ዝግጁ የሆኑ ባለሙያዎች",
+    "viewAll": "ሁሉንም ፍሪላንሰሮች ይመልከቱ",
+    "verified": "የተረጋገጠ",
+    "online": "በመስመር ላይ",
+    "rating": "{rating} ደረጃ",
+    "completedJobs": "{count} የተጠናቀቁ ስራዎች",
+    "hourlyRate": "{rate} ብር/ሰዓት",
+    "hireNow": "አሁን ይቅጠሩ",
+    "empty": "ለማሳየት ፍሪላንሰር የለም።"
+  },
+
+  "testimonials": {
+    "sectionTitle": "ተጠቃሚዎቻችን የሚሉት",
+    "sectionSub": "በመድረካችን ላይ ከሚገኙ ኢትዮጵያዊ ፍሪላንሰሮች እና ደንበኞች የተገኙ እውነተኛ ታሪኮች"
+  },
+
+  "cta": {
+    "headline": "የኢትዮጵያ የፍሪላንስ አብዮት አካል ለመሆን ዝግጁ ነዎት?",
+    "sub": "ከፍተኛ ባለሙያዎችን ለመቅጠርም ሆነ ቀጣዩን ፕሮጀክትዎን ለማግኘት፣ EthioFreelance ከኢትዮጵያ ምርጥ ባለሙያዎች ጋር ያገናኝዎታል።",
+    "hireButton": "ፍሪላንሰር ይቅጠሩ",
+    "freelanceButton": "ፍሪላንስ ስራ ይጀምሩ",
+    "note": "መቀላቀል ነጻ • ምንም የደንበኝነት ክፍያ የለም • 1% ኮሚሽን ብቻ ይክፈሉ"
+  },
+  "howItWorks": {
+    "pageTitle": "እንዴት እንደሚሰራ",
+    "pageSub": "EthioFreelance መገናኘትን፣ መተባበርን እና ክፍያ መቀበልን በአንድ ቦታ ቀላል ያደርጋል።",
+
+    "forClients": "ለደንበኞች",
+    "forFreelancers": "ለፍሪላንሰሮች",
+
+    "clientSteps": {
+      "step1Title": "ስራ ይለጥፉ",
+      "step1Desc": "ፕሮጀክትዎን ይግለጹ፣ በጀት ያዘጋጁ እና የሚፈለጉ ክህሎቶችን ይጠቁሙ። ስራ መለጠፍ ነጻ ነው።",
+
+      "step2Title": "ማመልከቻዎችን ይገምግሙ",
+      "step2Desc": "ከብቁ ፍሪላንሰሮች ማመልከቻዎችን ይቀበሉ። መገለጫዎችን፣ ደረጃዎችን እና የማመልከቻ ደብዳቤዎችን ይገምግሙ።",
+
+      "step3Title": "ይቅጠሩ እና በደህንነት ይክፈሉ",
+      "step3Desc": "ምርጡን ፍሪላንሰር ይምረጡ፣ በChapa Escrow ገንዘብ ያስቀምጡ እና ስራው ሲጠናቀቅ ክፍያውን ይልቀቁ።"
+    },
+
+    "freelancerSteps": {
+      "step1Title": "መገለጫዎን ይፍጠሩ",
+      "step1Desc": "ተገቢ ደንበኞችን ለመሳብ ክህሎቶችዎን፣ ልምድዎን እና የስራ ናሙናዎችዎን ያሳዩ።",
+
+      "step2Title": "ያስሱ እና ያመልክቱ",
+      "step2Desc": "ከሙያዎ ጋር የሚስማሙ ስራዎችን ያግኙ እና ጠንካራ ማመልከቻዎችን ያስገቡ።",
+
+      "step3Title": "ይስሩ እና ይከፈሉ",
+      "step3Desc": "ፕሮጀክቱን ያጠናቅቁ፣ እንዲጸድቅ ያድርጉ እና በChapa ወይም M-Pesa በደህንነት ክፍያዎን ይቀበሉ።"
+    },
+
+    "faqTitle": "በተደጋጋሚ የሚጠየቁ ጥያቄዎች",
+
+    "faq": {
+      "q1": "መመዝገብ ነጻ ነው?",
+      "a1": "አዎ፣ ለደንበኞችም ሆነ ለፍሪላንሰሮች መለያ መፍጠር ሙሉ በሙሉ ነጻ ነው።",
+
+      "q2": "ክፍያው እንዴት ይሰራል?",
+      "a2": "ደንበኞች በChapa አማካኝነት ወደ Escrow ሂሳብ ገንዘብ ያስቀምጣሉ። ስራው ከጸደቀ በኋላ ገንዘቡ ለፍሪላንሰሩ ይለቀቃል።",
+
+      "q3": "የኮሚሽን ክፍያው ስንት ነው?",
+      "a3": "EthioFreelance በተጠናቀቁ ግብይቶች ላይ 1% የመድረክ ክፍያ ያስከፍላል።",
+
+      "q4": "መለያዬን እንዴት አረጋግጣለሁ?",
+      "a4": "ለKYC ማረጋገጫ የብሔራዊ መታወቂያ ወይም የንግድ ምዝገባ ሰነድዎን በዳሽቦርድዎ በኩል ያስገቡ።",
+
+      "q5": "ከማንኛውም ከተማ ሆኜ በርቀት መስራት እችላለሁ?",
+      "a5": "በእርግጥ። በEthioFreelance ላይ ያሉ አብዛኞቹ ስራዎች በመላ ኢትዮጵያ ክልሎች ከርቀት ለመስራት ተስማሚ ናቸው።"
+    },
+
+    "ctaTitle": "ለመጀመር ዝግጁ ነዎት?",
+    "ctaSub": "በEthioFreelance የሚጠቀሙ ሺዎች ኢትዮጵያውያንን ይቀላቀሉ።",
+    "ctaPost": "ስራ ይለጥፉ",
+    "ctaFind": "ስራዎችን ያግኙ"
+  },
+  "auth": {
+    "register": {
+      "title": "መለያዎን ይፍጠሩ",
+      "sub": "በመድረኩ ላይ ያሉ ሺዎች ኢትዮጵያውያንን ይቀላቀሉ",
+
+      "roleFreelancer": "ፍሪላንሰር ነኝ",
+      "roleClient": "ደንበኛ ነኝ",
+
+      "stepLabels": {
+        "accountInfo": "የመለያ መረጃ",
+        "verifyEmail": "ኢሜይል ያረጋግጡ",
+        "review": "ያረጋግጡ"
+      },
+
+      "freelancer": {
+        "headline": "ዛሬ ገቢ ማግኘት ይጀምሩ",
+
+        "sub": "ክህሎቶችዎን ያሳዩ እና በከፍተኛ ኢትዮጵያዊ ኩባንያዎች ይቀጠሩ።",
+
+        "badges": {
+          "b1": "የሚከፈልበት ስራ ያግኙ",
+          "b2": "የስራ ማህደርዎን ይገንቡ",
+          "b3": "በደህንነት ይከፈሉ"
+        },
+
+        "phoneLabel": "ስልክ ቁጥር (አማራጭ)",
+
+        "extraLabel": "ዋና ክህሎት / የሙያ ርዕስ",
+
+        "extraPlaceholder": "ለምሳሌ Full Stack Developer, Graphic Designer...",
+
+        "summaryRole": "የፍሪላንሰር መለያ",
+
+        "step1Heading": "ስለራስዎ ይንገሩን",
+
+        "step1Sub": "የተሟላ መገለጫ ያላቸው ፍሪላንሰሮች 3 እጥፍ ተጨማሪ የስራ ግብዣዎችን ያገኛሉ።",
+
+        "createButton": "ፍሪላንስ ስራ ይጀምሩ 🚀"
+      },
+
+      "client": {
+        "headline": "ከፍተኛ ባለሙያዎችን ይቅጠሩ",
+
+        "sub": "ስራዎችን ይለጥፉ እና ከተረጋገጡ ኢትዮጵያዊ ፍሪላንሰሮች ጋር ወዲያውኑ ይገናኙ።",
+
+        "badges": {
+          "b1": "ያልተገደቡ ስራዎችን ይለጥፉ",
+          "b2": "ማመልከቻዎችን ይገምግሙ",
+          "b3": "በChapa Escrow ይክፈሉ"
+        },
+
+        "phoneLabel": "የድርጅት ስልክ (አማራጭ)",
+
+        "extraLabel": "የድርጅት / የተቋም ስም",
+
+        "extraPlaceholder": "ለምሳሌ TechEthio Solutions, UNICEF Ethiopia...",
+
+        "summaryRole": "የደንበኛ መለያ",
+
+        "step1Heading": "የደንበኛ መለያዎን ያዘጋጁ",
+
+        "step1Sub": "የተረጋገጡ መለያዎች ያላቸው ደንበኞች የተሻሉ ማመልከቻዎችን ይቀበላሉ።",
+
+        "createButton": "መቅጠር ይጀምሩ 🎯"
+      },
+
+      "fields": {
+        "firstName": "የመጀመሪያ ስም",
+        "lastName": "የአባት ስም",
+        "email": "የኢሜይል አድራሻ",
+        "emailPlaceholder": "abebe@example.com",
+        "password": "የይለፍ ቃል",
+        "passwordPlaceholder": "ቢያንስ 8 ቁምፊዎች",
+        "phonePrefix": "🇪🇹 +251",
+        "required": "*"
+      },
+
+      "otp": {
+        "heading": "ኢሜይልዎን ያረጋግጡ",
+
+        "sub": "ወደ {email} 6 አሃዝ ያለው ኮድ ልከናል",
+
+        "label": "6 አሃዝ ያለውን ኮድ ያስገቡ",
+
+        "verifyButton": "ኮዱን ያረጋግጡ",
+
+        "verifying": "በማረጋገጥ ላይ...",
+
+        "resendCooldown": "ከ {seconds} ሰከንድ በኋላ እንደገና ይላካል",
+
+        "resend": "ኮድ እንደገና ላክ",
+
+        "verified": "ኢሜይሉ ተረጋግጧል!",
+
+        "verifiedSub": "የኢሜይል አድራሻዎ ተረጋግጧል።",
+
+        "backButton": "ተመለስ",
+
+        "continueButton": "ቀጥል"
+      },
+
+      "review": {
+        "name": "ስም",
+        "email": "ኢሜይል",
+        "title": "የሙያ ርዕስ",
+        "company": "ድርጅት",
+        "emailVerified": "ኢሜይል ተረጋግጧል",
+        "emailVerifiedValue": "✓ ተረጋግጧል",
+        "findJobs": "ስራዎችን ያግኙ እና ይከፈሉ",
+        "postJobs": "ስራዎችን ይለጥፉ እና ባለሙያዎችን ይቅጠሩ",
+        "agreeTerms": "ተስማምቻለሁ በ",
+        "termsLink": "የአገልግሎት ውሎች",
+        "andText": "እና",
+        "privacyLink": "የግላዊነት ፖሊሲ",
+        "backButton": "ተመለስ",
+        "creating": "በመፍጠር ላይ..."
+      },
+
+      "errors": {
+        "fillRequired": "እባክዎ ሁሉንም አስፈላጊ መረጃዎች ያስገቡ።",
+        "invalidEmail": "እባክዎ ትክክለኛ የኢሜይል አድራሻ ያስገቡ።",
+        "passwordShort": "የይለፍ ቃል ቢያንስ 8 ቁምፊዎች ሊኖሩት ይገባል።",
+        "verifyFirst": "እባክዎ መጀመሪያ ኢሜይልዎን ያረጋግጡ።",
+        "agreeTerms": "የአገልግሎት ውሎችን መቀበል አለብዎት።",
+        "otpIncomplete": "ሙሉውን 6 አሃዝ ኮድ ያስገቡ።"
+      },
+
+      "footer": "መለያ አለዎት?",
+      "footerLink": "ግባ",
+
+      "etBuilt": "🇪🇹 ለኢትዮጵያ የተገነባ • በChapa በብር ይክፈሉ"
+    }
+  }
+}

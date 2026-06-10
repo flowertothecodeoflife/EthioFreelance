@@ -1,0 +1,823 @@
+{
+  "nav": {
+    "browseJobs": "Browse Jobs",
+    "findFreelancers": "Find Freelancers",
+    "howItWorks": "How It Works",
+    "postJob": "Post a Job",
+    "signIn": "Sign In",
+    "signUp": "Sign Up",
+    "dashboard": "Dashboard",
+    "messages": "Messages",
+    "profileSettings": "Profile Settings",
+    "adminPanel": "Admin Panel",
+    "signOut": "Sign Out",
+    "searchPlaceholder": "Search jobs...",
+    "searchGo": "Go",
+    "notifications": "Notifications",
+    "notificationsNew": "{count} new",
+    "noNotifications": "No notifications yet.",
+    "darkMode": "Dark Mode",
+    "lightMode": "Light Mode",
+    "categories": {
+      "itSoftware": "IT & Software",
+      "designCreative": "Design & Creative",
+      "writingContent": "Writing & Content",
+      "localServices": "Local Services",
+      "ngoRemote": "NGO & Remote Work",
+      "dataEntry": "Data Entry",
+      "tutoring": "Tutoring",
+      "governmentTasks": "Government Tasks"
+    }
+  },
+
+  "footer": {
+    "tagline": "Ethiopia's premier freelancing marketplace. Connecting talented professionals with clients across the country.",
+    "forClients": "For Clients",
+    "forFreelancers": "For Freelancers",
+    "contactUs": "Contact Us",
+    "address": "Bole Road, Addis Ababa, Ethiopia",
+    "phone": "+251 911 000 000",
+    "email": "support@ethiofreelance.et",
+    "paymentPartner": "PAYMENT PARTNER",
+    "copyright": "© 2025 EthioFreelance. All rights reserved.",
+    "privacyPolicy": "Privacy Policy",
+    "termsOfService": "Terms of Service",
+    "cookiePolicy": "Cookie Policy",
+    "madeIn": "🇪🇹 Made in Ethiopia",
+    "clientLinks": {
+      "postJob": "Post a Job",
+      "findFreelancers": "Find Freelancers",
+      "browseCategories": "Browse Categories",
+      "howToHire": "How to Hire",
+      "enterprise": "Enterprise Solutions"
+    },
+    "freelancerLinks": {
+      "findJobs": "Find Jobs",
+      "createProfile": "Create Profile",
+      "skillTests": "Skill Tests",
+      "resources": "Freelancer Resources",
+      "stories": "Success Stories"
+    }
+  },
+
+  "hero": {
+    "badge": "🇪🇹 Ethiopia's #1 Freelancing Platform",
+    "headline": "Find Top Ethiopian",
+    "headlineAccent": "Freelance Talent",
+    "sub": "Connect with skilled professionals across Ethiopia. Post jobs, get proposals, and pay securely via Chapa.",
+    "tabJobs": "Find Jobs",
+    "tabFreelancers": "Find Freelancers",
+    "searchJobPlaceholder": "Search for jobs, skills, or categories...",
+    "searchFreelancerPlaceholder": "Search for freelancers or skills...",
+    "locationAll": "All Ethiopia",
+    "locationAddis": "Addis Ababa",
+    "locationDire": "Dire Dawa",
+    "locationHawassa": "Hawassa",
+    "locationMekelle": "Mekelle",
+    "searchButton": "Search",
+    "popularSearches": "Popular:",
+    "popularItems": "Web Development, Graphic Design, Content Writing, Data Entry, Mobile App",
+    "trustBadge1": "✓ Verified Freelancers",
+    "trustBadge2": "🔒 Secure Escrow Payments",
+    "trustBadge3": "⭐ Top-Rated Talent"
+  },
+
+  "stats": {
+    "freelancers": "Freelancers",
+    "jobsPosted": "Jobs Posted",
+    "completedJobs": "Completed Jobs",
+    "successRate": "Success Rate",
+    "successRateValue": "98%"
+  },
+
+  "categories": {
+    "sectionTitle": "Browse by Category",
+    "sectionSub": "Find the right talent across Ethiopia's most in-demand skill areas",
+    "viewAll": "View All Categories",
+    "jobsCount": "{count} jobs",
+    "items": {
+      "itSoftware": "IT & Software",
+      "designCreative": "Design & Creative",
+      "writingContent": "Writing & Content",
+      "localServices": "Local Services",
+      "ngoRemote": "NGO & Remote Work",
+      "dataEntry": "Data Entry",
+      "tutoring": "Tutoring",
+      "governmentTasks": "Government Tasks",
+      "marketing": "Marketing",
+      "finance": "Finance & Accounting",
+      "legal": "Legal",
+      "engineering": "Engineering"
+    }
+  },
+
+  "featuredJobs": {
+    "sectionTitle": "Featured Jobs",
+    "sectionSub": "Fresh opportunities posted by verified Ethiopian clients",
+    "viewAll": "View All Jobs",
+    "badge": "Open",
+    "proposals": "{count} proposals",
+    "applyNow": "Apply Now",
+    "empty": "No open jobs right now. Check back soon!"
+  },
+
+  "featuredFreelancers": {
+    "sectionTitle": "Top Freelancers",
+    "sectionSub": "Skilled professionals ready to work on your next project",
+    "viewAll": "View All Freelancers",
+    "verified": "Verified",
+    "online": "Online",
+    "rating": "{rating} rating",
+    "completedJobs": "{count} jobs done",
+    "hourlyRate": "{rate} ETB/hr",
+    "hireNow": "Hire Now",
+    "empty": "No freelancers to display yet."
+  },
+
+  "testimonials": {
+    "sectionTitle": "What Our Users Say",
+    "sectionSub": "Real stories from Ethiopian freelancers and clients on our platform"
+  },
+
+  "cta": {
+    "headline": "Ready to Join Ethiopia's Freelance Revolution?",
+    "sub": "Whether you're looking to hire top talent or find your next project, EthioFreelance connects you with the best of Ethiopia.",
+    "hireButton": "Hire a Freelancer",
+    "freelanceButton": "Start Freelancing",
+    "note": "Free to join • No subscription required • Pay only 1% commission"
+  },
+
+  "howItWorks": {
+    "pageTitle": "How It Works",
+    "pageSub": "EthioFreelance makes it simple to connect, collaborate, and get paid — all in one place.",
+    "forClients": "For Clients",
+    "forFreelancers": "For Freelancers",
+    "clientSteps": {
+      "step1Title": "Post a Job",
+      "step1Desc": "Describe your project, set a budget, and specify required skills. It's free to post.",
+      "step2Title": "Review Proposals",
+      "step2Desc": "Receive proposals from qualified freelancers. Review profiles, ratings, and cover letters.",
+      "step3Title": "Hire & Pay Securely",
+      "step3Desc": "Choose the best freelancer, fund escrow via Chapa, and release payment on completion."
+    },
+    "freelancerSteps": {
+      "step1Title": "Create Your Profile",
+      "step1Desc": "Showcase your skills, experience, and portfolio to attract the right clients.",
+      "step2Title": "Browse & Apply",
+      "step2Desc": "Find jobs matching your expertise and submit compelling proposals.",
+      "step3Title": "Work & Get Paid",
+      "step3Desc": "Complete the project, get approved, and receive secure payment via Chapa or M-Pesa."
+    },
+    "faqTitle": "Frequently Asked Questions",
+    "faq": {
+      "q1": "Is it free to sign up?",
+      "a1": "Yes, creating an account is completely free for both clients and freelancers.",
+      "q2": "How does payment work?",
+      "a2": "Clients fund an escrow account via Chapa. Funds are released to the freelancer once the work is approved.",
+      "q3": "What is the commission fee?",
+      "a3": "EthioFreelance charges a 1% platform fee on completed transactions.",
+      "q4": "How do I verify my account?",
+      "a4": "Submit a national ID or business registration document through your dashboard for KYC verification.",
+      "q5": "Can I work remotely from any city?",
+      "a5": "Absolutely. Most jobs on EthioFreelance are remote-friendly across all regions of Ethiopia."
+    },
+    "ctaTitle": "Ready to Get Started?",
+    "ctaSub": "Join thousands of Ethiopians already using EthioFreelance.",
+    "ctaPost": "Post a Job",
+    "ctaFind": "Find Jobs"
+  },
+
+  "auth": {
+    "login": {
+      "title": "Welcome Back",
+      "sub": "Sign in to your EthioFreelance account",
+      "tabEmail": "Email",
+      "tabPhone": "Phone",
+      "emailLabel": "Email Address",
+      "emailPlaceholder": "abebe@example.com",
+      "phonePlaceholder": "9XX XXX XXX",
+      "passwordLabel": "Password",
+      "passwordPlaceholder": "Your password",
+      "forgotPassword": "Forgot password?",
+      "signInButton": "Sign In",
+      "signingIn": "Signing in…",
+      "noAccount": "Don't have an account?",
+      "signUp": "Sign Up",
+      "errorInvalid": "Invalid email or password.",
+      "errorGeneric": "Something went wrong. Please try again."
+    },
+    "register": {
+      "title": "Create Your Account",
+      "sub": "Join thousands of Ethiopians on the platform",
+      "roleFreelancer": "I'm a Freelancer",
+      "roleClient": "I'm a Client",
+      "stepLabels": {
+        "accountInfo": "Account Info",
+        "verifyEmail": "Verify Email",
+        "review": "Review"
+      },
+      "freelancer": {
+        "headline": "Start Earning Today",
+        "sub": "Showcase your skills and get hired by top Ethiopian companies.",
+        "badges": {
+          "b1": "Find paid work",
+          "b2": "Build your portfolio",
+          "b3": "Get paid securely"
+        },
+        "phoneLabel": "Phone Number (optional)",
+        "extraLabel": "Primary Skill / Title",
+        "extraPlaceholder": "e.g. Full Stack Developer, Graphic Designer…",
+        "summaryRole": "Freelancer Account",
+        "step1Heading": "Tell us about yourself",
+        "step1Sub": "Freelancers with complete profiles get 3× more job invitations.",
+        "createButton": "Start Freelancing 🚀"
+      },
+      "client": {
+        "headline": "Hire Top Talent",
+        "sub": "Post jobs and connect with verified Ethiopian freelancers instantly.",
+        "badges": {
+          "b1": "Post unlimited jobs",
+          "b2": "Review proposals",
+          "b3": "Pay via Chapa escrow"
+        },
+        "phoneLabel": "Business Phone (optional)",
+        "extraLabel": "Company / Organisation Name",
+        "extraPlaceholder": "e.g. TechEthio Solutions, UNICEF Ethiopia…",
+        "summaryRole": "Client Account",
+        "step1Heading": "Set up your client account",
+        "step1Sub": "Clients with verified accounts receive higher quality proposals.",
+        "createButton": "Start Hiring 🎯"
+      },
+      "fields": {
+        "firstName": "First Name",
+        "lastName": "Last Name",
+        "email": "Email Address",
+        "emailPlaceholder": "abebe@example.com",
+        "password": "Password",
+        "passwordPlaceholder": "Min. 8 characters",
+        "phonePrefix": "🇪🇹 +251",
+        "required": "*"
+      },
+      "otp": {
+        "heading": "Verify Your Email",
+        "sub": "We sent a 6-digit code to {email}",
+        "label": "Enter 6-digit code",
+        "verifyButton": "Verify Code",
+        "verifying": "Verifying…",
+        "resendCooldown": "Resend in {seconds}s",
+        "resend": "Resend code",
+        "verified": "Email Verified!",
+        "verifiedSub": "Your email address has been confirmed.",
+        "backButton": "Back",
+        "continueButton": "Continue"
+      },
+      "review": {
+        "name": "Name",
+        "email": "Email",
+        "title": "Title",
+        "company": "Company",
+        "emailVerified": "Email Verified",
+        "emailVerifiedValue": "✓ Confirmed",
+        "findJobs": "Find jobs & get paid",
+        "postJobs": "Post jobs & hire talent",
+        "agreeTerms": "I agree to the",
+        "termsLink": "Terms of Service",
+        "andText": "and",
+        "privacyLink": "Privacy Policy",
+        "backButton": "Back",
+        "creating": "Creating…"
+      },
+      "errors": {
+        "fillRequired": "Please fill in all required fields.",
+        "invalidEmail": "Please enter a valid email address.",
+        "passwordShort": "Password must be at least 8 characters.",
+        "verifyFirst": "Please verify your email first.",
+        "agreeTerms": "You must agree to the Terms of Service.",
+        "otpIncomplete": "Enter the full 6-digit code."
+      },
+      "footer": "Already have an account?",
+      "footerLink": "Sign In",
+      "etBuilt": "🇪🇹 Built for Ethiopia • Pay in ETB via Chapa"
+    },
+    "forgotPassword": {
+      "title": "Reset Your Password",
+      "sub": "Enter your email to receive a reset code",
+      "emailLabel": "Email Address",
+      "emailPlaceholder": "abebe@example.com",
+      "sendButton": "Send Reset Code",
+      "sending": "Sending…",
+      "otpHeading": "Check Your Email",
+      "otpSub": "We sent a 6-digit code to {email}",
+      "otpLabel": "Enter 6-digit code",
+      "verifyButton": "Verify Code",
+      "verifying": "Verifying…",
+      "resendCooldown": "Resend in {seconds}s",
+      "resend": "Resend code",
+      "newPasswordHeading": "Set New Password",
+      "newPasswordLabel": "New Password",
+      "newPasswordPlaceholder": "Min. 8 characters",
+      "confirmPasswordLabel": "Confirm Password",
+      "confirmPasswordPlaceholder": "Repeat your password",
+      "resetButton": "Reset Password",
+      "resetting": "Resetting…",
+      "successHeading": "Password Reset!",
+      "successSub": "Your password has been updated successfully.",
+      "backToLogin": "Back to Sign In",
+      "rememberPassword": "Remember your password?",
+      "signIn": "Sign In",
+      "errors": {
+        "enterEmail": "Please enter your email address.",
+        "invalidEmail": "Please enter a valid email address.",
+        "otpIncomplete": "Enter the full 6-digit code.",
+        "passwordShort": "Password must be at least 8 characters.",
+        "passwordMismatch": "Passwords do not match."
+      }
+    }
+  },
+
+  "jobs": {
+    "pageTitle": "Browse Jobs",
+    "pageSub": "Find your next opportunity from hundreds of Ethiopian clients",
+    "searchPlaceholder": "Search jobs by title, skill, or keyword…",
+    "searchButton": "Search",
+    "filterCategory": "Category",
+    "filterType": "Job Type",
+    "filterLocation": "Location",
+    "filterBudget": "Budget",
+    "allCategories": "All Categories",
+    "allTypes": "All Types",
+    "allLocations": "All Locations",
+    "typeFixed": "Fixed Price",
+    "typeHourly": "Hourly",
+    "budgetAny": "Any Budget",
+    "budget1": "Under 1,000 ETB",
+    "budget2": "1,000 – 5,000 ETB",
+    "budget3": "5,000 – 20,000 ETB",
+    "budget4": "20,000+ ETB",
+    "resultsCount": "{count} jobs found",
+    "sortLabel": "Sort by",
+    "sortNewest": "Newest First",
+    "sortBudgetHigh": "Budget: High to Low",
+    "sortBudgetLow": "Budget: Low to High",
+    "proposalsCount": "{count} proposals",
+    "postedBy": "Posted by",
+    "verified": "Verified",
+    "applyNow": "Apply Now",
+    "viewDetails": "View Details",
+    "fixed": "Fixed",
+    "hourly": "Hourly",
+    "emptyTitle": "No jobs found",
+    "emptySub": "Try adjusting your filters or search terms.",
+    "prevPage": "Previous",
+    "nextPage": "Next",
+    "pageIndicator": "Page {current} of {total}"
+  },
+
+  "jobDetail": {
+    "backToJobs": "← Back to Jobs",
+    "proposals": "{count} proposals",
+    "posted": "Posted {date}",
+    "budget": "Budget",
+    "type": "Type",
+    "location": "Location",
+    "category": "Category",
+    "skills": "Required Skills",
+    "aboutClient": "About the Client",
+    "memberSince": "Member since {date}",
+    "verified": "Verified",
+    "unverified": "Unverified",
+    "statusOpen": "Open",
+    "statusInProgress": "In Progress",
+    "statusCompleted": "Completed",
+    "statusCancelled": "Cancelled",
+    "milestones": "Milestones",
+    "milestoneAmount": "{amount} ETB",
+    "milestoneDue": "Due: {date}",
+    "ownerPanel": {
+      "title": "Proposals ({count})",
+      "empty": "No proposals yet.",
+      "status": {
+        "pending": "Pending",
+        "shortlisted": "Shortlisted",
+        "accepted": "Accepted",
+        "rejected": "Rejected"
+      },
+      "accept": "Accept",
+      "reject": "Reject",
+      "shortlist": "Shortlist",
+      "viewProfile": "View Profile",
+      "fundEscrow": "Fund Escrow",
+      "releasePayment": "Release Payment",
+      "confirmRelease": "Confirm Release",
+      "cancelRelease": "Cancel"
+    },
+    "applyPanel": {
+      "title": "Submit a Proposal",
+      "alreadyApplied": "You have already applied to this job.",
+      "withdrawn": "You withdrew your proposal.",
+      "bidLabel": "Your Bid (ETB)",
+      "bidPlaceholder": "Enter your bid amount",
+      "coverLabel": "Cover Letter",
+      "coverPlaceholder": "Explain why you're the best fit for this job…",
+      "attachments": "Attachments (optional)",
+      "attachButton": "Attach Files",
+      "submitButton": "Submit Proposal",
+      "submitting": "Submitting…",
+      "withdrawButton": "Withdraw Proposal",
+      "withdrawing": "Withdrawing…",
+      "loginPrompt": "Sign in to apply for this job.",
+      "loginLink": "Sign In"
+    },
+    "payment": {
+      "title": "Fund Escrow",
+      "amount": "Amount: {amount} ETB",
+      "selectMethod": "Select Payment Method",
+      "chapa": "Chapa",
+      "mpesa": "M-Pesa",
+      "phoneLabel": "M-Pesa Phone Number",
+      "phonePlaceholder": "2547XXXXXXXX",
+      "payButton": "Pay Now",
+      "paying": "Processing…",
+      "polling": "Waiting for M-Pesa confirmation…",
+      "successTitle": "Payment Successful",
+      "successSub": "Escrow funded. Work can now begin.",
+      "errorTitle": "Payment Failed",
+      "errorSub": "Please try again or use a different method.",
+      "cancel": "Cancel"
+    }
+  },
+
+  "freelancers": {
+    "pageTitle": "Find Freelancers",
+    "pageSub": "Browse talented professionals across Ethiopia",
+    "searchPlaceholder": "Search by name, skill, or title…",
+    "searchButton": "Search",
+    "filterSkill": "Skill",
+    "filterRating": "Min Rating",
+    "filterRate": "Hourly Rate",
+    "allSkills": "All Skills",
+    "anyRating": "Any Rating",
+    "anyRate": "Any Rate",
+    "rating4plus": "4+ Stars",
+    "rating3plus": "3+ Stars",
+    "rate1": "Under 100 ETB/hr",
+    "rate2": "100 – 500 ETB/hr",
+    "rate3": "500+ ETB/hr",
+    "resultsCount": "{count} freelancers found",
+    "verified": "Verified",
+    "online": "Online",
+    "completedJobs": "{count} jobs",
+    "rating": "{rating} ★",
+    "hourlyRate": "{rate} ETB/hr",
+    "viewProfile": "View Profile",
+    "hireNow": "Hire Now",
+    "emptyTitle": "No freelancers found",
+    "emptySub": "Try different search terms or filters."
+  },
+
+  "freelancerProfile": {
+    "backToFreelancers": "← Back to Freelancers",
+    "notFound": "Freelancer not found.",
+    "verified": "Verified",
+    "online": "Online",
+    "offline": "Offline",
+    "memberSince": "Member since {date}",
+    "rating": "{rating} / 5",
+    "completedJobs": "{count} completed jobs",
+    "hourlyRate": "{rate} ETB/hr",
+    "hireButton": "Hire {name}",
+    "messageButton": "Send Message",
+    "tabAbout": "About",
+    "tabPortfolio": "Portfolio",
+    "tabReviews": "Reviews",
+    "aboutHeading": "About Me",
+    "skillsHeading": "Skills",
+    "noAbout": "No bio provided yet.",
+    "noSkills": "No skills listed.",
+    "noPortfolio": "No portfolio items yet.",
+    "noReviews": "No reviews yet."
+  },
+
+  "dashboard": {
+    "greeting": "Welcome back, {name}!",
+    "subClient": "Manage your jobs and find great talent.",
+    "subFreelancer": "Track your proposals and earnings.",
+    "tabs": {
+      "overview": "Overview",
+      "jobs": "My Jobs",
+      "proposals": "Proposals",
+      "messages": "Messages",
+      "wallet": "Wallet"
+    },
+    "stats": {
+      "activeJobs": "Active Jobs",
+      "totalSpent": "Total Spent",
+      "hiredFreelancers": "Hired Freelancers",
+      "pendingProposals": "Pending Proposals",
+      "activeProposals": "Active Proposals",
+      "totalEarned": "Total Earned",
+      "completedJobs": "Completed Jobs",
+      "successRate": "Success Rate"
+    },
+    "jobs": {
+      "postNew": "Post New Job",
+      "emptyTitle": "No jobs posted yet",
+      "emptySub": "Post your first job to start receiving proposals.",
+      "status": {
+        "open": "Open",
+        "inProgress": "In Progress",
+        "completed": "Completed",
+        "cancelled": "Cancelled"
+      },
+      "proposals": "{count} proposals",
+      "viewJob": "View",
+      "editJob": "Edit",
+      "deleteJob": "Delete"
+    },
+    "proposals": {
+      "emptyTitle": "No proposals yet",
+      "emptySub": "Browse jobs and submit your first proposal.",
+      "status": {
+        "pending": "Pending",
+        "shortlisted": "Shortlisted",
+        "accepted": "Accepted",
+        "rejected": "Rejected",
+        "withdrawn": "Withdrawn"
+      },
+      "bid": "Bid: {amount} ETB",
+      "submitted": "Submitted {date}",
+      "viewJob": "View Job",
+      "withdraw": "Withdraw",
+      "withdrawing": "Withdrawing…"
+    },
+    "wallet": {
+      "balance": "Available Balance",
+      "currency": "ETB",
+      "escrowHeld": "In Escrow",
+      "totalEarned": "Total Earned",
+      "withdrawButton": "Withdraw Funds",
+      "history": "Transaction History",
+      "emptyHistory": "No transactions yet.",
+      "type": {
+        "escrowDeposit": "Escrow Deposit",
+        "escrowRelease": "Escrow Release",
+        "withdrawal": "Withdrawal"
+      },
+      "status": {
+        "pending": "Pending",
+        "completed": "Completed",
+        "failed": "Failed"
+      }
+    },
+    "pagination": {
+      "prev": "Previous",
+      "next": "Next",
+      "page": "Page {current} of {total}"
+    }
+  },
+
+  "messages": {
+    "pageTitle": "Messages",
+    "searchPlaceholder": "Search conversations…",
+    "noConversations": "No conversations yet.",
+    "startConversation": "Start a conversation by visiting a freelancer's profile.",
+    "selectConversation": "Select a conversation to start messaging.",
+    "online": "Online",
+    "offline": "Last seen {time}",
+    "inputPlaceholder": "Type a message…",
+    "sendButton": "Send",
+    "emptyChatTitle": "No messages yet",
+    "emptyChatSub": "Send a message to start the conversation.",
+    "loadingError": "Failed to load messages. Please refresh."
+  },
+
+  "profile": {
+    "pageTitle": "Profile Settings",
+    "pageSub": "Update your freelancer profile to attract more clients",
+    "titleLabel": "Professional Title",
+    "titlePlaceholder": "e.g. Full Stack Developer, Graphic Designer",
+    "bioLabel": "Bio",
+    "bioPlaceholder": "Tell clients about your experience, skills, and what makes you unique…",
+    "skillsLabel": "Skills",
+    "skillsPlaceholder": "Add a skill and press Enter",
+    "hourlyRateLabel": "Hourly Rate (ETB)",
+    "hourlyRatePlaceholder": "e.g. 250",
+    "saveButton": "Save Changes",
+    "saving": "Saving…",
+    "successMessage": "Profile updated successfully!",
+    "errorMessage": "Failed to update profile. Please try again."
+  },
+
+  "postJob": {
+    "pageTitle": "Post a Job",
+    "pageSub": "Describe your project and find the right freelancer",
+    "stepLabels": {
+      "jobDetails": "Job Details",
+      "requirements": "Requirements",
+      "review": "Review & Post"
+    },
+    "step1": {
+      "heading": "Tell us about your project",
+      "titleLabel": "Job Title",
+      "titlePlaceholder": "e.g. Build a React Native Mobile App",
+      "descriptionLabel": "Job Description",
+      "descriptionPlaceholder": "Describe the work, deliverables, and any specific requirements…",
+      "categoryLabel": "Category",
+      "typeLabel": "Job Type",
+      "typeFixed": "Fixed Price",
+      "typeHourly": "Hourly Rate",
+      "budgetLabel": "Budget (ETB)",
+      "budgetPlaceholder": "e.g. 5000",
+      "locationLabel": "Location / Remote",
+      "locationPlaceholder": "e.g. Addis Ababa or Remote"
+    },
+    "step2": {
+      "heading": "Define requirements",
+      "skillsLabel": "Required Skills",
+      "skillsPlaceholder": "Add a skill and press Enter",
+      "milestonesLabel": "Milestones (optional)",
+      "addMilestone": "Add Milestone",
+      "milestoneTitle": "Milestone Title",
+      "milestoneTitlePlaceholder": "e.g. Design mockups",
+      "milestoneAmount": "Amount (ETB)",
+      "milestoneDue": "Due Date (optional)",
+      "removeMilestone": "Remove"
+    },
+    "step3": {
+      "heading": "Review your job post",
+      "title": "Title",
+      "category": "Category",
+      "type": "Type",
+      "budget": "Budget",
+      "location": "Location",
+      "skills": "Skills",
+      "milestones": "Milestones",
+      "noMilestones": "None"
+    },
+    "nextButton": "Next",
+    "backButton": "Back",
+    "postButton": "Post Job",
+    "posting": "Posting…",
+    "successTitle": "Job Posted!",
+    "successSub": "Your job is now live and receiving proposals.",
+    "viewJob": "View Job",
+    "postAnother": "Post Another Job",
+    "errors": {
+      "titleRequired": "Job title is required.",
+      "descriptionRequired": "Description is required.",
+      "categoryRequired": "Please select a category.",
+      "budgetRequired": "Please enter a valid budget.",
+      "locationRequired": "Location is required.",
+      "skillsRequired": "Add at least one required skill."
+    }
+  },
+
+  "admin": {
+    "login": {
+      "title": "Admin Access",
+      "sub": "Authorised personnel only",
+      "usernameLabel": "Username",
+      "usernamePlaceholder": "admin",
+      "passwordLabel": "Password",
+      "passwordPlaceholder": "••••••••",
+      "loginButton": "Authenticate",
+      "authenticating": "Authenticating…",
+      "errorInvalid": "Invalid credentials.",
+      "errorGeneric": "Authentication failed. Please try again.",
+      "secureNote": "🔒 Secure connection"
+    },
+    "navbar": {
+      "title": "EthioFreelance",
+      "badge": "v1.0-sec",
+      "console": "Operations console",
+      "secureProtocol": "SECURE PROTOCOL ACTIVE",
+      "administrator": "System Administrator",
+      "disconnect": "Disconnect Portal",
+      "disconnecting": "Disconnecting…"
+    },
+    "dashboard": {
+      "title": "Operations Dashboard",
+      "sub": "Full platform oversight and management",
+      "tabs": {
+        "overview": "Overview",
+        "users": "Users",
+        "jobs": "Jobs",
+        "transactions": "Transactions",
+        "kyc": "KYC Review",
+        "notifications": "Send Notification"
+      },
+      "stats": {
+        "totalUsers": "Total Users",
+        "totalJobs": "Total Jobs",
+        "totalRevenue": "Total Revenue (ETB)",
+        "pendingKyc": "Pending KYC"
+      },
+      "users": {
+        "heading": "User Management",
+        "searchPlaceholder": "Search users…",
+        "colName": "Name",
+        "colEmail": "Email",
+        "colRole": "Role",
+        "colKyc": "KYC",
+        "colJoined": "Joined",
+        "colActions": "Actions",
+        "deleteButton": "Delete",
+        "confirmDeleteTitle": "Delete User",
+        "confirmDeleteMessage": "Are you sure you want to delete {name}? This cannot be undone.",
+        "confirmDelete": "Delete",
+        "cancelDelete": "Cancel",
+        "empty": "No users found."
+      },
+      "jobs": {
+        "heading": "Job Management",
+        "colTitle": "Title",
+        "colClient": "Client",
+        "colCategory": "Category",
+        "colStatus": "Status",
+        "colBudget": "Budget (ETB)",
+        "colPosted": "Posted",
+        "colActions": "Actions",
+        "deleteButton": "Delete",
+        "empty": "No jobs found."
+      },
+      "transactions": {
+        "heading": "Transactions",
+        "colId": "ID",
+        "colUser": "User",
+        "colJob": "Job",
+        "colType": "Type",
+        "colAmount": "Amount (ETB)",
+        "colStatus": "Status",
+        "colDate": "Date",
+        "empty": "No transactions found.",
+        "type": {
+          "escrowDeposit": "Escrow Deposit",
+          "escrowRelease": "Escrow Release",
+          "withdrawal": "Withdrawal"
+        }
+      },
+      "kyc": {
+        "heading": "KYC Review",
+        "colUser": "User",
+        "colEmail": "Email",
+        "colStatus": "Status",
+        "colSubmitted": "Submitted",
+        "colActions": "Actions",
+        "approveButton": "Approve",
+        "rejectButton": "Reject",
+        "status": {
+          "none": "None",
+          "pending": "Pending",
+          "approved": "Approved",
+          "rejected": "Rejected"
+        },
+        "empty": "No pending KYC submissions."
+      },
+      "notifications": {
+        "heading": "Send Platform Notification",
+        "targetLabel": "Send To",
+        "targetAll": "All Users",
+        "targetFreelancers": "All Freelancers",
+        "targetClients": "All Clients",
+        "titleLabel": "Notification Title",
+        "titlePlaceholder": "e.g. Platform Maintenance Notice",
+        "messageLabel": "Message",
+        "messagePlaceholder": "Write your notification message…",
+        "sendButton": "Send Notification",
+        "sending": "Sending…",
+        "successMessage": "Notification sent successfully.",
+        "errorMessage": "Failed to send notification."
+      }
+    }
+  },
+
+  "common": {
+    "loading": "Loading…",
+    "error": "Something went wrong.",
+    "retry": "Try Again",
+    "notFound": "Page not found.",
+    "backHome": "Back to Home",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "view": "View",
+    "submit": "Submit",
+    "confirm": "Confirm",
+    "close": "Close",
+    "search": "Search",
+    "filter": "Filter",
+    "clear": "Clear",
+    "next": "Next",
+    "back": "Back",
+    "yes": "Yes",
+    "no": "No",
+    "or": "or",
+    "and": "and",
+    "etb": "ETB",
+    "perHour": "/hr",
+    "verified": "Verified",
+    "online": "Online",
+    "offline": "Offline"
+  }
+}

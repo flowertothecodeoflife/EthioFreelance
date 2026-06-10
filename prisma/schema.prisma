@@ -1,0 +1,194 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  CLIENT
+  FREELANCER
+  ADMIN
+}
+
+enum KycStatus {
+  NONE
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum JobType {
+  FIXED
+  HOURLY
+}
+
+enum JobStatus {
+  OPEN
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
+
+enum ProposalStatus {
+  PENDING
+  SHORTLISTED
+  ACCEPTED
+  REJECTED
+}
+
+enum TransactionType {
+  ESCROW_DEPOSIT
+  ESCROW_RELEASE
+  WITHDRAWAL
+}
+
+enum TransactionStatus {
+  PENDING
+  COMPLETED
+  FAILED
+}
+
+model User {
+  id           String     @id @default(cuid())
+  email        String     @unique
+  phone        String?    @unique
+  name         String
+  passwordHash String
+  role         Role       @default(FREELANCER)
+  kycStatus    KycStatus  @default(NONE)
+  isOnline     Boolean    @default(false)
+  lastActive   DateTime   @default(now())
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+
+  profile          FreelancerProfile?
+  jobs             Job[]              @relation("ClientJobs")
+  proposals        Proposal[]         @relation("FreelancerProposals")
+  sentMessages     Message[]          @relation("SentMessages")
+  receivedMessages Message[]          @relation("ReceivedMessages")
+  transactions     Transaction[]
+  notifications    Notification[]
+}
+
+model FreelancerProfile {
+  id            String   @id @default(cuid())
+  userId        String   @unique
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title         String?
+  bio           String?
+  skills        String[]
+  hourlyRate    Float?
+  rating        Float    @default(0)
+  completedJobs Int      @default(0)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model Job {
+  id          String    @id @default(cuid())
+  title       String
+  description String
+  budget      Float
+  type        JobType
+  location    String
+  category    String
+  skills      String[]
+  status      JobStatus @default(OPEN)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  clientId     String
+  client       User          @relation("ClientJobs", fields: [clientId], references: [id], onDelete: Cascade)
+  proposals    Proposal[]
+  transactions Transaction[]
+  milestones   Milestone[]
+}
+
+model Milestone {
+  id        String   @id @default(cuid())
+  title     String
+  amount    Float
+  dueDate   String?  // stored as ISO date string for simplicity
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+
+  jobId String
+  job   Job    @relation(fields: [jobId], references: [id], onDelete: Cascade)
+}
+
+model Proposal {
+  id           String         @id @default(cuid())
+  bidAmount    Float
+  coverLetter  String
+  status       ProposalStatus @default(PENDING)
+  withdrawnAt  DateTime?      // set when freelancer withdraws
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+
+  jobId        String
+  job          Job                  @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  freelancerId String
+  freelancer   User                 @relation("FreelancerProposals", fields: [freelancerId], references: [id], onDelete: Cascade)
+  attachments  ProposalAttachment[]
+}
+
+model ProposalAttachment {
+  id         String   @id @default(cuid())
+  url        String   // Cloudinary / storage URL
+  name       String   // original file name
+  size       Int      // bytes
+  createdAt  DateTime @default(now())
+
+  proposalId String
+  proposal   Proposal @relation(fields: [proposalId], references: [id], onDelete: Cascade)
+}
+
+model Message {
+  id        String   @id @default(cuid())
+  content   String
+  createdAt DateTime @default(now())
+
+  senderId   String
+  sender     User   @relation("SentMessages", fields: [senderId], references: [id], onDelete: Cascade)
+  receiverId String
+  receiver   User   @relation("ReceivedMessages", fields: [receiverId], references: [id], onDelete: Cascade)
+}
+
+model Transaction {
+  id        String            @id @default(cuid())
+  amount    Float
+  type      TransactionType
+  status    TransactionStatus @default(PENDING)
+  chapaRef  String?
+  createdAt DateTime          @default(now())
+
+  jobId  String
+  job    Job    @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Notification {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title     String
+  content   String
+  type      String   // e.g. "PROPOSAL", "ESCROW", "DISPUTE", "MESSAGE"
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+model OtpToken {
+  id        String   @id @default(cuid())
+  email     String
+  codeHash  String   // bcrypt hash of the 6-digit code
+  purpose   String   // "EMAIL_VERIFY" | "PASSWORD_RESET"
+  expiresAt DateTime
+  used      Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@index([email, purpose])
+}

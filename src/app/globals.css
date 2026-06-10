@@ -1,0 +1,406 @@
+@import "tailwindcss";
+
+/* ── Design tokens ─────────────────────────────────────────────────────────── */
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+  --primary: #166534;
+  --primary-dark: #14532d;
+  --primary-light: #22c55e;
+  --accent: #16a34a;
+
+  /* Glassmorphism tokens — light mode */
+  --glass-bg:           rgba(255, 255, 255, 0.45);
+  --glass-bg-strong:    rgba(255, 255, 255, 0.62);
+  --glass-border:       rgba(255, 255, 255, 0.80);
+  --glass-border-inner: rgba(255, 255, 255, 0.55);
+  --glass-shadow:       0 8px 32px rgba(0, 0, 0, 0.16);
+  --glass-shadow-hover: 0 16px 48px rgba(0, 0, 0, 0.24);
+  --glass-blur:         blur(24px) saturate(2.0) brightness(1.08);
+  --section-bg:         rgba(255, 255, 255, 0.20);
+  --section-border:     rgba(255, 255, 255, 0.40);
+}
+
+[data-theme="dark"] {
+  --background: #0a0f1a;
+  --foreground: #e5e7eb;
+  --primary: #22c55e;
+  --primary-dark: #16a34a;
+  --primary-light: #4ade80;
+  --accent: #22c55e;
+
+  /* Glassmorphism tokens — dark mode */
+  --glass-bg:           rgba(15, 23, 42, 0.55);
+  --glass-bg-strong:    rgba(15, 23, 42, 0.75);
+  --glass-border:       rgba(255, 255, 255, 0.10);
+  --glass-border-inner: rgba(255, 255, 255, 0.06);
+  --glass-shadow:       0 8px 32px rgba(0, 0, 0, 0.40);
+  --glass-shadow-hover: 0 16px 48px rgba(0, 0, 0, 0.55);
+  --glass-blur:         blur(20px) saturate(1.3) brightness(0.95);
+  --section-bg:         rgba(10, 18, 35, 0.45);
+  --section-border:     rgba(255, 255, 255, 0.07);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+* { box-sizing: border-box; }
+
+/* ── Body — transparent so fixed background shows through everywhere ──────── */
+body {
+  background: transparent;
+  color: var(--foreground);
+  font-family: var(--font-sans), system-ui, sans-serif;
+  transition: color 0.4s ease;
+}
+
+/* ── Dark mode text overrides ─────────────────────────────────────────────── */
+[data-theme="dark"] .text-gray-900  { color: #f3f4f6 !important; }
+[data-theme="dark"] .text-gray-800  { color: #e5e7eb !important; }
+[data-theme="dark"] .text-gray-700  { color: #d1d5db !important; }
+[data-theme="dark"] .text-gray-600  { color: #9ca3af !important; }
+[data-theme="dark"] .text-gray-500  { color: #6b7280 !important; }
+[data-theme="dark"] .text-gray-400  { color: #4b5563 !important; }
+[data-theme="dark"] .border-gray-100 { border-color: rgba(255,255,255,0.08) !important; }
+[data-theme="dark"] .border-gray-200 { border-color: rgba(255,255,255,0.12) !important; }
+
+/* ── Light mode glass card text — stronger shadow + force darker colors ── */
+.glass-card .text-gray-900,
+.glass-card .text-gray-800 {
+  color: #111827 !important; /* force near-black for max contrast */
+  text-shadow: 0 1px 6px rgba(255,255,255,0.6), 0 1px 3px rgba(0,0,0,0.15);
+}
+
+.glass-card .text-gray-500,
+.glass-card .text-gray-400 {
+  color: #374151 !important; /* force gray-700 so it's readable */
+  text-shadow: 0 1px 4px rgba(255,255,255,0.5);
+}
+
+/* Undo the light-mode overrides in dark mode */
+[data-theme="dark"] .glass-card .text-gray-900,
+[data-theme="dark"] .glass-card .text-gray-800 {
+  color: #f3f4f6 !important;
+  text-shadow: 0 1px 8px rgba(0,0,0,0.5);
+}
+
+[data-theme="dark"] .glass-card .text-gray-500,
+[data-theme="dark"] .glass-card .text-gray-400 {
+  color: #9ca3af !important;
+  text-shadow: none;
+}
+
+/* ── Glass zone — the fixed background wrapper ────────────────────────────── */
+/*  Starts right after the hero, ends before the footer.                       */
+/*  The background image is fixed (ParallaxBackground component).              */
+/*  This zone has NO background of its own — sections inside float on top.     */
+.glass-zone {
+  position: relative;
+  isolation: isolate;
+}
+
+/* ── Section row — the band each section occupies ────────────────────────── */
+/*  A very subtle glass wash so section rows are distinct while the            */
+/*  background bleeds through clearly.                                         */
+.glass-section {
+  background: var(--section-bg);
+  border-top: 1px solid var(--section-border);
+  border-bottom: 1px solid var(--section-border);
+  backdrop-filter: blur(4px) saturate(1.2);
+  -webkit-backdrop-filter: blur(4px) saturate(1.2);
+}
+
+/* ── Glass card ─────────────────────────────────────────────────────────────  */
+/*  The core glassmorphism primitive. Every card/panel in the glass zone uses  */
+/*  this class (or its variants). Proper layering:                             */
+/*  background tint → backdrop blur → white border → inner highlight → shadow */
+.glass-card {
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow),
+              inset 0 1px 0 var(--glass-border-inner);
+  transition:
+    transform        0.22s ease,
+    box-shadow       0.22s ease,
+    background       0.22s ease;
+}
+
+.glass-card:hover {
+  background: var(--glass-bg-strong);
+  box-shadow: var(--glass-shadow-hover),
+              inset 0 1px 0 var(--glass-border);
+  transform: translateY(-3px);
+}
+
+/* ── Glass card — strong variant (stat cards, hero panels) ──────────────── */
+.glass-card-strong {
+  background: var(--glass-bg-strong);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow),
+              inset 0 1px 0 var(--glass-border-inner);
+}
+
+/* ── Glass badge / pill ──────────────────────────────────────────────────── */
+.glass-pill {
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.40);
+}
+
+[data-theme="dark"] .glass-pill {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.14);
+}
+
+/* ── Section headings inside glass zone ─────────────────────────────────── */
+.glass-zone h2,
+.glass-zone h3 {
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="dark"] .glass-zone h2,
+[data-theme="dark"] .glass-zone h3 {
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.5);
+}
+
+/* ── Scrollbar hide ──────────────────────────────────────────────────────── */
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* ── Ethiopian pattern ───────────────────────────────────────────────────── */
+.ethiopian-pattern {
+  background-image:
+    linear-gradient(135deg, rgba(22,101,52,0.95) 0%, rgba(20,83,45,0.95) 100%),
+    url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23fcd34d' fill-opacity='0.08'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  background-size: cover, 60px 60px;
+}
+
+/* ── Toast animation ─────────────────────────────────────────────────────── */
+@keyframes slideUp {
+  from { transform: translateY(16px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+.animate-slideUp { animation: slideUp 0.25s ease-out forwards; }
+
+/* ── Legacy section classes (kept for non-home pages) ───────────────────── */
+.home-section-white { background: var(--section-bg); }
+.home-section-gray  { background: var(--section-bg); }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   NON-HOME PAGE DARK MODE SYSTEM
+   All interior pages use data-theme="dark" on <html> (set by ThemeProvider).
+   Since these pages have hardcoded Tailwind light classes, we override them
+   here via the attribute selector so no component files need to change.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── Page-level background utility ────────────────────────────────────────── */
+/*  Replace hardcoded bg-gray-50 / bg-white on <main> with this class.        */
+.page-bg {
+  background-color: var(--background);
+  color: var(--foreground);
+  transition: background-color 0.4s ease, color 0.4s ease;
+  min-height: 100vh;
+}
+
+/* ── Surface backgrounds (cards, panels, inputs) ────────────────────────── */
+[data-theme="dark"] .bg-white,
+[data-theme="dark"] .bg-gray-50 {
+  background-color: #111827 !important; /* gray-900 */
+}
+[data-theme="dark"] .bg-gray-100 {
+  background-color: #1f2937 !important; /* gray-800 */
+}
+[data-theme="dark"] .bg-gray-200 {
+  background-color: #374151 !important; /* gray-700 */
+}
+
+/* Sidebar & chat area subtle tints */
+[data-theme="dark"] [class*="bg-gray-50\\/"] {
+  background-color: rgba(17, 24, 39, 0.5) !important;
+}
+
+/* ── Borders ────────────────────────────────────────────────────────────────  */
+[data-theme="dark"] .border-gray-50  { border-color: rgba(255,255,255,0.05) !important; }
+[data-theme="dark"] .border-gray-100 { border-color: rgba(255,255,255,0.08) !important; }
+[data-theme="dark"] .border-gray-200 { border-color: rgba(255,255,255,0.12) !important; }
+
+/* ── Hover states ───────────────────────────────────────────────────────────  */
+[data-theme="dark"] .hover\:bg-gray-50:hover  { background-color: #1f2937 !important; }
+[data-theme="dark"] .hover\:bg-gray-100:hover { background-color: #374151 !important; }
+[data-theme="dark"] .hover\:bg-gray-200:hover { background-color: #4b5563 !important; }
+
+/* ── Input / select / textarea fields ──────────────────────────────────────  */
+[data-theme="dark"] input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+[data-theme="dark"] select,
+[data-theme="dark"] textarea {
+  background-color: #1f2937 !important;
+  color: #f3f4f6 !important;
+  border-color: rgba(255,255,255,0.12) !important;
+}
+[data-theme="dark"] input::placeholder,
+[data-theme="dark"] textarea::placeholder {
+  color: #6b7280 !important;
+}
+[data-theme="dark"] input:focus:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+[data-theme="dark"] select:focus,
+[data-theme="dark"] textarea:focus {
+  background-color: #111827 !important;
+  border-color: rgba(34,197,94,0.5) !important;
+}
+
+/* ── Text overrides (covers components' hardcoded text classes) ─────────── */
+[data-theme="dark"] .text-gray-950 { color: #f3f4f6 !important; }
+[data-theme="dark"] .text-gray-900 { color: #f3f4f6 !important; }
+[data-theme="dark"] .text-gray-800 { color: #e5e7eb !important; }
+[data-theme="dark"] .text-gray-700 { color: #d1d5db !important; }
+[data-theme="dark"] .text-gray-600 { color: #9ca3af !important; }
+[data-theme="dark"] .text-gray-500 { color: #6b7280 !important; }
+[data-theme="dark"] .text-gray-400 { color: #4b5563 !important; }
+
+/* Green heading text (hardcoded text-green-900 on several pages) */
+[data-theme="dark"] .text-green-900 { color: #4ade80 !important; }
+
+/* ── Protect button text inside green bg buttons from the override above ── */
+/*  Navbar "Sign Up" + "Post a Job" use bg-green-400 text-green-900.         */
+/*  In dark mode the text must stay dark so it reads on the bright button.   */
+[data-theme="dark"] .bg-green-400 .text-green-900,
+[data-theme="dark"] .bg-green-400.text-green-900,
+[data-theme="dark"] a.bg-green-400,
+[data-theme="dark"] button.bg-green-400,
+[data-theme="dark"] .bg-green-300 .text-green-900,
+[data-theme="dark"] .bg-green-300.text-green-900,
+[data-theme="dark"] a.bg-green-300,
+[data-theme="dark"] button.bg-green-300 {
+  color: #14532d !important; /* green-900 original — stays dark on bright bg */
+}
+
+/* ── Shadow softening in dark mode ──────────────────────────────────────── */
+[data-theme="dark"] .shadow-sm,
+[data-theme="dark"] .shadow-md,
+[data-theme="dark"] .shadow-lg,
+[data-theme="dark"] .shadow-xl,
+[data-theme="dark"] .shadow-2xl {
+  --tw-shadow-color: rgba(0, 0, 0, 0.5);
+}
+
+/* ── Status badge color overrides (light-bg-only classes) ──────────────── */
+[data-theme="dark"] .bg-blue-100   { background-color: rgba(59,130,246,0.20)  !important; }
+[data-theme="dark"] .text-blue-700 { color: #93c5fd !important; }
+[data-theme="dark"] .bg-green-100  { background-color: rgba(34,197,94,0.20)   !important; }
+[data-theme="dark"] .text-green-700 { color: #86efac !important; }
+[data-theme="dark"] .bg-green-50   { background-color: rgba(34,197,94,0.10)   !important; }
+[data-theme="dark"] .text-green-800 { color: #86efac !important; }
+[data-theme="dark"] .border-green-100 { border-color: rgba(34,197,94,0.20) !important; }
+[data-theme="dark"] .border-green-200 { border-color: rgba(34,197,94,0.30) !important; }
+[data-theme="dark"] .bg-teal-100   { background-color: rgba(20,184,166,0.20)  !important; }
+[data-theme="dark"] .text-teal-700 { color: #5eead4 !important; }
+[data-theme="dark"] .bg-yellow-100 { background-color: rgba(234,179,8,0.20)   !important; }
+[data-theme="dark"] .text-yellow-700 { color: #fde047 !important; }
+[data-theme="dark"] .bg-amber-100  { background-color: rgba(245,158,11,0.20)  !important; }
+[data-theme="dark"] .text-amber-700 { color: #fbbf24 !important; }
+[data-theme="dark"] .bg-red-100    { background-color: rgba(239,68,68,0.20)   !important; }
+[data-theme="dark"] .text-red-600  { color: #f87171 !important; }
+[data-theme="dark"] .bg-red-50     { background-color: rgba(239,68,68,0.12)   !important; }
+[data-theme="dark"] .text-red-700  { color: #fca5a5 !important; }
+[data-theme="dark"] .border-red-100 { border-color: rgba(239,68,68,0.20) !important; }
+[data-theme="dark"] .border-red-200 { border-color: rgba(239,68,68,0.30) !important; }
+[data-theme="dark"] .bg-orange-100 { background-color: rgba(249,115,22,0.20)  !important; }
+[data-theme="dark"] .text-orange-700 { color: #fdba74 !important; }
+[data-theme="dark"] .bg-purple-100 { background-color: rgba(168,85,247,0.20)  !important; }
+[data-theme="dark"] .text-purple-700 { color: #c4b5fd !important; }
+[data-theme="dark"] .bg-cyan-100   { background-color: rgba(6,182,212,0.20)   !important; }
+[data-theme="dark"] .text-cyan-700 { color: #67e8f9 !important; }
+[data-theme="dark"] .bg-indigo-100 { background-color: rgba(99,102,241,0.20)  !important; }
+[data-theme="dark"] .text-indigo-700 { color: #a5b4fc !important; }
+[data-theme="dark"] .bg-slate-100  { background-color: rgba(100,116,139,0.20) !important; }
+[data-theme="dark"] .text-slate-700 { color: #94a3b8 !important; }
+[data-theme="dark"] .bg-blue-50    { background-color: rgba(59,130,246,0.10)  !important; }
+[data-theme="dark"] .text-blue-800 { color: #93c5fd !important; }
+[data-theme="dark"] .border-blue-200 { border-color: rgba(59,130,246,0.25) !important; }
+[data-theme="dark"] .bg-teal-50    { background-color: rgba(20,184,166,0.10)  !important; }
+[data-theme="dark"] .bg-yellow-50  { background-color: rgba(234,179,8,0.10)   !important; }
+[data-theme="dark"] .bg-orange-50  { background-color: rgba(249,115,22,0.10)  !important; }
+[data-theme="dark"] .bg-purple-50  { background-color: rgba(168,85,247,0.10)  !important; }
+
+/* ── Category skill tag special overrides ───────────────────────────────── */
+[data-theme="dark"] .bg-green-50.text-green-700,
+[data-theme="dark"] .bg-green-50 .text-green-700 {
+  background-color: rgba(34,197,94,0.12) !important;
+  color: #86efac !important;
+  border-color: rgba(34,197,94,0.20) !important;
+}
+
+/* ── Dashboard tab strip ───────────────────────────────────────────────── */
+[data-theme="dark"] .bg-gray-100.rounded-xl {
+  background-color: #1f2937 !important;
+}
+
+/* ── Progress bar tracks (bg-gray-100 inside cards) ──────────────────── */
+[data-theme="dark"] .flex-1.bg-gray-100.rounded-full {
+  background-color: #374151 !important;
+}
+
+/* ── "or continue with" login divider bg ───────────────────────────────── */
+[data-theme="dark"] .bg-white.px-3 {
+  background-color: #111827 !important;
+}
+
+/* ── How It Works page sections ─────────────────────────────────────────── */
+[data-theme="dark"] .bg-green-50:not([class*="text-"]) {
+  background-color: rgba(34,197,94,0.08) !important;
+}
+[data-theme="dark"] .border-green-100 {
+  border-color: rgba(34,197,94,0.18) !important;
+}
+[data-theme="dark"] .text-green-900:not(.bg-green-700 *):not(.bg-green-900 *) {
+  color: #4ade80 !important;
+}
+
+/* ── details/summary FAQ accordion ─────────────────────────────────────── */
+[data-theme="dark"] details {
+  background-color: #111827 !important;
+  border-color: rgba(255,255,255,0.08) !important;
+}
+[data-theme="dark"] details summary {
+  color: #f3f4f6 !important;
+}
+[data-theme="dark"] details p {
+  color: #9ca3af !important;
+}
+
+/* ── Footer surface — deep green in both modes, slightly lighter in dark ── */
+.footer-surface {
+  background-color: #052e16; /* green-950 */
+  transition: background-color 0.4s ease;
+}
+[data-theme="dark"] .footer-surface {
+  background-color: #0a1628 !important; /* navy-dark for dark mode contrast */
+}
+
+/* ── How-it-works hero — add a visible top border in dark mode so it
+      doesn't bleed into the same-color navbar                           ── */
+[data-theme="dark"] .bg-gradient-to-br.from-green-900 {
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+
+/* ── Navbar CSS variable for dynamic height reference ────────────────────── */
+:root {
+  --navbar-h: 4.5rem;
+}
+
+/* ── PageLoader spinner ──────────────────────────────────────────────────── */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
