@@ -1,46 +1,29 @@
 /**
- * Email utility — Brevo (formerly Sendinblue) Transactional Email API.
+ * Email utility — Brevo Transactional Email API.
  *
- * Brevo sends over HTTPS (port 443), so it works behind any firewall or ISP
- * that blocks outbound SMTP ports 465 / 587. No domain ownership required
- * to get started — you can send from any verified sender address.
+ * Sends over HTTPS (port 443) — works behind any firewall that blocks SMTP.
  *
  * Setup:
  *   1. Sign up at https://www.brevo.com (free tier: 300 emails/day)
- *   2. Go to Settings → SMTP & API → API Keys → Create a new API key
- *   3. Add your sender email under Settings → Senders & IP → Add a Sender
- *      (verify it — Brevo sends a confirmation link to that address)
+ *   2. Settings → SMTP & API → API Keys → create key → add as BREVO_API_KEY
+ *   3. Settings → Senders & IP → Senders → Add a Sender → verify the address
  *   4. Add to .env.local:
  *        BREVO_API_KEY=xkeysib-...
- *        BREVO_SENDER_EMAIL=your-verified@email.com   (defaults to GMAIL_USER if not set)
- *        BREVO_SENDER_NAME=EthioFreelance             (optional)
+ *        BREVO_SENDER_EMAIL=your-verified@email.com
  */
 
-import * as Brevo from "@getbrevo/brevo";
+import { BrevoClient, BrevoError } from "@getbrevo/brevo";
 
-// ── Read env vars ─────────────────────────────────────────────────────────────
-const BREVO_API_KEY     = process.env.BREVO_API_KEY ?? "";
-const SITE_URL          = process.env.NEXT_PUBLIC_BASE_URL ?? "http://localhost:3000";
-const LOGO_URL          = `${SITE_URL}/circular-logo.png`;
+// ── Env vars ──────────────────────────────────────────────────────────────────
+const BREVO_API_KEY    = process.env.BREVO_API_KEY    ?? "";
+const SENDER_EMAIL     = process.env.BREVO_SENDER_EMAIL
+                       ?? process.env.GMAIL_USER      // convenient fallback
+                       ?? "";
+const SENDER_NAME      = process.env.BREVO_SENDER_NAME ?? "EthioFreelance";
+const SITE_URL         = process.env.NEXT_PUBLIC_BASE_URL ?? "http://localhost:3000";
+const LOGO_URL         = `${SITE_URL}/circular-logo.png`;
 
-// Sender email — use dedicated env var, fall back to GMAIL_USER for convenience
-const SENDER_EMAIL      = process.env.BREVO_SENDER_EMAIL
-                        ?? process.env.GMAIL_USER
-                        ?? "";
-const SENDER_NAME       = process.env.BREVO_SENDER_NAME ?? "EthioFreelance";
-
-const CREDENTIALS_OK    = BREVO_API_KEY.startsWith("xkeysib-") && SENDER_EMAIL.includes("@");
-
-// ── Brevo API client — created fresh per call (serverless-safe) ───────────────
-function createClient() {
-  const apiInstance = new Brevo.TransactionalEmailsApi();
-  // The SDK reads the key from the ApiClient default headers
-  apiInstance.setApiKey(
-    Brevo.TransactionalEmailsApiApiKeys.apiKey,
-    BREVO_API_KEY,
-  );
-  return apiInstance;
-}
+const CREDENTIALS_OK   = BREVO_API_KEY.startsWith("xkeysib-") && SENDER_EMAIL.includes("@");
 
 // ── sendEmail ─────────────────────────────────────────────────────────────────
 
@@ -51,7 +34,8 @@ export interface SendEmailParams {
 }
 
 export async function sendEmail({ to, subject, html }: SendEmailParams): Promise<void> {
-  // ── Dev console fallback when credentials are missing / invalid ─────────────
+
+  // ── Console fallback when not configured ────────────────────────────────────
   if (!CREDENTIALS_OK) {
     console.log("\n📧 ─────────────────────────────────────────────────");
     console.log("   DEV MODE — email not sent (Brevo not configured)");
@@ -61,35 +45,41 @@ export async function sendEmail({ to, subject, html }: SendEmailParams): Promise
     const match = html.match(/font-family:monospace[^>]*>(\d{6})</);
     if (match) console.log(`\n   ⚡ OTP CODE: ${match[1]}\n`);
 
-    if (!BREVO_API_KEY) {
-      console.log("   ⚠  BREVO_API_KEY is not set in .env.local");
-    } else if (!BREVO_API_KEY.startsWith("xkeysib-")) {
-      console.log("   ⚠  BREVO_API_KEY doesn't look right (should start with xkeysib-)");
+    if (!BREVO_API_KEY.startsWith("xkeysib-")) {
+      console.log("   ⚠  BREVO_API_KEY missing or invalid — must start with xkeysib-");
     }
-    if (!SENDER_EMAIL) {
-      console.log("   ⚠  Set BREVO_SENDER_EMAIL (or GMAIL_USER) to the verified sender address");
+    if (!SENDER_EMAIL.includes("@")) {
+      console.log("   ⚠  Set BREVO_SENDER_EMAIL to a verified Brevo sender address");
     }
     console.log("─────────────────────────────────────────────────\n");
     return;
   }
 
-  // ── Send via Brevo API ────────────────────────────────────────────────────
-  const client  = createClient();
-  const message = new Brevo.SendSmtpEmail();
-
-  message.sender    = { name: SENDER_NAME, email: SENDER_EMAIL };
-  message.to        = [{ email: to }];
-  message.subject   = subject;
-  message.htmlContent = html;
-  // Reply-To so recipients can reply to the sender address
-  message.replyTo   = { email: SENDER_EMAIL, name: SENDER_NAME };
+  // ── Send via Brevo ────────────────────────────────────────────────────────
+  const brevo = new BrevoClient({ apiKey: BREVO_API_KEY });
 
   try {
-    const result = await client.sendTransacEmail(message);
-    console.log(`📧 Email sent to ${to} — messageId: ${(result.body as any)?.messageId ?? "n/a"}`);
-  } catch (err: any) {
-    const status  = err?.response?.status  ?? "";
-    const body    = err?.response?.text    ?? err?.message ?? "unknown error";
+    const result = await brevo.transactionalEmails.sendTransacEmail({
+      sender:      { name: SENDER_NAME, email: SENDER_EMAIL },
+      to:          [{ email: to }],
+      replyTo:     { email: SENDER_EMAIL, name: SENDER_NAME },
+      subject,
+      htmlContent: html,
+    });
+
+    console.log(`📧 Email sent to ${to} — messageId: ${(result as any)?.messageId ?? "ok"}`);
+
+  } catch (err: unknown) {
+    // ── Translate Brevo error types into readable messages ─────────────────
+    let status  = 0;
+    let body    = "unknown error";
+
+    if (err instanceof BrevoError) {
+      status = err.statusCode ?? 0;
+      body   = err.message ?? body;
+    } else if (err instanceof Error) {
+      body = err.message;
+    }
 
     console.error("─── Brevo API error ─────────────────────────────");
     console.error(`  status:  ${status}`);
@@ -97,14 +87,13 @@ export async function sendEmail({ to, subject, html }: SendEmailParams): Promise
     console.error(`  sender:  ${SENDER_EMAIL}`);
     console.error("─────────────────────────────────────────────────");
 
-    // Human-readable error messages
-    let userMessage = `Email delivery failed (${status || "unknown"})`;
+    let userMessage = `Email delivery failed (status ${status || "unknown"})`;
     if (status === 401) {
-      userMessage = "Brevo authentication failed — check your BREVO_API_KEY.";
+      userMessage = "Brevo authentication failed — check BREVO_API_KEY.";
     } else if (status === 400) {
-      userMessage = `Brevo rejected the request — ${body}. Check BREVO_SENDER_EMAIL is a verified sender.`;
+      userMessage = `Brevo rejected the request — ${body}. Ensure BREVO_SENDER_EMAIL is a verified sender in your Brevo account.`;
     } else if (status === 429) {
-      userMessage = "Brevo rate limit reached. Try again in a minute.";
+      userMessage = "Brevo daily sending limit reached. Upgrade or try again tomorrow.";
     }
 
     throw new Error(userMessage);
@@ -140,12 +129,8 @@ export function otpEmailHtml(
           <!-- Header -->
           <tr>
             <td style="background:#14532d;padding:32px;text-align:center">
-              <img
-                src="${LOGO_URL}"
-                alt="EthioFreelance"
-                width="56" height="56"
-                style="width:56px;height:56px;border-radius:50%;object-fit:contain;display:block;margin:0 auto"
-              />
+              <img src="${LOGO_URL}" alt="EthioFreelance" width="56" height="56"
+                style="width:56px;height:56px;border-radius:50%;object-fit:contain;display:block;margin:0 auto" />
               <h1 style="color:#ffffff;font-size:20px;font-weight:700;margin:16px 0 4px">${title}</h1>
               <p style="color:#86efac;font-size:13px;margin:0">EthioFreelance Platform</p>
             </td>
@@ -181,7 +166,7 @@ export function otpEmailHtml(
           <tr>
             <td style="background:#f9fafb;border-top:1px solid #e5e7eb;padding:20px 32px;text-align:center">
               <p style="color:#9ca3af;font-size:11px;margin:0">
-                &copy; ${new Date().getFullYear()} EthioFreelance &middot; Ethiopia&apos;s Freelance Platform
+                &copy; ${new Date().getFullYear()} EthioFreelance &middot; Ethiopia's Freelance Platform
               </p>
             </td>
           </tr>
