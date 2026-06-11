@@ -125,7 +125,7 @@ export default async function Home() {
   return (
     <main className="min-h-screen bg-transparent">
       <Navbar />
-      <HeroSection />
+      <HeroSection stats={stats} />
 
       {/* ── Glassmorphism content zone ──────────────────────────────────────
           The background image is locked (position:fixed via ParallaxBackground).

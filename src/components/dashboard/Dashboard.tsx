@@ -66,6 +66,7 @@ export default function Dashboard({ data }: DashboardProps) {
   const [releaseError, setReleaseError] = useState("");
   const [releaseSuccess, setReleaseSuccess] = useState<string | null>(null);
   const [confirmJobId, setConfirmJobId] = useState<string | null>(null);
+  const [withdrawModalOpen, setWithdrawModalOpen] = useState(false);
   const [, startTransition] = useTransition();
 
   // Pagination state
@@ -107,6 +108,8 @@ export default function Dashboard({ data }: DashboardProps) {
     .toUpperCase();
 
   // Dynamic lists mapping
+  // isDemo = no data prop = unauthenticated/preview mode only
+  // Real logged-in users always get real data (empty arrays if new user — never mock)
   const activeJobs = !isDemo
     ? isClient
       ? data.jobs.map(j => ({
@@ -118,7 +121,6 @@ export default function Dashboard({ data }: DashboardProps) {
           deadline: new Date(j.updatedAt).toLocaleDateString("en-US", { month: "short", day: "numeric" }),
           progress: j.status === "COMPLETED" ? 100 : j.status === "IN_PROGRESS" ? 50 : 0,
           escrowFunded: Array.isArray(j.transactions) && j.transactions.some((t: any) => t.status === "COMPLETED"),
-          // Accepted freelancer info for the release confirm modal
           freelancerName:   j.proposals?.[0]?.freelancer?.name ?? null,
           freelancerAmount: j.proposals?.[0]?.bidAmount ?? j.budget,
         }))
@@ -139,7 +141,6 @@ export default function Dashboard({ data }: DashboardProps) {
         const timeDiff = Date.now() - new Date(p.createdAt).getTime();
         const diffDays = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
         const dateStr = diffDays === 0 ? "Today" : diffDays === 1 ? "1 day ago" : `${diffDays} days ago`;
-
         return {
           id: p.id,
           jobId: p.job?.id ?? "",
@@ -196,7 +197,7 @@ export default function Dashboard({ data }: DashboardProps) {
           <Link href="/messages" className="relative p-2.5 bg-white border border-gray-200 rounded-xl hover:border-green-400 transition-colors">
             <MessageSquare className="w-5 h-5 text-gray-600" />
           </Link>
-          <Link href="/dashboard" className="relative p-2.5 bg-white border border-gray-200 rounded-xl hover:border-green-400 transition-colors">
+          <Link href="#notifications" className="relative p-2.5 bg-white border border-gray-200 rounded-xl hover:border-green-400 transition-colors" title="View notifications in the top bar">
             <Bell className="w-5 h-5 text-gray-600" />
           </Link>
           {isClient ? (
@@ -211,49 +212,49 @@ export default function Dashboard({ data }: DashboardProps) {
         </div>
       </div>
 
-      {/* Stats Cards */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+      {/* Stats Cards — reduced padding/font on mobile to prevent value overflow */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-8">
         {[
-          { 
-            icon: DollarSign, 
-            label: isClient ? "Total Spent" : "Total Earned", 
-            value: totalEarnedStr, 
-            sub: isClient ? "All time project spend" : "+ETB 8,000 this month", 
-            color: "text-green-600", 
-            bg: "bg-green-50" 
+          {
+            icon: DollarSign,
+            label: isClient ? "Total Spent" : "Total Earned",
+            value: totalEarnedStr,
+            sub: isClient ? "All time project spend" : "+ETB 8,000 this month",
+            color: "text-green-600",
+            bg: "bg-green-50"
           },
-          { 
-            icon: Briefcase, 
-            label: isClient ? "Posted Jobs" : "Active Jobs", 
-            value: data?.stats?.activeJobsCount.toString() || "3", 
-            sub: isClient ? "Active listings" : "Current contracts", 
-            color: "text-blue-600", 
-            bg: "bg-blue-50" 
+          {
+            icon: Briefcase,
+            label: isClient ? "Posted Jobs" : "Active Jobs",
+            value: data?.stats?.activeJobsCount.toString() || "0",
+            sub: isClient ? "Active listings" : "Current contracts",
+            color: "text-blue-600",
+            bg: "bg-blue-50"
           },
-          { 
-            icon: CheckCircle, 
-            label: "Completed Jobs", 
-            value: data?.stats?.completedJobsCount.toString() || "47", 
-            sub: "All time completed", 
-            color: "text-teal-600", 
-            bg: "bg-teal-50" 
+          {
+            icon: CheckCircle,
+            label: "Completed",
+            value: data?.stats?.completedJobsCount.toString() || "0",
+            sub: "All time",
+            color: "text-teal-600",
+            bg: "bg-teal-50"
           },
-          { 
-            icon: Star, 
-            label: "Avg. Rating", 
-            value: ratingValue.toString(), 
-            sub: isClient ? "Client rating" : "Freelancer rating", 
-            color: "text-yellow-500", 
-            bg: "bg-yellow-50" 
+          {
+            icon: Star,
+            label: "Rating",
+            value: ratingValue.toString(),
+            sub: isClient ? "Client rating" : "Freelancer rating",
+            color: "text-yellow-500",
+            bg: "bg-yellow-50"
           },
         ].map(({ icon: Icon, label, value, sub, color, bg }) => (
-          <div key={label} className="bg-white rounded-2xl p-5 border border-gray-100 shadow-sm">
-            <div className={`w-10 h-10 ${bg} rounded-xl flex items-center justify-center mb-3`}>
-              <Icon className={`w-5 h-5 ${color}`} />
+          <div key={label} className="bg-white rounded-2xl p-3.5 sm:p-5 border border-gray-100 shadow-sm overflow-hidden">
+            <div className={`w-8 h-8 sm:w-10 sm:h-10 ${bg} rounded-xl flex items-center justify-center mb-2 sm:mb-3`}>
+              <Icon className={`w-4 h-4 sm:w-5 sm:h-5 ${color}`} />
             </div>
-            <div className="text-2xl font-bold text-gray-900 mb-0.5">{value}</div>
-            <div className="text-sm text-gray-500">{label}</div>
-            <div className="text-xs text-gray-400 mt-1">{sub}</div>
+            <div className="text-lg sm:text-2xl font-bold text-gray-900 mb-0.5 truncate">{value}</div>
+            <div className="text-xs sm:text-sm text-gray-500 truncate">{label}</div>
+            <div className="text-[10px] sm:text-xs text-gray-400 mt-0.5 truncate">{sub}</div>
           </div>
         ))}
       </div>
@@ -288,7 +289,21 @@ export default function Dashboard({ data }: DashboardProps) {
               {activeJobs.length === 0 ? (
                 <div className="text-center py-8 text-gray-400">
                   <Briefcase className="w-8 h-8 mx-auto mb-2 opacity-30" />
-                  <p className="text-sm">No active jobs found.</p>
+                  <p className="text-sm font-medium text-gray-600 mb-1">
+                    {isClient ? "No jobs posted yet" : "No active jobs yet"}
+                  </p>
+                  <p className="text-xs text-gray-400 mb-4">
+                    {isClient
+                      ? "Post your first job and start receiving proposals from verified freelancers."
+                      : "Browse open jobs and submit your first proposal to get started."}
+                  </p>
+                  <Link
+                    href={isClient ? "/post-job" : "/jobs"}
+                    className="inline-flex items-center gap-1.5 text-xs font-semibold bg-green-700 text-white px-4 py-2 rounded-xl hover:bg-green-800 transition-colors"
+                  >
+                    <Plus className="w-3.5 h-3.5" />
+                    {isClient ? "Post a Job" : "Browse Jobs"}
+                  </Link>
                 </div>
               ) : (
                 activeJobs.slice(0, 3).map((job: any) => (
@@ -331,13 +346,13 @@ export default function Dashboard({ data }: DashboardProps) {
               </div>
               <div className="text-3xl font-bold mb-1">{walletBalance}</div>
               <div className="text-green-300 text-xs mb-4">Secured escrow protection</div>
-              <Link
-                href="/dashboard?withdraw=1"
+              <button
+                type="button"
+                onClick={() => setWithdrawModalOpen(true)}
                 className="w-full bg-white/20 hover:bg-white/30 text-white font-medium py-2 rounded-xl text-sm transition-colors backdrop-blur-sm text-center block"
-                title="Withdraw your escrow balance to your bank account"
               >
                 Withdraw to Bank
-              </Link>
+              </button>
             </div>
 
             {/* Profile Completion */}
@@ -388,10 +403,23 @@ export default function Dashboard({ data }: DashboardProps) {
           <h2 className="font-bold text-gray-900 mb-4">{isClient ? "My Posted Jobs" : "My Contract Jobs"}</h2>
           <div className="space-y-4">
             {activeJobs.length === 0 ? (
-              <div className="text-center py-12 text-gray-400">
+              <div className="text-center py-14 text-gray-400">
                 <Briefcase className="w-12 h-12 mx-auto mb-3 opacity-30" />
-                <p className="text-lg font-medium">No jobs found</p>
-                <p className="text-sm">You do not have any active jobs on the platform currently.</p>
+                <p className="text-base font-semibold text-gray-700 mb-1">
+                  {isClient ? "You haven't posted any jobs yet" : "No contract jobs yet"}
+                </p>
+                <p className="text-sm text-gray-400 mb-5 max-w-xs mx-auto">
+                  {isClient
+                    ? "Create your first job listing to connect with skilled Ethiopian freelancers."
+                    : "Once a client accepts your proposal, your active jobs will appear here."}
+                </p>
+                <Link
+                  href={isClient ? "/post-job" : "/jobs"}
+                  className="inline-flex items-center gap-2 bg-green-700 text-white font-semibold px-5 py-2.5 rounded-xl hover:bg-green-800 transition-colors text-sm"
+                >
+                  <Plus className="w-4 h-4" />
+                  {isClient ? "Post Your First Job" : "Find Jobs to Apply"}
+                </Link>
               </div>
             ) : (
               <>
@@ -520,9 +548,9 @@ export default function Dashboard({ data }: DashboardProps) {
             <div className="text-sm text-green-300 mb-1">Available balance</div>
             <div className="text-4xl font-bold mb-4">{walletBalance}</div>
             <button
-              onClick={() => setActiveTab("Earnings")}
+              type="button"
+              onClick={() => setWithdrawModalOpen(true)}
               className="w-full bg-white text-green-800 font-bold py-3 rounded-xl hover:bg-green-50 transition-colors mb-2 text-sm shadow-md"
-              title="Go to Earnings tab to withdraw funds"
             >
               Withdraw Funds
             </button>
@@ -536,10 +564,18 @@ export default function Dashboard({ data }: DashboardProps) {
           <h2 className="font-bold text-gray-900 mb-4">Proposals Submissions</h2>
           <div className="space-y-4">
             {activeProposals.length === 0 ? (
-              <div className="text-center py-12 text-gray-400">
+              <div className="text-center py-14 text-gray-400">
                 <Briefcase className="w-12 h-12 mx-auto mb-3 opacity-30" />
-                <p className="text-lg font-medium">No proposals</p>
-                <p className="text-sm">You have not submitted any active proposals yet.</p>
+                <p className="text-base font-semibold text-gray-700 mb-1">No proposals yet</p>
+                <p className="text-sm text-gray-400 mb-5 max-w-xs mx-auto">
+                  Find a job that matches your skills and submit your first proposal. It only takes a few minutes.
+                </p>
+                <Link
+                  href="/jobs"
+                  className="inline-flex items-center gap-2 bg-green-700 text-white font-semibold px-5 py-2.5 rounded-xl hover:bg-green-800 transition-colors text-sm"
+                >
+                  <Plus className="w-4 h-4" /> Browse Jobs
+                </Link>
               </div>
             ) : (
               <>
@@ -592,6 +628,8 @@ export default function Dashboard({ data }: DashboardProps) {
           >
             Open Messages Workspace
           </Link>
+          {/* Auto-redirect hint */}
+          <p className="text-xs text-gray-400 mt-3">You will be taken to the full messages page.</p>
         </div>
       )}
 
@@ -643,6 +681,33 @@ export default function Dashboard({ data }: DashboardProps) {
           </div>
         );
       })()}
+      {/* ── Withdraw modal ── */}
+      {withdrawModalOpen && (
+        <div className="fixed inset-0 bg-black/40 z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl p-6 max-w-sm w-full shadow-2xl">
+            <div className="w-12 h-12 bg-blue-50 rounded-2xl flex items-center justify-center mx-auto mb-4">
+              <Wallet className="w-6 h-6 text-blue-600" />
+            </div>
+            <h3 className="font-bold text-gray-900 text-center mb-2">Withdraw Funds</h3>
+            <p className="text-sm text-gray-500 text-center mb-4">
+              Direct bank withdrawals are coming soon. Currently, escrow funds are released when a client marks a job as complete.
+            </p>
+            <div className="bg-blue-50 border border-blue-100 rounded-xl p-3 mb-5 text-center">
+              <p className="text-xs text-blue-700 font-medium">Your current balance</p>
+              <p className="text-2xl font-bold text-blue-800 mt-0.5">{walletBalance}</p>
+            </div>
+            <p className="text-xs text-gray-400 text-center mb-5">
+              To receive payment, ensure your jobs are completed and the client has released escrow. Bank withdrawal (CBE, Awash, Telebirr) will be available soon.
+            </p>
+            <button
+              onClick={() => setWithdrawModalOpen(false)}
+              className="w-full border border-gray-200 text-gray-600 font-medium py-2.5 rounded-xl hover:bg-gray-50 transition-colors text-sm"
+            >
+              Got it
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -154,8 +154,14 @@ export default function LoginForm() {
             <div className="relative flex justify-center text-xs text-gray-400 bg-white px-3">or continue with</div>
           </div>
 
-          <button type="button" className="w-full border border-gray-200 text-gray-700 font-medium py-3 rounded-xl hover:bg-gray-50 transition-colors flex items-center justify-center gap-2 text-sm">
+          <button
+            type="button"
+            disabled
+            title="Telebirr login is coming soon"
+            className="w-full border border-gray-200 text-gray-400 font-medium py-3 rounded-xl bg-gray-50 cursor-not-allowed flex items-center justify-center gap-2 text-sm"
+          >
             <span className="text-lg">📱</span> Continue with Telebirr
+            <span className="text-[10px] bg-gray-200 text-gray-500 px-1.5 py-0.5 rounded-full ml-1 font-semibold">Coming soon</span>
           </button>
         </form>
       </div>

@@ -4,10 +4,42 @@ import { useState, useEffect, useCallback } from "react";
 import { Star, Quote, ChevronLeft, ChevronRight } from "lucide-react";
 
 const TESTIMONIALS = [
-  { name: "Selam Tesfaye",  role: "Client — E-commerce Owner",     location: "Addis Ababa", avatar: "ST", gradient: "from-purple-500 to-pink-600",   rating: 5, text: "I found an amazing web developer within 24 hours. The Chapa payment system made everything so easy. I paid in ETB and the work was delivered on time. EthioFreelance is a game changer!" },
-  { name: "Biruk Mengistu", role: "Freelancer — Graphic Designer",  location: "Bahir Dar",   avatar: "BM", gradient: "from-blue-500 to-indigo-600",    rating: 5, text: "Before EthioFreelance, I had no way to find clients outside my city. Now I work with companies in Addis Ababa and even NGOs. My income has tripled in 6 months!" },
-  { name: "Almaz Bekele",   role: "Client — NGO Project Manager",   location: "Hawassa",     avatar: "AB", gradient: "from-teal-500 to-cyan-600",      rating: 5, text: "We needed Amharic translators urgently for a survey project. Found 3 verified translators in one day. The built-in chat made coordination seamless. Highly recommended!" },
-  { name: "Henok Girma",    role: "Freelancer — Mobile Developer",  location: "Mekelle",     avatar: "HG", gradient: "from-orange-500 to-amber-600",   rating: 5, text: "The verification badge really helped me stand out. Clients trust me more knowing I'm verified. I've completed 40+ projects and the escrow system protects both sides perfectly." },
+  {
+    name: "Selam Tesfaye",
+    role: "Client — E-commerce Owner",
+    location: "Addis Ababa",
+    avatar: "ST",
+    gradient: "from-purple-500 to-pink-600",
+    rating: 5,
+    text: "Found a solid React developer within a day. Communication was smooth through the built-in chat, and the Chapa escrow meant I only paid when I was satisfied with the milestone. Would definitely hire again.",
+  },
+  {
+    name: "Biruk Mengistu",
+    role: "Freelancer — Graphic Designer",
+    location: "Bahir Dar",
+    avatar: "BM",
+    gradient: "from-blue-500 to-indigo-600",
+    rating: 5,
+    text: "Before EthioFreelance I was stuck with local word-of-mouth. Now I have regular clients in Addis and an NGO in Hawassa. My monthly income has roughly doubled since I completed my profile and got KYC verified.",
+  },
+  {
+    name: "Almaz Bekele",
+    role: "Client — NGO Project Manager",
+    location: "Hawassa",
+    avatar: "AB",
+    gradient: "from-teal-500 to-cyan-600",
+    rating: 4,
+    text: "We urgently needed Amharic translators for a field survey. Found three verified candidates the same afternoon. Onboarding was a bit slow at first but the support team resolved it quickly. Overall a very useful platform.",
+  },
+  {
+    name: "Henok Girma",
+    role: "Freelancer — Mobile Developer",
+    location: "Mekelle",
+    avatar: "HG",
+    gradient: "from-orange-500 to-amber-600",
+    rating: 5,
+    text: "The KYC badge made a real difference — clients respond faster when they can see you're verified. I've completed 40+ projects here and the escrow system has protected me on every single one.",
+  },
 ];
 
 const AUTO_INTERVAL = 5000;

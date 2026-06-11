@@ -186,14 +186,22 @@ export default function JobsListing({ initialJobs = [], dbHasJobs = false }: { i
           )}
         </div>
         <button onClick={handleSearch} disabled={isNavigating}
-          className="px-5 py-3 bg-green-700 text-white rounded-xl text-sm font-semibold hover:bg-green-800 transition-colors disabled:opacity-60">
-          {isNavigating ? <Loader2 className="w-4 h-4 animate-spin" /> : "Search"}
+          className="flex items-center justify-center gap-2 px-3 sm:px-5 py-3 bg-green-700 text-white rounded-xl text-sm font-semibold hover:bg-green-800 transition-colors disabled:opacity-60 flex-shrink-0"
+          aria-label="Search"
+        >
+          {isNavigating
+            ? <Loader2 className="w-4 h-4 animate-spin" />
+            : <><Search className="w-4 h-4 sm:hidden" /><span className="hidden sm:inline">Search</span></>
+          }
         </button>
         <button onClick={() => setShowFilters(!showFilters)}
-          className={`flex items-center gap-2 px-4 py-3 rounded-xl border text-sm font-medium transition-colors ${
+          className={`flex items-center gap-2 px-3 sm:px-4 py-3 rounded-xl border text-sm font-medium transition-colors flex-shrink-0 ${
             showFilters ? "bg-green-700 text-white border-green-700" : "bg-white border-gray-200 text-gray-700 hover:border-green-400"
-          }`}>
-          <SlidersHorizontal className="w-4 h-4" /> Filters
+          }`}
+          aria-label="Toggle filters"
+        >
+          <SlidersHorizontal className="w-4 h-4" />
+          <span className="hidden sm:inline">Filters</span>
         </button>
       </div>
 

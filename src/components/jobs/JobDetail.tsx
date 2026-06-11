@@ -287,6 +287,7 @@ export default function JobDetail({ job, currentUserId, currentUserRole }: JobDe
   const [isPending, startTransition] = useTransition();
   const [showProposalForm, setShowProposalForm] = useState(false);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const [reportState, setReportState] = useState<"idle" | "done">("idle");
 
   // Proposal form fields
   const [bidAmount,   setBidAmount]   = useState("");
@@ -778,9 +779,22 @@ export default function JobDetail({ job, currentUserId, currentUserRole }: JobDe
             </div>
           </div>
 
-          <button type="button" className="flex items-center gap-2 text-sm text-gray-400 hover:text-red-500 transition-colors">
-            <Flag className="w-4 h-4" /> Report this job
-          </button>
+          {reportState === "done" ? (
+            <span className="flex items-center gap-2 text-sm text-green-600">
+              <CheckCircle className="w-4 h-4" /> Report submitted — thank you.
+            </span>
+          ) : (
+            <button
+              type="button"
+              onClick={() => {
+                setReportState("done");
+                setTimeout(() => setReportState("idle"), 5000);
+              }}
+              className="flex items-center gap-2 text-sm text-gray-400 hover:text-red-500 transition-colors"
+            >
+              <Flag className="w-4 h-4" /> Report this job
+            </button>
+          )}
         </div>
       </div>
 

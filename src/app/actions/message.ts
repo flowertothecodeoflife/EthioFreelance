@@ -179,6 +179,28 @@ export async function markNotificationReadAction(notificationId: string) {
   }
 }
 
+// 5b. Mark ALL notifications as read
+export async function markAllNotificationsReadAction() {
+  try {
+    const session = await auth();
+    const userId = session?.user?.id;
+
+    if (!userId) {
+      return { error: "Unauthorized access." };
+    }
+
+    const updated = await prisma.notification.updateMany({
+      where: { userId, read: false },
+      data: { read: true },
+    });
+
+    return { success: true, count: updated.count };
+  } catch (err: any) {
+    console.error("MarkAllNotificationsReadAction error:", err);
+    return { error: "Failed to update notifications." };
+  }
+}
+
 // 6. Fetch Potential Chat Partners (other registered users)
 export async function getPotentialPartnersAction() {
   try {

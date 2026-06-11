@@ -19,48 +19,90 @@ const TRUST_BADGES = [
   { icon: Award,      label: "Dispute Protection", sub: "Fair admin arbitration" },
 ];
 
+/** Inline shimmer bar — no extra CSS needed */
+function Shimmer({ w = "w-16" }: { w?: string }) {
+  return (
+    <span
+      className={`inline-block ${w} h-7 rounded-lg animate-pulse`}
+      style={{ background: "rgba(255,255,255,0.20)" }}
+      aria-hidden
+    />
+  );
+}
+
 export default function StatsSection({ stats }: Props) {
+  const loading = !stats;
+
   const items = [
-    { icon: Users,        value: stats ? fmt(stats.totalFreelancers) : "—", label: "Registered Freelancers", sub: "Verified professionals",  accent: "text-emerald-400", glow: "rgba(52,211,153,0.18)" },
-    { icon: Briefcase,    value: stats ? fmt(stats.totalJobs)        : "—", label: "Jobs Posted",            sub: "Across all categories",   accent: "text-sky-400",     glow: "rgba(56,189,248,0.18)" },
-    { icon: CheckCircle,  value: stats ? fmt(stats.completedJobs)    : "—", label: "Projects Completed",     sub: "Successfully delivered",  accent: "text-teal-400",    glow: "rgba(45,212,191,0.18)" },
-    { icon: Star,         value: "4.8/5",                                   label: "Average Rating",         sub: "Client satisfaction",     accent: "text-amber-400",   glow: "rgba(251,191,36,0.18)" },
+    {
+      icon: Users,
+      value: loading ? null : fmt(stats!.totalFreelancers),
+      label: "Registered Freelancers",
+      sub: "Verified professionals",
+      accent: "text-emerald-400",
+      glow: "rgba(52,211,153,0.18)",
+    },
+    {
+      icon: Briefcase,
+      value: loading ? null : fmt(stats!.totalJobs),
+      label: "Jobs Posted",
+      sub: "Across all categories",
+      accent: "text-sky-400",
+      glow: "rgba(56,189,248,0.18)",
+    },
+    {
+      icon: CheckCircle,
+      value: loading ? null : fmt(stats!.completedJobs),
+      label: "Projects Completed",
+      sub: "Successfully delivered",
+      accent: "text-teal-400",
+      glow: "rgba(45,212,191,0.18)",
+    },
+    {
+      icon: Star,
+      value: "4.8/5",
+      label: "Average Rating",
+      sub: "Client satisfaction",
+      accent: "text-amber-400",
+      glow: "rgba(251,191,36,0.18)",
+    },
   ];
 
   return (
     <section className="glass-section py-14">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-        {/* Stat cards */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 mb-8">
+        {/* Stat cards — 2-col on mobile, 4-col on lg */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5 mb-8">
           {items.map(({ icon: Icon, value, label, sub, accent, glow }) => (
             <div
               key={label}
-              className="glass-card rounded-2xl p-5 sm:p-6 relative overflow-hidden"
+              className="glass-card rounded-2xl p-3.5 sm:p-6 relative overflow-hidden"
             >
-              {/* Ambient glow blob */}
               <div
                 className="absolute -top-6 -right-6 w-24 h-24 rounded-full pointer-events-none"
                 style={{ background: glow, filter: "blur(16px)" }}
               />
               <div className="relative">
                 <div
-                  className="w-10 h-10 rounded-xl flex items-center justify-center mb-3"
+                  className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center mb-2 sm:mb-3"
                   style={{ background: "rgba(255,255,255,0.18)", backdropFilter: "blur(6px)" }}
                 >
-                  <Icon className={`w-5 h-5 ${accent}`} />
+                  <Icon className={`w-4 h-4 sm:w-5 sm:h-5 ${accent}`} />
                 </div>
-                <div className={`text-2xl sm:text-3xl font-black ${accent} mb-0.5`}>{value}</div>
-                <div className="text-sm font-semibold text-gray-900">{label}</div>
-                <div className="text-xs text-gray-600 mt-0.5">{sub}</div>
+                <div className={`text-xl sm:text-3xl font-black ${accent} mb-0.5`}>
+                  {value === null ? <Shimmer w="w-12 sm:w-16" /> : value}
+                </div>
+                <div className="text-xs sm:text-sm font-semibold text-gray-900 leading-tight">{label}</div>
+                <div className="text-[10px] sm:text-xs text-gray-600 mt-0.5">{sub}</div>
               </div>
             </div>
           ))}
         </div>
 
-        {/* Trust strip */}
+        {/* ── Desktop: static trust strip ── */}
         <div
-          className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8 py-4 px-6 rounded-2xl"
+          className="hidden sm:flex items-center justify-center gap-8 py-4 px-6 rounded-2xl"
           style={{
             background: "rgba(255,255,255,0.18)",
             backdropFilter: "blur(12px)",
@@ -82,6 +124,39 @@ export default function StatsSection({ stats }: Props) {
               </div>
             </div>
           ))}
+        </div>
+
+        {/* ── Mobile: infinite horizontal marquee ticker ── */}
+        <div
+          className="sm:hidden overflow-hidden rounded-2xl py-3"
+          style={{
+            background: "rgba(255,255,255,0.18)",
+            backdropFilter: "blur(12px)",
+            WebkitBackdropFilter: "blur(12px)",
+            border: "1px solid rgba(255,255,255,0.35)",
+          }}
+        >
+          {/*
+           * Two identical lists side-by-side so the loop is seamless.
+           * CSS animation scrolls them leftward; when the first copy exits
+           * the second has already filled the gap — pure CSS, no JS needed.
+           */}
+          <div className="flex w-max animate-marquee">
+            {[...TRUST_BADGES, ...TRUST_BADGES].map(({ icon: Icon, label, sub }, i) => (
+              <div key={i} className="flex items-center gap-2 px-5 whitespace-nowrap">
+                <div
+                  className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0"
+                  style={{ background: "rgba(34,197,94,0.15)", border: "1px solid rgba(34,197,94,0.25)" }}
+                >
+                  <Icon className="w-3.5 h-3.5 text-emerald-500" />
+                </div>
+                <span className="font-semibold text-gray-800 text-sm">{label}</span>
+                <span className="text-gray-500 text-xs">· {sub}</span>
+                {/* Separator dot between items */}
+                <span className="text-gray-300 ml-4 select-none">◆</span>
+              </div>
+            ))}
+          </div>
         </div>
 
       </div>

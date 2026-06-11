@@ -1,13 +1,14 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ProfileSettingsForm from "@/components/profile/ProfileSettingsForm";
+import ClientProfileForm from "@/components/profile/ClientProfileForm";
 import { auth } from "@/auth";
 import prisma from "@/lib/prisma";
 import { redirect } from "next/navigation";
 
 export const metadata = {
   title: "Profile Settings | EthioFreelance",
-  description: "Manage your freelancer profile title, bio, hourly rate, and skill tags.",
+  description: "Manage your profile and account details.",
 };
 
 export default async function ProfilePage() {
@@ -26,10 +27,28 @@ export default async function ProfilePage() {
     redirect("/login");
   }
 
-  if (user.role !== "FREELANCER") {
-    redirect("/dashboard");
+  // Clients get their own settings form instead of being bounced to /dashboard
+  if (user.role === "CLIENT") {
+    const clientData = {
+      name: user.name,
+      email: user.email,
+      phone: user.phone ?? "",
+    };
+
+    return (
+      <main className="min-h-screen page-bg flex flex-col justify-between">
+        <div>
+          <Navbar />
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <ClientProfileForm initialData={clientData} />
+          </div>
+        </div>
+        <Footer />
+      </main>
+    );
   }
 
+  // Freelancers
   const profileData = {
     title: user.profile?.title || "",
     bio: user.profile?.bio || "",

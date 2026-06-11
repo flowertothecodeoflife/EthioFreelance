@@ -6,7 +6,7 @@ export const metadata = { title: "Reset Password | EthioFreelance" };
 
 export default function ForgotPasswordPage() {
   return (
-    <main className="min-h-screen bg-gray-50">
+    <main className="min-h-screen page-bg">
       <Navbar />
       <ForgotPasswordForm />
       <Footer />

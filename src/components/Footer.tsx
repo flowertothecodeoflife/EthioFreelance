@@ -37,7 +37,6 @@ export default function Footer() {
                 ["Find Freelancers", "/freelancers"],
                 ["Browse Categories", "/jobs"],
                 ["How to Hire", "/how-it-works"],
-                ["Enterprise Solutions", "/enterprise"],
               ].map(([label, href]) => (
                 <li key={label}>
                   <Link href={href} className="text-green-300 hover:text-white text-sm transition-colors">
@@ -45,6 +44,11 @@ export default function Footer() {
                   </Link>
                 </li>
               ))}
+              <li>
+                <span className="text-green-600 text-sm cursor-default">
+                  Enterprise Solutions <span className="text-[10px] bg-green-800 text-green-400 px-1.5 py-0.5 rounded-full ml-1">Soon</span>
+                </span>
+              </li>
             </ul>
           </div>
 
@@ -55,14 +59,18 @@ export default function Footer() {
               {[
                 ["Find Jobs", "/jobs"],
                 ["Create Profile", "/register"],
-                ["Skill Tests", "/skills"],
-                ["Freelancer Resources", "/resources"],
-                ["Success Stories", "/stories"],
               ].map(([label, href]) => (
                 <li key={label}>
                   <Link href={href} className="text-green-300 hover:text-white text-sm transition-colors">
                     {label}
                   </Link>
+                </li>
+              ))}
+              {["Skill Tests", "Freelancer Resources", "Success Stories"].map((label) => (
+                <li key={label}>
+                  <span className="text-green-600 text-sm cursor-default">
+                    {label} <span className="text-[10px] bg-green-800 text-green-400 px-1.5 py-0.5 rounded-full ml-1">Soon</span>
+                  </span>
                 </li>
               ))}
             </ul>
@@ -102,10 +110,8 @@ export default function Footer() {
             © 2025 EthioFreelance. All rights reserved.
           </p>
           <div className="flex gap-6">
-            {["Privacy Policy", "Terms of Service", "Cookie Policy"].map((item) => (
-              <Link key={item} href="#" className="text-green-400 hover:text-white text-sm transition-colors">
-                {item}
-              </Link>
+            {[["Privacy Policy", "/privacy"], ["Terms of Service", "/terms"], ["Cookie Policy", "/cookie-policy"]].map(([item]) => (
+              <span key={item} className="text-green-600 text-sm cursor-default">{item}</span>
             ))}
           </div>
           <div className="flex gap-2 text-xs text-green-500">

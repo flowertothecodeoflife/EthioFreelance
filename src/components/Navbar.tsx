@@ -10,7 +10,7 @@ import {
 import { useTheme } from "./ThemeProvider";
 import BrandLogo from "./BrandLogo";
 import { useSession, signOut } from "next-auth/react";
-import { getNotificationsAction, markNotificationReadAction } from "@/app/actions/message";
+import { getNotificationsAction, markNotificationReadAction, markAllNotificationsReadAction } from "@/app/actions/message";
 
 // ── Notification type matching the Prisma model ───────────────────────────────
 type NavNotification = {
@@ -53,24 +53,31 @@ export default function Navbar() {
   const [activeToast, setActiveToast]     = useState<{ title: string; content: string } | null>(null);
 
   // ── Refs for outside-click detection ─────────────────────────────────────
-  const catRef   = useRef<HTMLDivElement>(null);
-  const langRef  = useRef<HTMLDivElement>(null);
-  const userRef  = useRef<HTMLDivElement>(null);
-  const notifRef = useRef<HTMLDivElement>(null);
+  const catRef    = useRef<HTMLDivElement>(null);
+  const langRef   = useRef<HTMLDivElement>(null);
+  const userRef   = useRef<HTMLDivElement>(null);
+  const notifRef  = useRef<HTMLDivElement>(null);
+  const mobileRef = useRef<HTMLDivElement>(null);
 
   // Close mobile menu on route change
   useEffect(() => { setMobileOpen(false); }, [pathname]);
 
   // ── Close any open dropdown when clicking outside ─────────────────────────
   useEffect(() => {
-    const handler = (e: MouseEvent) => {
-      if (catRef.current   && !catRef.current.contains(e.target as Node))   setCatOpen(false);
-      if (langRef.current  && !langRef.current.contains(e.target as Node))  setLangOpen(false);
-      if (userRef.current  && !userRef.current.contains(e.target as Node))  setUserOpen(false);
-      if (notifRef.current && !notifRef.current.contains(e.target as Node)) setNotifOpen(false);
+    const handler = (e: MouseEvent | TouchEvent) => {
+      const target = e.target as Node;
+      if (catRef.current   && !catRef.current.contains(target))   setCatOpen(false);
+      if (langRef.current  && !langRef.current.contains(target))  setLangOpen(false);
+      if (userRef.current  && !userRef.current.contains(target))  setUserOpen(false);
+      if (notifRef.current && !notifRef.current.contains(target)) setNotifOpen(false);
+      if (mobileRef.current && !mobileRef.current.contains(target)) setMobileOpen(false);
     };
     document.addEventListener("mousedown", handler);
-    return () => document.removeEventListener("mousedown", handler);
+    document.addEventListener("touchstart", handler, { passive: true });
+    return () => {
+      document.removeEventListener("mousedown", handler);
+      document.removeEventListener("touchstart", handler);
+    };
   }, []);
 
   // Load notifications + SSE stream
@@ -109,6 +116,12 @@ export default function Navbar() {
     }
   };
 
+  const handleMarkAllAsRead = async () => {
+    const res = await markAllNotificationsReadAction();
+    if (res.success) {
+      setNotifications((prev) => prev.map((n) => ({ ...n, read: true })));
+    }
+  };
   // ── Mobile search submit ──────────────────────────────────────────────────
   const handleMobileSearch = useCallback((e?: React.FormEvent) => {
     e?.preventDefault();
@@ -143,19 +156,17 @@ export default function Navbar() {
     }`;
 
   const languages = [
-    { code: "EN", label: "English"     },
-    { code: "አማ", label: "አማርኛ"        },
-    { code: "OM", label: "Afaan Oromo" },
-    { code: "ትግ", label: "ትግርኛ"        },
+    { code: "EN", label: "English" },
+    { code: "አማ", label: "አማርኛ"   },
   ];
 
   return (
     <nav className="bg-green-900 text-white sticky top-0 z-50 shadow-lg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between min-h-[4.5rem] py-2">
+        <div className="relative flex items-center justify-between min-h-[4.5rem] py-2">
 
-          {/* Logo — opaque horizontal with mix-blend-lighten (original look) */}
-          <BrandLogo variant="horizontal" size={68} surface="dark" priority />
+          {/* Logo — smaller on mobile */}
+          <BrandLogo variant="horizontal" size={52} surface="dark" priority className="sm:!h-[68px]" />
 
           {/* ── Desktop nav links ── */}
           <div className="hidden md:flex items-center gap-6">
@@ -251,11 +262,21 @@ export default function Navbar() {
                     <div className="absolute top-full right-0 mt-2 w-80 bg-white text-gray-800 rounded-2xl shadow-2xl border border-gray-100 py-3.5 z-50">
                       <div className="px-4 pb-2 border-b border-gray-100 flex items-center justify-between">
                         <span className="font-bold text-sm text-gray-900">Notifications</span>
-                        {unreadCount > 0 && (
-                          <span className="text-[10px] text-green-700 bg-green-50 px-2 py-0.5 rounded-full font-bold">
-                            {unreadCount} new
-                          </span>
-                        )}
+                        <div className="flex items-center gap-2">
+                          {unreadCount > 0 && (
+                            <>
+                              <span className="text-[10px] text-green-700 bg-green-50 px-2 py-0.5 rounded-full font-bold">
+                                {unreadCount} new
+                              </span>
+                              <button
+                                onClick={handleMarkAllAsRead}
+                                className="text-[10px] text-gray-400 hover:text-green-700 font-medium transition-colors"
+                              >
+                                Mark all read
+                              </button>
+                            </>
+                          )}
+                        </div>
                       </div>
                       <div className="max-h-64 overflow-y-auto divide-y divide-gray-50">
                         {notifications.length > 0 ? (
@@ -304,6 +325,11 @@ export default function Navbar() {
                           <Settings className="w-4 h-4" /> Profile Settings
                         </Link>
                       )}
+                      {userRole === "CLIENT" && (
+                        <Link href="/profile" className="flex items-center gap-2 px-4 py-2 text-sm hover:bg-green-50 hover:text-green-800 transition-colors" onClick={() => setUserOpen(false)}>
+                          <Settings className="w-4 h-4" /> Account Settings
+                        </Link>
+                      )}
                       {userRole === "ADMIN" && (
                         <Link href="/admin" className="flex items-center gap-2 px-4 py-2 text-sm hover:bg-green-50 hover:text-green-800 transition-colors" onClick={() => setUserOpen(false)}>
                           <Settings className="w-4 h-4" /> Admin Panel
@@ -338,94 +364,98 @@ export default function Navbar() {
             </Link>
           </div>
 
-          {/* Mobile hamburger */}
-          <button
-            className="md:hidden p-2 hover:bg-green-800 rounded-lg transition-colors"
-            onClick={() => setMobileOpen((o) => !o)}
-            aria-label={mobileOpen ? "Close menu" : "Open menu"}
-          >
-            {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
-        </div>
-      </div>
-
-      {/* ── Mobile menu ── */}
-      <div
-        className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${
-          mobileOpen ? "max-h-screen opacity-100" : "max-h-0 opacity-0"
-        }`}
-      >
-        <div className="bg-green-900 border-t border-green-800 px-4 py-4 space-y-1">
-
-          {/* Search — functional, navigates to /jobs?search=… */}
-          <form onSubmit={handleMobileSearch} className="relative mb-3">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-green-400" />
-            <input
-              type="text"
-              value={mobileSearch}
-              onChange={(e) => setMobileSearch(e.target.value)}
-              placeholder="Search jobs..."
-              className="w-full bg-green-800 text-white placeholder-green-400 pl-9 pr-16 py-2.5 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-green-400"
-            />
+          {/* Mobile hamburger — inside mobileRef so outside-click doesn't conflict */}
+          <div ref={mobileRef} className="md:hidden">
             <button
-              type="submit"
-              className="absolute right-2 top-1/2 -translate-y-1/2 bg-green-400 text-green-900 text-xs font-bold px-2.5 py-1 rounded-lg hover:bg-green-300 transition-colors"
+              className="p-2 hover:bg-green-800 rounded-lg transition-colors"
+              onClick={() => setMobileOpen((o) => !o)}
+              aria-label={mobileOpen ? "Close menu" : "Open menu"}
             >
-              Go
+              {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
-          </form>
 
-          {/* Nav links */}
-          {NAV_LINKS.map(({ label, href }) => (
-            <Link
-              key={label}
-              href={href}
-              className={mobileNavLinkClass(href)}
-              onClick={() => setMobileOpen(false)}
+            {/* ── Mobile dropdown ── */}
+            <div
+              className={`absolute left-0 right-0 overflow-hidden transition-all duration-300 ease-in-out z-40 ${
+                mobileOpen ? "max-h-[32rem] opacity-100" : "max-h-0 opacity-0 pointer-events-none"
+              }`}
+              style={{ top: "100%" }}
             >
-              {label}
-            </Link>
-          ))}
+              <div className="bg-green-900 border-t border-green-800 px-3 py-3 space-y-0.5 shadow-xl">
 
-          {isAuthenticated ? (
-            <>
-              <Link href="/dashboard" className={mobileNavLinkClass("/dashboard")} onClick={() => setMobileOpen(false)}>Dashboard</Link>
-              <Link href="/messages"  className={mobileNavLinkClass("/messages")}  onClick={() => setMobileOpen(false)}>Messages</Link>
-              <hr className="border-green-800 my-2" />
-              <button
-                onClick={() => signOut()}
-                className="flex items-center gap-2 px-3 py-2.5 rounded-xl text-sm text-red-300 hover:bg-red-900/30 hover:text-red-200 transition-colors w-full"
-              >
-                <LogOut className="w-4 h-4" /> Sign Out
-              </button>
-            </>
-          ) : (
-            <>
-              <hr className="border-green-800 my-2" />
-              <div className="flex gap-2 pt-1 pb-1">
-                <Link href="/login"    className="flex-1 text-center border border-green-400 text-green-400 py-2.5 rounded-xl text-sm hover:bg-green-800 transition-colors" onClick={() => setMobileOpen(false)}>Sign In</Link>
-                <Link href="/register" className="flex-1 text-center bg-green-400 text-green-900 font-semibold py-2.5 rounded-xl text-sm hover:bg-green-300 transition-colors" onClick={() => setMobileOpen(false)}>Sign Up</Link>
+                {/* Search */}
+                <form onSubmit={handleMobileSearch} className="relative mb-2.5">
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-green-400" />
+                  <input
+                    type="text"
+                    value={mobileSearch}
+                    onChange={(e) => setMobileSearch(e.target.value)}
+                    placeholder="Search jobs..."
+                    className="w-full bg-green-800 text-white placeholder-green-400 pl-8 pr-14 py-2 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-green-400"
+                  />
+                  <button
+                    type="submit"
+                    className="absolute right-2 top-1/2 -translate-y-1/2 bg-green-400 text-green-900 text-xs font-bold px-2 py-0.5 rounded-lg"
+                  >
+                    Go
+                  </button>
+                </form>
+
+                {/* Nav links */}
+                {NAV_LINKS.map(({ label, href }) => (
+                  <Link
+                    key={label}
+                    href={href}
+                    className={mobileNavLinkClass(href)}
+                    onClick={() => setMobileOpen(false)}
+                  >
+                    {label}
+                  </Link>
+                ))}
+
+                {isAuthenticated ? (
+                  <>
+                    <Link href="/dashboard" className={mobileNavLinkClass("/dashboard")} onClick={() => setMobileOpen(false)}>Dashboard</Link>
+                    <Link href="/messages"  className={mobileNavLinkClass("/messages")}  onClick={() => setMobileOpen(false)}>Messages</Link>
+                    <hr className="border-green-800 my-1.5" />
+                    <button
+                      onClick={() => signOut()}
+                      className="flex items-center gap-2 px-3 py-2 rounded-xl text-sm text-red-300 hover:bg-red-900/30 hover:text-red-200 transition-colors w-full"
+                    >
+                      <LogOut className="w-3.5 h-3.5" /> Sign Out
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <hr className="border-green-800 my-1.5" />
+                    <div className="flex gap-2 py-1">
+                      <Link href="/login"    className="flex-1 text-center border border-green-400 text-green-400 py-2 rounded-xl text-sm hover:bg-green-800 transition-colors" onClick={() => setMobileOpen(false)}>Sign In</Link>
+                      <Link href="/register" className="flex-1 text-center bg-green-400 text-green-900 font-semibold py-2 rounded-xl text-sm hover:bg-green-300 transition-colors" onClick={() => setMobileOpen(false)}>Sign Up</Link>
+                    </div>
+                    <Link
+                      href="/register?role=client"
+                      className="flex items-center justify-center gap-2 bg-green-400/20 border border-green-400/40 text-green-300 py-2 rounded-xl text-sm font-medium hover:bg-green-400/30 transition-colors"
+                      onClick={() => setMobileOpen(false)}
+                    >
+                      <Briefcase className="w-3.5 h-3.5" /> Post a Job
+                    </Link>
+                  </>
+                )}
+
+                {/* Theme toggle */}
+                <button
+                  onClick={toggleTheme}
+                  className="flex items-center gap-2 px-3 py-2 rounded-xl text-sm text-white/70 hover:bg-green-800/60 hover:text-white transition-colors w-full"
+                >
+                  {theme === "light" ? <Moon className="w-3.5 h-3.5" /> : <Sun className="w-3.5 h-3.5" />}
+                  {theme === "light" ? "Dark Mode" : "Light Mode"}
+                </button>
               </div>
-              <Link
-                href="/register?role=client"
-                className="flex items-center justify-center gap-2 bg-green-400/20 border border-green-400/40 text-green-300 py-2.5 rounded-xl text-sm font-medium hover:bg-green-400/30 transition-colors"
-                onClick={() => setMobileOpen(false)}
-              >
-                <Briefcase className="w-4 h-4" /> Post a Job
-              </Link>
-            </>
-          )}
+            </div>
+          </div>
 
-          {/* Theme toggle */}
-          <button
-            onClick={toggleTheme}
-            className="flex items-center gap-2 px-3 py-2.5 rounded-xl text-sm text-white/70 hover:bg-green-800/60 hover:text-white transition-colors w-full"
-          >
-            {theme === "light" ? <Moon className="w-4 h-4" /> : <Sun className="w-4 h-4" />}
-            {theme === "light" ? "Dark Mode" : "Light Mode"}
-          </button>
-        </div>
-      </div>
+        </div>{/* end flex items-center row */}
+      </div>{/* end max-w-7xl */}
 
       {/* Notification toast */}
       {activeToast && (

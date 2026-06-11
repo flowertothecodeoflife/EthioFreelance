@@ -184,14 +184,19 @@ export default function FreelancerProfile({ freelancer }: FreelancerProfileProps
           <div className="bg-white rounded-2xl border border-gray-100 p-5">
             <h3 className="font-semibold text-gray-900 mb-3">Contact</h3>
             <div className="space-y-2.5">
-              <div className="flex items-center gap-2 text-sm text-gray-600 min-w-0">
+              {/* Email — masked to prevent harvesting */}
+              <div className="flex items-center gap-2 text-sm text-gray-500 min-w-0">
                 <Mail className="w-4 h-4 text-green-600 flex-shrink-0" />
-                <span className="truncate">{freelancer.email}</span>
+                <span className="truncate italic">
+                  {freelancer.email.replace(/^(.).*@(.).*/,
+                    (_, a, b) => `${a}•••@${b}•••`)}
+                  {" "}· <Link href="/messages" className="text-green-700 hover:underline font-medium not-italic">Send a message</Link>
+                </span>
               </div>
               {freelancer.phone && (
                 <div className="flex items-center gap-2 text-sm text-gray-600">
                   <Phone className="w-4 h-4 text-green-600 flex-shrink-0" />
-                  <span>{freelancer.phone}</span>
+                  <span>{freelancer.phone.replace(/.(?=.{4})/g, "•")}</span>
                 </div>
               )}
               <div className="flex items-center gap-2 text-sm text-gray-600">

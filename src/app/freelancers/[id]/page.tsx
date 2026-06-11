@@ -33,7 +33,7 @@ export default async function FreelancerProfilePage({
   // Freelancer not found — clean 404 page
   if (!res.success || !res.freelancer) {
     return (
-      <main className="min-h-screen bg-gray-50">
+      <main className="min-h-screen page-bg">
         <Navbar />
         <div className="max-w-2xl mx-auto px-4 py-24 text-center">
           <div className="w-16 h-16 bg-red-50 rounded-2xl flex items-center justify-center mx-auto mb-5">
@@ -56,7 +56,7 @@ export default async function FreelancerProfilePage({
   }
 
   return (
-    <main className="min-h-screen bg-gray-50">
+    <main className="min-h-screen page-bg">
       <Navbar />
       <FreelancerProfile freelancer={res.freelancer} />
       <Footer />

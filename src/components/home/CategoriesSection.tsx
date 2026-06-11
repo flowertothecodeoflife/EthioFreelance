@@ -1,7 +1,7 @@
 import Link from "next/link";
 import {
   Code2, Palette, PenTool, Languages, BookOpen, Database,
-  Building2, Mic, Calculator, Camera, Truck, GraduationCap,
+  Building2, Calculator, Camera, Truck, GraduationCap,
 } from "lucide-react";
 import ScrollStrip from "@/components/ui/ScrollStrip";
 
@@ -17,7 +17,6 @@ const CATEGORIES = [
   { icon: GraduationCap, label: "Tutoring",             key: "Tutoring",             color: "from-yellow-500 to-orange-500",  href: "/jobs?category=Tutoring"               },
   { icon: Database,      label: "Data Entry",           key: "Data Entry",           color: "from-cyan-500 to-sky-600",       href: "/jobs?category=Data+Entry"             },
   { icon: Building2,     label: "NGO & Remote Work",    key: "NGO & Remote Work",    color: "from-teal-500 to-cyan-600",      href: "/jobs?category=NGO+%26+Remote+Work"    },
-  { icon: Mic,           label: "Voice & Audio",        key: "Voice & Audio",        color: "from-pink-500 to-rose-600",      href: "/jobs?category=Voice+%26+Audio"        },
   { icon: Calculator,    label: "Finance & Accounting", key: "Finance & Accounting", color: "from-indigo-500 to-violet-600",  href: "/jobs?category=Finance+%26+Accounting" },
   { icon: Camera,        label: "Photography & Video",  key: "Photography & Video",  color: "from-red-500 to-pink-600",       href: "/jobs?category=Photography+%26+Video"  },
   { icon: Truck,         label: "Local Services",       key: "Local Services",       color: "from-amber-500 to-yellow-600",   href: "/jobs?category=Local+Services"         },

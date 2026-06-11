@@ -149,3 +149,39 @@ export async function getFreelancerProfile(userId: string) {
     return { error: err.message || "Failed to fetch freelancer profile details." };
   }
 }
+
+export async function updateClientProfile(data: {
+  name?: string;
+  phone?: string;
+}) {
+  try {
+    const session = await auth();
+    if (!session || !session.user || !(session.user as any).id) {
+      return { error: "You must be logged in to update your profile." };
+    }
+
+    const userId = (session.user as any).id;
+    const user = await prisma.user.findUnique({ where: { id: userId } });
+
+    if (!user || user.role !== "CLIENT") {
+      return { error: "Only clients can use this action." };
+    }
+
+    const { name, phone } = data;
+
+    await prisma.user.update({
+      where: { id: userId },
+      data: {
+        ...(name?.trim() && { name: name.trim() }),
+        ...(phone !== undefined && { phone: phone.trim() || null }),
+      },
+    });
+
+    revalidatePath("/profile");
+    revalidatePath("/dashboard");
+    return { success: true };
+  } catch (err: any) {
+    console.error("Update client profile error:", err);
+    return { error: err.message || "Failed to update profile." };
+  }
+}

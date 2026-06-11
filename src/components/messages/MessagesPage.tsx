@@ -10,7 +10,7 @@ import {
 } from "@/app/actions/message";
 import { 
   Send, Search, MessageSquare, Plus, CheckCheck, 
-  AlertCircle, ShieldAlert, Sparkles 
+  AlertCircle, ShieldAlert, Sparkles, ArrowLeft
 } from "lucide-react";
 
 interface ChatPartner {
@@ -37,6 +37,8 @@ export default function MessagesPage() {
   const [potentialPartners, setPotentialPartners] = useState<ChatPartner[]>([]);
   const [selectedPartner, setSelectedPartner] = useState<ChatPartner | null>(null);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
+  // Mobile: show chat panel when a partner is selected
+  const [mobileShowChat, setMobileShowChat] = useState(false);
   
   const [searchQuery, setSearchQuery] = useState("");
   const [inputText, setInputText] = useState("");
@@ -189,6 +191,13 @@ export default function MessagesPage() {
       return [user, ...prev];
     });
     setSelectedPartner(user);
+    setMobileShowChat(true);
+  };
+
+  // Helper: select partner and switch to chat on mobile
+  const handleSelectPartner = (partner: ChatPartner) => {
+    setSelectedPartner(partner);
+    setMobileShowChat(true);
   };
 
   // 8. Filter partners by search query
@@ -200,8 +209,8 @@ export default function MessagesPage() {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
       <div className="bg-white rounded-3xl border border-gray-100 overflow-hidden shadow-2xl shadow-gray-100/50 flex flex-col md:flex-row" style={{ height: "calc(100dvh - var(--navbar-h, 4.5rem) - 3rem)" }}>
         
-        {/* SIDEBAR: Contacts List */}
-        <div className="w-full md:w-80 border-r border-gray-100 flex flex-col flex-shrink-0 bg-gray-50/50">
+        {/* SIDEBAR: Contacts List — hidden on mobile when chat is open */}
+        <div className={`w-full md:w-80 border-r border-gray-100 flex flex-col flex-shrink-0 bg-gray-50/50 ${mobileShowChat ? "hidden md:flex" : "flex"}`}>
           <div className="p-5 border-b border-gray-100 bg-white">
             <div className="flex items-center justify-between mb-4">
               <h2 className="font-extrabold text-xl text-gray-900 tracking-tight flex items-center gap-2">
@@ -234,7 +243,7 @@ export default function MessagesPage() {
               filteredPartners.map((conv) => (
                 <button
                   key={conv.id}
-                  onClick={() => setSelectedPartner(conv)}
+                  onClick={() => handleSelectPartner(conv)}
                   className={`w-full flex items-center gap-3.5 p-3.5 rounded-2xl transition-all text-left ${
                     selectedPartner?.id === conv.id
                       ? "bg-white border border-gray-100 shadow-lg shadow-gray-200/50"
@@ -305,27 +314,32 @@ export default function MessagesPage() {
           </div>
         </div>
 
-        {/* CHAT MAIN PANEL */}
-        <div className="flex-1 flex flex-col bg-white">
+        {/* CHAT MAIN PANEL — hidden on mobile when sidebar is shown */}
+        <div className={`flex-1 flex flex-col bg-white ${!mobileShowChat ? "hidden md:flex" : "flex"}`}>
           {selectedPartner ? (
             <>
-              {/* Chat Panel Header */}
-              <div className="flex items-center justify-between p-5 border-b border-gray-100">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-gradient-to-tr from-green-700 to-emerald-600 rounded-2xl flex items-center justify-center text-white font-extrabold text-base shadow-lg shadow-green-700/15">
-                    {selectedPartner.name[0]}
-                  </div>
-                  <div>
-                    <div className="font-bold text-gray-900 text-base">{selectedPartner.name}</div>
-                    <div className="text-xs text-gray-400 capitalize flex items-center gap-1.5 font-medium">
-                      <span>{selectedPartner.role.toLowerCase()}</span>
-                      <span>•</span>
-                      {selectedPartner.isOnline ? (
-                        <span className="text-green-500 font-bold">Online</span>
-                      ) : (
-                        <span>Offline</span>
-                      )}
-                    </div>
+              {/* Chat Panel Header — back button on mobile */}
+              <div className="flex items-center gap-3 p-4 sm:p-5 border-b border-gray-100">
+                <button
+                  onClick={() => setMobileShowChat(false)}
+                  className="md:hidden p-2 -ml-1 hover:bg-gray-100 rounded-xl transition-colors flex-shrink-0"
+                  aria-label="Back to contacts"
+                >
+                  <ArrowLeft className="w-5 h-5 text-gray-500" />
+                </button>
+                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-tr from-green-700 to-emerald-600 rounded-2xl flex items-center justify-center text-white font-extrabold text-base shadow-lg shadow-green-700/15 flex-shrink-0">
+                  {selectedPartner.name[0]}
+                </div>
+                <div>
+                  <div className="font-bold text-gray-900 text-sm sm:text-base">{selectedPartner.name}</div>
+                  <div className="text-xs text-gray-400 capitalize flex items-center gap-1.5 font-medium">
+                    <span>{selectedPartner.role.toLowerCase()}</span>
+                    <span>•</span>
+                    {selectedPartner.isOnline ? (
+                      <span className="text-green-500 font-bold">Online</span>
+                    ) : (
+                      <span>Offline</span>
+                    )}
                   </div>
                 </div>
               </div>
