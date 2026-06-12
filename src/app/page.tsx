@@ -49,66 +49,69 @@ export default async function Home() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let categoryCountsRaw: any[] = [];
 
-  try {
-    [
-      totalUsers,
-      totalJobs,
-      completedJobs,
-      featuredJobs,
-      featuredFreelancers,
-      categoryCountsRaw,
-    ] = await Promise.all([
-      prisma.user.count({ where: { role: "FREELANCER" } }),
-      prisma.job.count(),
-      prisma.job.count({ where: { status: "COMPLETED" } }),
+  // Helper: run a query and return its result or a fallback — never throws.
+  // This means one flaky DB connection doesn't kill the whole page.
+  async function safe<T>(query: Promise<T>, fallback: T): Promise<T> {
+    try { return await query; } catch { return fallback; }
+  }
 
-      // 8 most recent open jobs for the featured strip
-      prisma.job.findMany({
-        where: { status: "OPEN" },
-        orderBy: { createdAt: "desc" },
-        take: 8,
-        include: {
-          client: { select: { name: true, kycStatus: true } },
-          _count: { select: { proposals: true } },
-        },
-      }),
+  // Run all queries independently so a dropped connection on one
+  // doesn't prevent the others from succeeding.
+  [
+    totalUsers,
+    totalJobs,
+    completedJobs,
+    featuredJobs,
+    featuredFreelancers,
+    categoryCountsRaw,
+  ] = await Promise.all([
+    safe(prisma.user.count({ where: { role: "FREELANCER" } }), 0),
+    safe(prisma.job.count(), 0),
+    safe(prisma.job.count({ where: { status: "COMPLETED" } }), 0),
 
-      // Top 8 freelancers ordered by recency
-      prisma.user.findMany({
-        where: {
-          role: "FREELANCER",
-          profile: { isNot: null },
-        },
-        orderBy: { createdAt: "desc" },
-        take: 8,
-        select: {
-          id: true,
-          name: true,
-          kycStatus: true,
-          isOnline: true,
-          profile: {
-            select: {
-              title: true,
-              skills: true,
-              hourlyRate: true,
-              rating: true,
-              completedJobs: true,
-            },
+    // 8 most recent open jobs for the featured strip
+    safe(prisma.job.findMany({
+      where: { status: "OPEN" },
+      orderBy: { createdAt: "desc" },
+      take: 8,
+      include: {
+        client: { select: { name: true, kycStatus: true } },
+        _count: { select: { proposals: true } },
+      },
+    }), []),
+
+    // Top 8 freelancers ordered by recency
+    safe(prisma.user.findMany({
+      where: {
+        role: "FREELANCER",
+        profile: { isNot: null },
+      },
+      orderBy: { createdAt: "desc" },
+      take: 8,
+      select: {
+        id: true,
+        name: true,
+        kycStatus: true,
+        isOnline: true,
+        profile: {
+          select: {
+            title: true,
+            skills: true,
+            hourlyRate: true,
+            rating: true,
+            completedJobs: true,
           },
         },
-      }),
+      },
+    }), []),
 
-      // Job counts per category
-      prisma.job.groupBy({
-        by: ["category"],
-        where: { status: "OPEN" },
-        _count: { id: true },
-      }),
-    ]);
-  } catch (err) {
-    // DB unreachable — page still renders with empty/zero data instead of 500
-    console.error("[Home] DB fetch failed, rendering with fallback data:", err);
-  }
+    // Job counts per category
+    safe(prisma.job.groupBy({
+      by: ["category"],
+      where: { status: "OPEN" },
+      _count: { id: true },
+    }), []),
+  ]);
 
   // Build category→count map
   const catCountMap: Record<string, number> = {};
