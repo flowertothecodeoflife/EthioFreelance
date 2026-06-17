@@ -7,6 +7,7 @@ import {
   Clock, Award, ChevronRight, ExternalLink,
   User, Phone, Mail, Calendar, Layers,
 } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 // ─── Types (match getFreelancerProfile return shape) ─────────────────────────
 
@@ -79,6 +80,7 @@ function StarRow({ rating, size = "sm" }: { rating: number; size?: "sm" | "md" }
 // ─── Component ────────────────────────────────────────────────────────────────
 
 export default function FreelancerProfile({ freelancer }: FreelancerProfileProps) {
+  const t = useTranslations("freelancerProfile");
   const [activeTab, setActiveTab] = useState("Overview");
 
   // Derived values — all from real data with safe fallbacks

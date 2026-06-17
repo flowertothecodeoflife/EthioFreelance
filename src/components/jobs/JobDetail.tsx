@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { submitProposal, updateProposalStatus, withdrawProposal } from "@/app/actions/proposal";
 import PaymentSelector from "@/components/payment/PaymentSelector";
+import { useTranslations } from "next-intl";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -279,6 +280,7 @@ function ProposalsPanel({ jobId, initialProposals, jobStatus }: {
 // ─── Main component ───────────────────────────────────────────────────────────
 
 export default function JobDetail({ job, currentUserId, currentUserRole }: JobDetailProps) {
+  const t = useTranslations("jobDetail");
   const isOwner        = !!currentUserId && currentUserId === job.client.id;
   const isFreelancer   = currentUserRole === "FREELANCER";
   const isAuthenticated = !!currentUserId;
@@ -405,7 +407,7 @@ export default function JobDetail({ job, currentUserId, currentUserRole }: JobDe
       <div className="bg-white rounded-2xl p-6 border border-green-200">
         <div className="flex flex-col items-center text-center gap-3 py-4">
           <div className="w-12 h-12 bg-green-50 rounded-2xl flex items-center justify-center"><LogIn className="w-6 h-6 text-green-700" /></div>
-          <h3 className="font-bold text-gray-900">Sign in to Submit a Proposal</h3>
+          <h3 className="font-bold text-gray-900">{t("applyPanel.title")}</h3>
           <div className="flex gap-3 mt-1">
             <Link href={`/login?callbackUrl=/jobs/${job.id}`} className="bg-green-700 text-white font-semibold px-5 py-2.5 rounded-xl text-sm hover:bg-green-800">Sign In</Link>
             <Link href="/register?role=freelancer" className="border border-gray-200 text-gray-600 font-medium px-5 py-2.5 rounded-xl text-sm hover:bg-gray-50">Register</Link>
@@ -716,7 +718,7 @@ export default function JobDetail({ job, currentUserId, currentUserRole }: JobDe
             {isOwner && job.status === "IN_PROGRESS" && !job.escrowFunded && (
               <button type="button" onClick={() => setShowPaymentModal(true)}
                 className="w-full bg-green-700 text-white font-bold py-3 rounded-xl hover:bg-green-800 transition-colors mb-3 text-sm flex items-center justify-center gap-2">
-                <Wallet className="w-4 h-4" /> Fund Escrow
+                <Wallet className="w-4 h-4" /> {t("ownerPanel.fundEscrow")}
               </button>
             )}
 
@@ -730,7 +732,7 @@ export default function JobDetail({ job, currentUserId, currentUserRole }: JobDe
             {!isAuthenticated && (
               <Link href={`/login?callbackUrl=/jobs/${job.id}`}
                 className="w-full bg-green-700 text-white font-bold py-3 rounded-xl hover:bg-green-800 transition-colors mb-3 text-sm flex items-center justify-center gap-2">
-                <LogIn className="w-4 h-4" /> Sign In to Apply
+                <LogIn className="w-4 h-4" /> {t("applyPanel.loginPrompt")}
               </Link>
             )}
 
@@ -757,7 +759,7 @@ export default function JobDetail({ job, currentUserId, currentUserRole }: JobDe
 
           {/* Client card */}
           <div className="bg-white rounded-2xl p-5 border border-gray-100">
-            <h3 className="font-semibold text-gray-900 mb-4">About the Client</h3>
+            <h3 className="font-semibold text-gray-900 mb-4">{t("aboutClient")}</h3>
             <div className="flex items-center gap-3 mb-4">
               <div className="w-12 h-12 bg-gradient-to-br from-green-700 to-emerald-600 rounded-xl flex items-center justify-center text-white font-bold text-base">
                 {clientInitials}

@@ -31,7 +31,7 @@ interface DashboardProps {
   };
 }
 
-const tabs = [t("tabs.overview"), t("tabs.jobs"), t("tabs.proposals"), "Earnings", t("tabs.messages")];
+const tabs = ["Overview", "My Jobs", "Proposals", "Earnings", "Messages"];
 
 const mockJobs = [
   { id: "mock-1", title: "E-commerce Website Development", client: "TechEthio", status: "In Progress", budget: "ETB 20,000", deadline: "Dec 15", progress: 65 },
@@ -63,7 +63,10 @@ const statusColors: Record<string, string> = {
 
 export default function Dashboard({ data }: DashboardProps) {
   const t = useTranslations("dashboard");
-  const [activeTab, setActiveTab] = useState("Overview");
+  // Stable keys for state comparison — translated labels for display
+  const tabKeys   = ["Overview", "My Jobs", "Proposals", "Earnings", "Messages"] as const;
+  const tabLabels = [t("tabs.overview"), t("tabs.jobs"), t("tabs.proposals"), "Earnings", t("tabs.messages")];
+  const [activeTab, setActiveTab] = useState<typeof tabKeys[number]>("Overview");
   const [releasingJobId, setReleasingJobId] = useState<string | null>(null);
   const [releaseError, setReleaseError] = useState("");
   const [releaseSuccess, setReleaseSuccess] = useState<string | null>(null);
@@ -263,15 +266,15 @@ export default function Dashboard({ data }: DashboardProps) {
 
       {/* Tabs */}
       <div className="flex gap-1 bg-gray-100 rounded-xl p-1 mb-6 overflow-x-auto scrollbar-hide">
-        {tabs.map((tab) => (
+        {tabKeys.map((key, i) => (
           <button
-            key={tab}
-            onClick={() => setActiveTab(tab)}
+            key={key}
+            onClick={() => setActiveTab(key)}
             className={`flex-shrink-0 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-              activeTab === tab ? "bg-white text-green-800 shadow-sm" : "text-gray-500 hover:text-gray-700"
+              activeTab === key ? "bg-white text-green-800 shadow-sm" : "text-gray-500 hover:text-gray-700"
             }`}
           >
-            {tab}
+            {tabLabels[i]}
           </button>
         ))}
       </div>

@@ -12,6 +12,7 @@ import {
   Send, Search, MessageSquare, Plus, CheckCheck, 
   AlertCircle, ShieldAlert, Sparkles, ArrowLeft
 } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 interface ChatPartner {
   id: string;
@@ -31,6 +32,7 @@ interface ChatMessage {
 
 export default function MessagesPage() {
   const { data: session } = useSession();
+  const t = useTranslations("messages");
   const currentUserId = session?.user?.id;
 
   const [partners, setPartners] = useState<ChatPartner[]>([]);
@@ -215,7 +217,7 @@ export default function MessagesPage() {
             <div className="flex items-center justify-between mb-4">
               <h2 className="font-extrabold text-xl text-gray-900 tracking-tight flex items-center gap-2">
                 <MessageSquare className="w-5 h-5 text-green-600" />
-                <span>Interactions</span>
+                <span>{t("pageTitle")}</span>
               </h2>
             </div>
             
@@ -226,7 +228,7 @@ export default function MessagesPage() {
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Find conversation..."
+                placeholder={t("searchPlaceholder")}
                 className="w-full bg-gray-50 border border-gray-100 pl-10 pr-4 py-2.5 rounded-2xl text-xs focus:outline-none focus:ring-2 focus:ring-green-400 focus:bg-white transition-all font-medium"
               />
             </div>
@@ -398,9 +400,9 @@ export default function MessagesPage() {
                     <div className="w-16 h-16 bg-green-50 border border-green-100 text-green-600 rounded-3xl flex items-center justify-center mb-4">
                       <MessageSquare className="w-8 h-8" />
                     </div>
-                    <h3 className="font-extrabold text-gray-900 text-base mb-1">Start of Chat Session</h3>
+                    <h3 className="font-extrabold text-gray-900 text-base mb-1">{t("emptyChatTitle")}</h3>
                     <p className="text-xs text-gray-400 max-w-xs font-medium">
-                      All messages are securely encrypted. Type your message below to establish connection.
+                      {t("emptyChatSub")}
                     </p>
                   </div>
                 )}
@@ -417,7 +419,7 @@ export default function MessagesPage() {
                     onChange={(e) => setInputText(e.target.value)}
                     onKeyDown={(e) => e.key === "Enter" && handleSendMessage()}
                     disabled={isPending}
-                    placeholder="Write your secure response..."
+                    placeholder={t("inputPlaceholder")}
                     className="flex-1 bg-gray-50 border border-gray-100 px-4 py-3 rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-green-400 focus:bg-white transition-all font-medium"
                   />
                   <button
@@ -435,9 +437,9 @@ export default function MessagesPage() {
               <div className="w-16 h-16 bg-gray-100 border border-gray-200 text-gray-400 rounded-3xl flex items-center justify-center mb-4">
                 <MessageSquare className="w-8 h-8 animate-bounce" />
               </div>
-              <h3 className="font-extrabold text-gray-900 text-base mb-1">Secure Messaging Console</h3>
+              <h3 className="font-extrabold text-gray-900 text-base mb-1">{t("selectConversation")}</h3>
               <p className="text-xs text-gray-400 max-w-sm font-medium">
-                Choose an active conversation from the sidebar or click <Plus className="inline w-3 h-3 text-green-600" /> next to active users to initialize a direct live chat.
+                {t("startConversation")}
               </p>
             </div>
           )}

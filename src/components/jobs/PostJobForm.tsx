@@ -7,6 +7,7 @@ import {
   DollarSign, Clock, AlertCircle, Loader2, Rocket,
 } from "lucide-react";
 import { createJob } from "@/app/actions/job";
+import { useTranslations } from "next-intl";
 
 const categories = [
   "IT & Software", "Design & Creative", "Writing & Content", "Translation",
@@ -39,6 +40,7 @@ interface FormState {
 }
 
 export default function PostJobForm() {
+  const t = useTranslations("postJob");
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
 
@@ -216,13 +218,13 @@ export default function PostJobForm() {
   return (
     <div className="max-w-3xl mx-auto px-4 py-10">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-green-900 mb-2">Post a Job</h1>
-        <p className="text-gray-500">Find the perfect Ethiopian freelancer for your project</p>
+        <h1 className="text-3xl font-bold text-green-900 mb-2">{t("pageTitle")}</h1>
+        <p className="text-gray-500">{t("pageSub")}</p>
       </div>
 
       {/* ── Progress indicator ── */}
       <div className="flex items-center gap-2 mb-8">
-        {["Job Details", "Budget & Timeline", "Review & Post"].map((label, i) => (
+        {[t("stepLabels.jobDetails"), t("stepLabels.requirements"), t("stepLabels.review")].map((label, i) => (
           <div key={label} className="flex items-center gap-2 flex-1">
             <div className="flex items-center gap-2">
               <div
@@ -262,7 +264,7 @@ export default function PostJobForm() {
         ════════════════════════════════════════════════════════════ */}
         {step === 1 && (
           <div className="space-y-5">
-            <h2 className="font-bold text-gray-900 text-lg">Job Details</h2>
+            <h2 className="font-bold text-gray-900 text-lg">{t("step1.heading")}</h2>
 
             {/* Inline error banner */}
             {step1Error && (
@@ -624,7 +626,7 @@ export default function PostJobForm() {
         ════════════════════════════════════════════════════════════ */}
         {step === 3 && (
           <div className="space-y-5">
-            <h2 className="font-bold text-gray-900 text-lg">Review & Post</h2>
+            <h2 className="font-bold text-gray-900 text-lg">{t("step3.heading")}</h2>
 
             {/* Submit error */}
             {submitError && (

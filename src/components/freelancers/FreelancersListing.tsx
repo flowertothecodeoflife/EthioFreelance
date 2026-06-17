@@ -6,6 +6,7 @@ import {
   Search, Star, MapPin, CheckCircle, SlidersHorizontal,
   X, Users, Briefcase,
 } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -92,6 +93,7 @@ function formatRate(rate: number | null): string {
 // ─── Component ────────────────────────────────────────────────────────────────
 
 export default function FreelancersListing({ initialFreelancers = [] }: FreelancersListingProps) {
+  const t = useTranslations("freelancers");
   // Use real DB data if available, otherwise fall back to mock data
   const source: FreelancerItem[] = initialFreelancers.length > 0 ? initialFreelancers : MOCK_FREELANCERS;
   const isUsingMock = initialFreelancers.length === 0;
@@ -162,9 +164,9 @@ export default function FreelancersListing({ initialFreelancers = [] }: Freelanc
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-green-900 mb-2">Find Freelancers</h1>
+        <h1 className="text-3xl font-bold text-green-900 mb-2">{t("pageTitle")}</h1>
         <p className="text-gray-500">
-          {filtered.length} verified professional{filtered.length !== 1 ? "s" : ""} available
+          {t("resultsCount", { count: filtered.length })}
           {isUsingMock && (
             <span className="ml-2 text-xs bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full font-medium">
               Sample data
@@ -181,7 +183,7 @@ export default function FreelancersListing({ initialFreelancers = [] }: Freelanc
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search by name, skill, or title..."
+            placeholder={t("searchPlaceholder")}
             className="w-full bg-white border border-gray-200 pl-12 pr-10 py-3 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-green-400"
           />
           {search && (
@@ -285,8 +287,8 @@ export default function FreelancersListing({ initialFreelancers = [] }: Freelanc
       {filtered.length === 0 ? (
         <div className="text-center py-20 text-gray-400">
           <Users className="w-12 h-12 mx-auto mb-3 opacity-30" />
-          <p className="text-lg font-medium">No freelancers found</p>
-          <p className="text-sm mt-1">Try adjusting your filters or search term</p>
+          <p className="text-lg font-medium">{t("emptyTitle")}</p>
+          <p className="text-sm mt-1">{t("emptySub")}</p>
           <button
             onClick={() => { setSearch(""); setSelectedCat("All Skills"); setSelectedLoc("All Ethiopia"); setSelectedRate("Any Rate"); setVerifiedOnly(false); setAvailableOnly(false); }}
             className="mt-4 text-sm text-green-700 font-semibold hover:underline"
