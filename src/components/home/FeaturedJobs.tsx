@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Clock, DollarSign, MapPin, Users, ArrowRight, Zap } from "lucide-react";
 import ScrollStrip from "@/components/ui/ScrollStrip";
+import { getTranslations } from "next-intl/server";
 
 interface FeaturedJob {
   id: string;
@@ -47,7 +48,8 @@ const MOCK_JOBS: FeaturedJob[] = [
   { id: "mock-6", title: "Mathematics Tutor – Grade 10–12",              budget: 150,   type: "HOURLY", location: "Addis Ababa", category: "Tutoring",          skills: ["Mathematics", "Teaching"],         createdAt: new Date(Date.now() - 43200000), client: { name: "Private Client",     kycStatus: "NONE"     }, _count: { proposals: 9  } },
 ];
 
-export default function FeaturedJobs({ jobs }: Props) {
+export default async function FeaturedJobs({ jobs }: Props) {
+  const t = await getTranslations("featuredJobs");
   const list = jobs && jobs.length > 0 ? jobs : MOCK_JOBS;
 
   return (
@@ -56,8 +58,8 @@ export default function FeaturedJobs({ jobs }: Props) {
 
         <div className="flex items-end justify-between mb-10">
           <div>
-            <h2 className="text-3xl font-bold text-gray-900 mb-2">Featured Jobs</h2>
-            <p className="text-gray-500">Hand-picked opportunities from top Ethiopian employers</p>
+            <h2 className="text-3xl font-bold text-gray-900 mb-2">{t("sectionTitle")}</h2>
+            <p className="text-gray-500">{t("sectionSub")}</p>
           </div>
           <Link
             href="/jobs"
@@ -69,7 +71,7 @@ export default function FeaturedJobs({ jobs }: Props) {
               border: "1px solid rgba(255,255,255,0.55)",
             }}
           >
-            View all <ArrowRight className="w-3.5 h-3.5" />
+            {t("viewAll")} <ArrowRight className="w-3.5 h-3.5" />
           </Link>
         </div>
 
@@ -170,7 +172,7 @@ export default function FeaturedJobs({ jobs }: Props) {
               }}
             >
               <ArrowRight className="w-8 h-8" />
-              <span className="text-sm font-bold">Browse all jobs</span>
+              <span className="text-sm font-bold">{t("viewAll")}</span>
             </div>
           </Link>
         </ScrollStrip>

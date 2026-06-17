@@ -1,4 +1,5 @@
 import { Users, Briefcase, CheckCircle, Star, Shield, CreditCard, Award } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 interface Props {
   stats?: {
@@ -31,13 +32,14 @@ function Shimmer({ w = "w-16" }: { w?: string }) {
 }
 
 export default function StatsSection({ stats }: Props) {
+  const t = useTranslations("stats");
   const loading = !stats;
 
   const items = [
     {
       icon: Users,
       value: loading ? null : fmt(stats!.totalFreelancers),
-      label: "Registered Freelancers",
+      label: t("freelancers"),
       sub: "Verified professionals",
       accent: "text-emerald-400",
       glow: "rgba(52,211,153,0.18)",
@@ -45,7 +47,7 @@ export default function StatsSection({ stats }: Props) {
     {
       icon: Briefcase,
       value: loading ? null : fmt(stats!.totalJobs),
-      label: "Jobs Posted",
+      label: t("jobsPosted"),
       sub: "Across all categories",
       accent: "text-sky-400",
       glow: "rgba(56,189,248,0.18)",
@@ -53,15 +55,15 @@ export default function StatsSection({ stats }: Props) {
     {
       icon: CheckCircle,
       value: loading ? null : fmt(stats!.completedJobs),
-      label: "Projects Completed",
+      label: t("completedJobs"),
       sub: "Successfully delivered",
       accent: "text-teal-400",
       glow: "rgba(45,212,191,0.18)",
     },
     {
       icon: Star,
-      value: "4.8/5",
-      label: "Average Rating",
+      value: t("successRateValue"),
+      label: t("successRate"),
       sub: "Client satisfaction",
       accent: "text-amber-400",
       glow: "rgba(251,191,36,0.18)",

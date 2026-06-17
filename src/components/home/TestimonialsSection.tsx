@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { Star, Quote, ChevronLeft, ChevronRight } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 const TESTIMONIALS = [
   {
@@ -45,6 +46,7 @@ const TESTIMONIALS = [
 const AUTO_INTERVAL = 5000;
 
 export default function TestimonialsSection() {
+  const tl = useTranslations("testimonials");
   const [current, setCurrent] = useState(0);
   const [paused,  setPaused]  = useState(false);
   const [animDir, setAnimDir] = useState<"left" | "right">("right");
@@ -73,8 +75,8 @@ export default function TestimonialsSection() {
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
 
         <div className="text-center mb-10">
-          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">What Our Community Says</h2>
-          <p className="text-gray-500 text-sm">Real stories from Ethiopian freelancers and clients.</p>
+          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">{tl("sectionTitle")}</h2>
+          <p className="text-gray-500 text-sm">{tl("sectionSub")}</p>
         </div>
 
         {/* Testimonial glass card */}

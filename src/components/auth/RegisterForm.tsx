@@ -11,6 +11,7 @@ import {
 import { registerUser, sendOtp, verifyOtp } from "@/app/actions/auth";
 import { signIn } from "next-auth/react";
 import BrandLogo from "@/components/BrandLogo";
+import { useTranslations } from "next-intl";
 
 // ─── Role config — everything that differs between client and freelancer ──────
 
@@ -51,9 +52,8 @@ interface Props {
   initialRole?: Role;
 }
 
-const STEP_LABELS = ["Account Info", "Verify Email", "Review"];
-
 export default function RegisterForm({ initialRole = "freelancer" }: Props) {
+  const t = useTranslations("auth.register");
   const router                           = useRouter();
   const [isPending, startTransition]     = useTransition();
   const [role, setRole]                  = useState<Role>(initialRole);
@@ -94,13 +94,13 @@ export default function RegisterForm({ initialRole = "freelancer" }: Props) {
   // ── Step 1 validation ─────────────────────────────────────────────────────
   const validateStep1 = () => {
     if (!form.firstName || !form.lastName || !form.email || !form.password) {
-      setError("Please fill in all required fields."); return false;
+      setError(t("errors.fillRequired")); return false;
     }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
-      setError("Please enter a valid email address."); return false;
+      setError(t("errors.invalidEmail")); return false;
     }
     if (form.password.length < 8) {
-      setError("Password must be at least 8 characters."); return false;
+      setError(t("errors.passwordShort")); return false;
     }
     setError(""); return true;
   };
@@ -146,7 +146,7 @@ export default function RegisterForm({ initialRole = "freelancer" }: Props) {
 
   const handleVerifyOtp = () => {
     const code = otp.join("");
-    if (code.length < 6) { setError("Enter the full 6-digit code."); return; }
+    if (code.length < 6) { setError(t("errors.otpIncomplete")); return; }
     setError("");
     startTransition(async () => {
       const res = await verifyOtp(form.email, code, "EMAIL_VERIFY");
@@ -162,8 +162,8 @@ export default function RegisterForm({ initialRole = "freelancer" }: Props) {
 
   // ── Final submit ──────────────────────────────────────────────────────────
   const handleCreateAccount = () => {
-    if (!form.agreeTerms) { setError("You must agree to the Terms of Service."); return; }
-    if (!otpVerified) { setError("Please verify your email first."); return; }
+    if (!form.agreeTerms) { setError(t("errors.agreeTerms")); return; }
+    if (!otpVerified) { setError(t("errors.verifyFirst")); return; }
     setError("");
     startTransition(async () => {
       const res = await registerUser({ ...form, role });
@@ -183,10 +183,13 @@ export default function RegisterForm({ initialRole = "freelancer" }: Props) {
           <div className="mb-12">
             <BrandLogo variant="horizontal-transparent" size={64} surface="dark" linkClassName="drop-shadow-md" />
           </div>
-          <h2 className="text-3xl font-bold mb-3">{cfg.headline}</h2>
-          <p className="text-white/70 text-sm leading-relaxed mb-8">{cfg.sub}</p>
+          <h2 className="text-3xl font-bold mb-3">{role === "freelancer" ? t("freelancer.headline") : t("client.headline")}</h2>
+          <p className="text-white/70 text-sm leading-relaxed mb-8">{role === "freelancer" ? t("freelancer.sub") : t("client.sub")}</p>
           <div className="space-y-3">
-            {cfg.badges.map(b => (
+            {(role === "freelancer"
+              ? [t("freelancer.badges.b1"), t("freelancer.badges.b2"), t("freelancer.badges.b3")]
+              : [t("client.badges.b1"), t("client.badges.b2"), t("client.badges.b3")]
+            ).map(b => (
               <div key={b} className="flex items-center gap-3">
                 <CheckCircle className="w-5 h-5 text-white/80 flex-shrink-0" />
                 <span className="text-sm text-white/90">{b}</span>
@@ -195,7 +198,7 @@ export default function RegisterForm({ initialRole = "freelancer" }: Props) {
           </div>
         </div>
         <div className="text-white/40 text-xs">
-          🇪🇹 Built for Ethiopia • Pay in ETB via Chapa
+          {t("etBuilt")}
         </div>
       </div>
 
@@ -208,8 +211,8 @@ export default function RegisterForm({ initialRole = "freelancer" }: Props) {
             <BrandLogo variant="circular" size={80} />
           </div>
 
-          <h1 className="text-2xl font-bold text-gray-900 mb-1 text-center">Create Your Account</h1>
-          <p className="text-gray-500 text-sm text-center mb-6">Join thousands of Ethiopians on the platform</p>
+          <h1 className="text-2xl font-bold text-gray-900 mb-1 text-center">{t("title")}</h1>
+          <p className="text-gray-500 text-sm text-center mb-6">{t("sub")}</p>
 
           {/* ── Role toggle ── */}
           <div className="flex bg-gray-100 rounded-2xl p-1.5 gap-1 mb-6">
@@ -230,7 +233,7 @@ export default function RegisterForm({ initialRole = "freelancer" }: Props) {
                   }`}
                 >
                   <Icon className="w-4 h-4" />
-                  {c.label}
+                  {r === "freelancer" ? t("roleFreelancer") : t("roleClient")}
                 </button>
               );
             })}
@@ -238,13 +241,13 @@ export default function RegisterForm({ initialRole = "freelancer" }: Props) {
 
           {/* Role description badge */}
           <div className={`border rounded-xl px-4 py-3 mb-6 text-sm ${cfg.badgeColor}`}>
-            <strong>{role === "freelancer" ? "Freelancer" : "Client"}:</strong>{" "}
-            {cfg.sub}
+            <strong>{role === "freelancer" ? t("roleFreelancer") : t("roleClient")}:</strong>{" "}
+            {role === "freelancer" ? t("freelancer.sub") : t("client.sub")}
           </div>
 
           {/* Progress */}
           <div className="flex items-center gap-2 mb-6">
-            {STEP_LABELS.map((label, i) => (
+            {[t("stepLabels.accountInfo"), t("stepLabels.verifyEmail"), t("stepLabels.review")].map((label, i) => (
               <div key={label} className="flex items-center gap-2 flex-1">
                 <div className="flex items-center gap-1.5">
                   <div className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold transition-colors ${
@@ -274,65 +277,63 @@ export default function RegisterForm({ initialRole = "freelancer" }: Props) {
             {step === 1 && (
               <div className="space-y-4">
                 <h2 className="font-bold text-gray-900 mb-1">
-                  {role === "freelancer" ? "Tell us about yourself" : "Set up your client account"}
+                  {role === "freelancer" ? t("freelancer.step1Heading") : t("client.step1Heading")}
                 </h2>
                 <p className="text-xs text-gray-400 mb-4">
-                  {role === "freelancer"
-                    ? "Freelancers with complete profiles get 3× more job invitations."
-                    : "Clients with verified accounts receive higher quality proposals."}
+                  {role === "freelancer" ? t("freelancer.step1Sub") : t("client.step1Sub")}
                 </p>
 
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="text-sm font-medium text-gray-700 mb-1.5 block">First Name <span className="text-red-500">*</span></label>
+                    <label className="text-sm font-medium text-gray-700 mb-1.5 block">{t("fields.firstName")} <span className="text-red-500">{t("fields.required")}</span></label>
                     <input type="text" value={form.firstName} onChange={e => update("firstName", e.target.value)}
                       placeholder="Abebe" className="w-full border border-gray-200 px-4 py-3 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-green-400" />
                   </div>
                   <div>
-                    <label className="text-sm font-medium text-gray-700 mb-1.5 block">Last Name <span className="text-red-500">*</span></label>
+                    <label className="text-sm font-medium text-gray-700 mb-1.5 block">{t("fields.lastName")} <span className="text-red-500">{t("fields.required")}</span></label>
                     <input type="text" value={form.lastName} onChange={e => update("lastName", e.target.value)}
                       placeholder="Girma" className="w-full border border-gray-200 px-4 py-3 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-green-400" />
                   </div>
                 </div>
 
                 <div>
-                  <label className="text-sm font-medium text-gray-700 mb-1.5 block">Email Address <span className="text-red-500">*</span></label>
+                  <label className="text-sm font-medium text-gray-700 mb-1.5 block">{t("fields.email")} <span className="text-red-500">{t("fields.required")}</span></label>
                   <div className="relative">
                     <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                     <input type="email" value={form.email} onChange={e => update("email", e.target.value)}
-                      placeholder="abebe@example.com"
+                      placeholder={t("fields.emailPlaceholder")}
                       className="w-full border border-gray-200 pl-10 pr-4 py-3 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-green-400" />
                   </div>
                 </div>
 
                 <div>
-                  <label className="text-sm font-medium text-gray-700 mb-1.5 block">{cfg.extraLabel}</label>
+                  <label className="text-sm font-medium text-gray-700 mb-1.5 block">{role === "freelancer" ? t("freelancer.extraLabel") : t("client.extraLabel")}</label>
                   <div className="relative">
                     {role === "freelancer"
                       ? <Code2  className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                       : <Building2 className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                     }
                     <input type="text" value={form.extra} onChange={e => update("extra", e.target.value)}
-                      placeholder={cfg.extraPlaceholder}
+                      placeholder={role === "freelancer" ? t("freelancer.extraPlaceholder") : t("client.extraPlaceholder")}
                       className="w-full border border-gray-200 pl-10 pr-4 py-3 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-green-400" />
                   </div>
                 </div>
 
                 <div>
-                  <label className="text-sm font-medium text-gray-700 mb-1.5 block">{cfg.phoneLabel}</label>
+                  <label className="text-sm font-medium text-gray-700 mb-1.5 block">{role === "freelancer" ? t("freelancer.phoneLabel") : t("client.phoneLabel")}</label>
                   <div className="relative">
-                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm text-gray-500">🇪🇹 +251</span>
+                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm text-gray-500">{t("fields.phonePrefix")}</span>
                     <input type="tel" value={form.phone} onChange={e => update("phone", e.target.value)}
-                      placeholder={cfg.phonePlaceholder}
+                      placeholder="9XX XXX XXX"
                       className="w-full border border-gray-200 pl-20 pr-4 py-3 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-green-400" />
                   </div>
                 </div>
 
                 <div>
-                  <label className="text-sm font-medium text-gray-700 mb-1.5 block">Password <span className="text-red-500">*</span></label>
+                  <label className="text-sm font-medium text-gray-700 mb-1.5 block">{t("fields.password")} <span className="text-red-500">{t("fields.required")}</span></label>
                   <div className="relative">
                     <input type={showPass ? "text" : "password"} value={form.password} onChange={e => update("password", e.target.value)}
-                      placeholder="Min. 8 characters"
+                      placeholder={t("fields.passwordPlaceholder")}
                       className="w-full border border-gray-200 px-4 py-3 pr-10 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-green-400" />
                     <button type="button" onClick={() => setShowPass(!showPass)} className="absolute right-3 top-1/2 -translate-y-1/2">
                       {showPass ? <EyeOff className="w-4 h-4 text-gray-400" /> : <Eye className="w-4 h-4 text-gray-400" />}
@@ -342,7 +343,7 @@ export default function RegisterForm({ initialRole = "freelancer" }: Props) {
 
                 <button type="button" onClick={handleStep1Continue} disabled={isPending}
                   className={`w-full text-white font-bold py-3 rounded-xl transition-colors flex items-center justify-center gap-2 disabled:opacity-60 ${role === "freelancer" ? "bg-blue-700 hover:bg-blue-800" : "bg-green-700 hover:bg-green-800"}`}>
-                  {isPending ? <><Loader2 className="w-4 h-4 animate-spin" /> Sending code…</> : <>Continue <ArrowRight className="w-4 h-4" /></>}
+                  {isPending ? <><Loader2 className="w-4 h-4 animate-spin" /> {t("otp.verifying")}</> : <>{t("otp.continueButton")} <ArrowRight className="w-4 h-4" /></>}
                 </button>
               </div>
             )}
@@ -354,9 +355,9 @@ export default function RegisterForm({ initialRole = "freelancer" }: Props) {
                   <div className={`w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-3 ${role === "freelancer" ? "bg-blue-50" : "bg-green-50"}`}>
                     <ShieldCheck className={`w-7 h-7 ${role === "freelancer" ? "text-blue-700" : "text-green-700"}`} />
                   </div>
-                  <h2 className="font-bold text-gray-900 text-lg mb-1">Verify Your Email</h2>
+                  <h2 className="font-bold text-gray-900 text-lg mb-1">{t("otp.heading")}</h2>
                   <p className="text-sm text-gray-500">
-                    We sent a 6-digit code to <strong className="text-gray-800">{form.email}</strong>
+                    {t("otp.sub", { email: form.email })}
                   </p>
                 </div>
 
@@ -364,14 +365,14 @@ export default function RegisterForm({ initialRole = "freelancer" }: Props) {
                   <div className="bg-green-50 border border-green-200 rounded-xl p-4 flex items-center gap-3">
                     <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0" />
                     <div>
-                      <p className="font-semibold text-green-800 text-sm">Email Verified!</p>
-                      <p className="text-green-700 text-xs mt-0.5">Your email address has been confirmed.</p>
+                      <p className="font-semibold text-green-800 text-sm">{t("otp.verified")}</p>
+                      <p className="text-green-700 text-xs mt-0.5">{t("otp.verifiedSub")}</p>
                     </div>
                   </div>
                 ) : (
                   <>
                     <div>
-                      <label className="text-sm font-medium text-gray-700 mb-3 block text-center">Enter 6-digit code</label>
+                      <label className="text-sm font-medium text-gray-700 mb-3 block text-center">{t("otp.label")}</label>
                       <div className="flex gap-2 justify-center" onPaste={handleOtpPaste}>
                         {otp.map((digit, i) => (
                           <input key={i} ref={el => { inputRefs.current[i] = el; }}
@@ -392,15 +393,15 @@ export default function RegisterForm({ initialRole = "freelancer" }: Props) {
 
                     <button type="button" onClick={handleVerifyOtp} disabled={isPending || otp.join("").length < 6}
                       className={`w-full text-white font-bold py-3 rounded-xl transition-colors flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed ${role === "freelancer" ? "bg-blue-700 hover:bg-blue-800" : "bg-green-700 hover:bg-green-800"}`}>
-                      {isPending ? <><Loader2 className="w-4 h-4 animate-spin" /> Verifying…</> : "Verify Code"}
+                      {isPending ? <><Loader2 className="w-4 h-4 animate-spin" /> {t("otp.verifying")}</> : t("otp.verifyButton")}
                     </button>
 
                     <div className="text-center">
                       {resendCooldown > 0
-                        ? <p className="text-xs text-gray-400">Resend in {resendCooldown}s</p>
+                        ? <p className="text-xs text-gray-400">{t("otp.resendCooldown", { seconds: resendCooldown })}</p>
                         : <button type="button" onClick={() => startTransition(async () => { await doSendOtp(); })} disabled={isPending}
                             className="text-sm text-green-700 hover:underline font-medium flex items-center gap-1 mx-auto disabled:opacity-50">
-                            <RefreshCw className="w-3.5 h-3.5" /> Resend code
+                            <RefreshCw className="w-3.5 h-3.5" /> {t("otp.resend")}
                           </button>
                       }
                     </div>
@@ -410,12 +411,12 @@ export default function RegisterForm({ initialRole = "freelancer" }: Props) {
                 <div className="flex gap-3 pt-1">
                   <button type="button" onClick={() => { setStep(1); setOtpVerified(false); setOtp(["","","","","",""]); setError(""); }}
                     className="flex-1 border border-gray-200 text-gray-600 font-medium py-3 rounded-xl hover:bg-gray-50 transition-colors text-sm">
-                    Back
+                    {t("otp.backButton")}
                   </button>
-                  <button type="button" onClick={() => { if (!otpVerified) { setError("Please verify your email first."); return; } setError(""); setStep(3); }}
+                  <button type="button" onClick={() => { if (!otpVerified) { setError(t("errors.verifyFirst")); return; } setError(""); setStep(3); }}
                     disabled={!otpVerified}
                     className={`flex-1 text-white font-bold py-3 rounded-xl transition-colors flex items-center justify-center gap-2 text-sm disabled:opacity-50 disabled:cursor-not-allowed ${role === "freelancer" ? "bg-blue-700 hover:bg-blue-800" : "bg-green-700 hover:bg-green-800"}`}>
-                    Continue <ArrowRight className="w-4 h-4" />
+                    {t("otp.continueButton")} <ArrowRight className="w-4 h-4" />
                   </button>
                 </div>
               </div>
@@ -430,21 +431,21 @@ export default function RegisterForm({ initialRole = "freelancer" }: Props) {
                     <cfg.icon className="w-5 h-5 text-white" />
                   </div>
                   <div>
-                    <div className="font-bold text-sm">{cfg.summaryRole}</div>
-                    <div className="text-xs opacity-70">{role === "freelancer" ? "Find jobs & get paid" : "Post jobs & hire talent"}</div>
+                    <div className="font-bold text-sm">{role === "freelancer" ? t("freelancer.summaryRole") : t("client.summaryRole")}</div>
+                    <div className="text-xs opacity-70">{role === "freelancer" ? t("review.findJobs") : t("review.postJobs")}</div>
                   </div>
                 </div>
 
                 <div className="bg-gray-50 rounded-xl p-4 space-y-2.5">
                   {[
-                    { label: "Name",  value: `${form.firstName} ${form.lastName}` },
-                    { label: "Email", value: form.email },
-                    ...(form.extra ? [{ label: role === "freelancer" ? "Title" : "Company", value: form.extra }] : []),
-                    { label: "Email Verified", value: "✓ Confirmed" },
+                    { label: t("review.name"),  value: `${form.firstName} ${form.lastName}` },
+                    { label: t("review.email"), value: form.email },
+                    ...(form.extra ? [{ label: role === "freelancer" ? t("review.title") : t("review.company"), value: form.extra }] : []),
+                    { label: t("review.emailVerified"), value: t("review.emailVerifiedValue") },
                   ].map(({ label, value }) => (
                     <div key={label} className="flex justify-between text-sm">
                       <span className="text-gray-500">{label}</span>
-                      <span className={`font-medium ${label === "Email Verified" ? "text-green-600" : "text-gray-900"}`}>{value}</span>
+                      <span className={`font-medium ${label === t("review.emailVerified") ? "text-green-600" : "text-gray-900"}`}>{value}</span>
                     </div>
                   ))}
                 </div>
@@ -453,21 +454,21 @@ export default function RegisterForm({ initialRole = "freelancer" }: Props) {
                   <input type="checkbox" checked={form.agreeTerms} onChange={e => update("agreeTerms", e.target.checked)}
                     className="w-4 h-4 mt-0.5 accent-green-600" />
                   <span className="text-sm text-gray-600">
-                    I agree to the{" "}
-                    <Link href="/terms" className="text-green-700 hover:underline">Terms of Service</Link>
-                    {" "}and{" "}
-                    <Link href="/privacy" className="text-green-700 hover:underline">Privacy Policy</Link>
+                    {t("review.agreeTerms")}{" "}
+                    <Link href="/terms" className="text-green-700 hover:underline">{t("review.termsLink")}</Link>
+                    {" "}{t("review.andText")}{" "}
+                    <Link href="/privacy" className="text-green-700 hover:underline">{t("review.privacyLink")}</Link>
                   </span>
                 </label>
 
                 <div className="flex gap-3">
                   <button type="button" onClick={() => setStep(2)}
                     className="flex-1 border border-gray-200 text-gray-600 font-medium py-3 rounded-xl hover:bg-gray-50 transition-colors text-sm">
-                    Back
+                    {t("review.backButton")}
                   </button>
                   <button type="button" onClick={handleCreateAccount} disabled={isPending}
                     className={`flex-1 text-white font-bold py-3 rounded-xl transition-colors flex items-center justify-center gap-2 text-sm disabled:opacity-50 disabled:cursor-not-allowed ${role === "freelancer" ? "bg-blue-700 hover:bg-blue-800" : "bg-green-700 hover:bg-green-800"}`}>
-                    {isPending ? <><Loader2 className="w-4 h-4 animate-spin" /> Creating…</> : role === "freelancer" ? "Start Freelancing 🚀" : "Start Hiring 🎯"}
+                    {isPending ? <><Loader2 className="w-4 h-4 animate-spin" /> {t("review.creating")}</> : role === "freelancer" ? t("freelancer.createButton") : t("client.createButton")}
                   </button>
                 </div>
               </div>
@@ -475,8 +476,8 @@ export default function RegisterForm({ initialRole = "freelancer" }: Props) {
           </div>
 
           <p className="text-center text-sm text-gray-500 mt-6">
-            Already have an account?{" "}
-            <Link href="/login" className="text-green-700 font-semibold hover:underline">Sign In</Link>
+            {t("footer")}{" "}
+            <Link href="/login" className="text-green-700 font-semibold hover:underline">{t("footerLink")}</Link>
           </p>
         </div>
       </div>

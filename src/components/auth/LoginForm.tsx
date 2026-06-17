@@ -5,8 +5,10 @@ import BrandLogo from "@/components/BrandLogo";
 import { Eye, EyeOff, Mail, Lock, Phone } from "lucide-react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 export default function LoginForm() {
+  const t = useTranslations("auth.login");
   const router = useRouter();
   const [showPass, setShowPass] = useState(false);
   const [loginMethod, setLoginMethod] = useState<"email" | "phone">("email");
@@ -41,13 +43,13 @@ export default function LoginForm() {
       });
 
       if (res?.error) {
-        setError("Invalid email/phone or password.");
+        setError(t("errorInvalid"));
       } else {
         router.push("/dashboard");
         router.refresh();
       }
     } catch (err) {
-      setError("An unexpected error occurred. Please try again.");
+      setError(t("errorGeneric"));
     } finally {
       setLoading(false);
     }
@@ -59,8 +61,8 @@ export default function LoginForm() {
         <div className="flex justify-center mb-4">
           <BrandLogo variant="circular" size={96} showLink={false} />
         </div>
-        <h1 className="text-3xl font-bold text-green-900 mb-2">Welcome Back</h1>
-        <p className="text-gray-500">Sign in to your EthioFreelance account</p>
+        <h1 className="text-3xl font-bold text-green-900 mb-2">{t("title")}</h1>
+        <p className="text-gray-500">{t("sub")}</p>
       </div>
 
       <div className="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm">
@@ -72,7 +74,7 @@ export default function LoginForm() {
               loginMethod === "email" ? "bg-white text-green-800 shadow-sm" : "text-gray-500"
             }`}
           >
-            <Mail className="w-4 h-4" /> Email
+            <Mail className="w-4 h-4" /> {t("tabEmail")}
           </button>
           <button
             onClick={() => { setLoginMethod("phone"); setError(""); }}
@@ -80,7 +82,7 @@ export default function LoginForm() {
               loginMethod === "phone" ? "bg-white text-green-800 shadow-sm" : "text-gray-500"
             }`}
           >
-            <Phone className="w-4 h-4" /> Phone
+            <Phone className="w-4 h-4" /> {t("tabPhone")}
           </button>
         </div>
 
@@ -93,7 +95,7 @@ export default function LoginForm() {
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="text-sm font-medium text-gray-700 mb-1.5 block">
-              {loginMethod === "email" ? "Email Address" : "Phone Number"}
+              {loginMethod === "email" ? t("emailLabel") : "Phone Number"}
             </label>
             <div className="relative">
               {loginMethod === "email" ? (
@@ -105,7 +107,7 @@ export default function LoginForm() {
                 type={loginMethod === "email" ? "email" : "tel"}
                 value={identifier}
                 onChange={(e) => setIdentifier(e.target.value)}
-                placeholder={loginMethod === "email" ? "abebe@example.com" : "9XX XXX XXX"}
+                placeholder={loginMethod === "email" ? t("emailPlaceholder") : t("phonePlaceholder")}
                 className={`w-full border border-gray-200 py-3 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-green-400 ${
                   loginMethod === "email" ? "pl-10 pr-4" : "pl-20 pr-4"
                 }`}
@@ -115,9 +117,9 @@ export default function LoginForm() {
 
           <div>
             <div className="flex justify-between mb-1.5">
-              <label className="text-sm font-medium text-gray-700">Password</label>
+              <label className="text-sm font-medium text-gray-700">{t("passwordLabel")}</label>
               <Link href="/forgot-password" className="text-sm text-green-700 hover:underline">
-                Forgot password?
+                {t("forgotPassword")}
               </Link>
             </div>
             <div className="relative">
@@ -126,7 +128,7 @@ export default function LoginForm() {
                 type={showPass ? "text" : "password"}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="Enter your password"
+                placeholder={t("passwordPlaceholder")}
                 className="w-full border border-gray-200 pl-10 pr-10 py-3 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-green-400"
               />
               <button
@@ -144,7 +146,7 @@ export default function LoginForm() {
             disabled={loading}
             className="w-full bg-green-700 text-white font-bold py-3 rounded-xl hover:bg-green-800 transition-colors flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {loading ? "Signing In..." : "Sign In"}
+            {loading ? t("signingIn") : t("signInButton")}
           </button>
 
           <div className="relative">
@@ -167,8 +169,8 @@ export default function LoginForm() {
       </div>
 
       <p className="text-center text-sm text-gray-500 mt-6">
-        Don&apos;t have an account?{" "}
-        <Link href="/register" className="text-green-700 font-semibold hover:underline">Create Account</Link>
+        {t("noAccount")}{" "}
+        <Link href="/register" className="text-green-700 font-semibold hover:underline">{t("signUp")}</Link>
       </p>
     </div>
   );

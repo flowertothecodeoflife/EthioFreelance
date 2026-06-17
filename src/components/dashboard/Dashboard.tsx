@@ -8,6 +8,7 @@ import {
   Loader2, AlertCircle, ArrowUpCircle, Link as LinkIcon,
 } from "lucide-react";
 import { releaseEscrowPayment } from "@/app/actions/payment";
+import { useTranslations } from "next-intl";
 
 interface DashboardProps {
   data?: {
@@ -30,7 +31,7 @@ interface DashboardProps {
   };
 }
 
-const tabs = ["Overview", "My Jobs", "Proposals", "Earnings", "Messages"];
+const tabs = [t("tabs.overview"), t("tabs.jobs"), t("tabs.proposals"), "Earnings", t("tabs.messages")];
 
 const mockJobs = [
   { id: "mock-1", title: "E-commerce Website Development", client: "TechEthio", status: "In Progress", budget: "ETB 20,000", deadline: "Dec 15", progress: 65 },
@@ -61,6 +62,7 @@ const statusColors: Record<string, string> = {
 };
 
 export default function Dashboard({ data }: DashboardProps) {
+  const t = useTranslations("dashboard");
   const [activeTab, setActiveTab] = useState("Overview");
   const [releasingJobId, setReleasingJobId] = useState<string | null>(null);
   const [releaseError, setReleaseError] = useState("");
@@ -183,7 +185,7 @@ export default function Dashboard({ data }: DashboardProps) {
             {initials}
           </div>
           <div>
-            <h1 className="text-2xl font-bold text-gray-900">Welcome back, {userName.split(" ")[0]}! 👋</h1>
+            <h1 className="text-2xl font-bold text-gray-900">{t("greeting", { name: userName.split(" ")[0] })} 👋</h1>
             <div className="flex items-center gap-2 text-sm text-gray-500 flex-wrap">
               <CheckCircle className={`w-4 h-4 ${isVerified ? "text-green-500" : "text-gray-400"}`} />
               <span>{isVerified ? "Verified" : "Unverified"} {isClient ? "Client" : "Freelancer"}</span>

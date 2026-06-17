@@ -4,9 +4,11 @@ import { loginAdmin } from "@/app/actions/adminAuth";
 import { Lock, User, AlertTriangle, ArrowRight } from "lucide-react";
 import BrandLogo from "@/components/BrandLogo";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 export default function AdminLoginForm() {
   const router = useRouter();
+  const t = useTranslations("admin.login");
   const [state, formAction, isPending] = useActionState(loginAdmin, null);
 
   useEffect(() => {
@@ -53,7 +55,7 @@ export default function AdminLoginForm() {
           <form action={formAction} className="space-y-6">
             <div>
               <label className="text-xs font-bold text-green-400 uppercase tracking-widest mb-2 block">
-                Security ID
+                {t("usernameLabel")}
               </label>
               <div className="relative">
                 <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
@@ -61,7 +63,7 @@ export default function AdminLoginForm() {
                   type="text"
                   name="username"
                   required
-                  placeholder="Enter Username"
+                  placeholder={t("usernamePlaceholder")}
                   className="w-full bg-[#0d1217] border border-gray-800 text-white pl-12 pr-4 py-3.5 rounded-2xl text-sm focus:outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500 transition-all font-medium placeholder-gray-600"
                 />
               </div>
@@ -69,7 +71,7 @@ export default function AdminLoginForm() {
 
             <div>
               <label className="text-xs font-bold text-green-400 uppercase tracking-widest mb-2 block">
-                Access Code
+                {t("passwordLabel")}
               </label>
               <div className="relative">
                 <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
@@ -77,7 +79,7 @@ export default function AdminLoginForm() {
                   type="password"
                   name="password"
                   required
-                  placeholder="Enter Access Key"
+                  placeholder={t("passwordPlaceholder")}
                   className="w-full bg-[#0d1217] border border-gray-800 text-white pl-12 pr-4 py-3.5 rounded-2xl text-sm focus:outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500 transition-all font-medium placeholder-gray-600"
                 />
               </div>
@@ -92,7 +94,7 @@ export default function AdminLoginForm() {
                 <span className="w-5 h-5 border-2 border-[#0d1217] border-t-transparent rounded-full animate-spin"></span>
               ) : (
                 <>
-                  Establish Connection
+                  {t("loginButton")}
                   <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                 </>
               )}

@@ -2,10 +2,12 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { UserPlus, Search, MessageSquare, CreditCard, Shield, Award, CheckCircle } from "lucide-react";
 import Link from "next/link";
+import { getTranslations } from "next-intl/server";
 
 export const metadata = { title: "How It Works | EthioFreelance" };
 
-export default function HowItWorksPage() {
+export default async function HowItWorksPage() {
+  const t = await getTranslations("howItWorks");
   return (
     /*
      * bg-transparent so the fixed ParallaxBackground (rendered in layout.tsx)
@@ -35,10 +37,10 @@ export default function HowItWorksPage() {
               Simple · Transparent · Ethiopian
             </div>
             <h1 className="text-4xl sm:text-5xl font-extrabold text-gray-900 mb-4 leading-tight">
-              How EthioFreelance Works
+              {t("pageTitle")}
             </h1>
             <p className="text-gray-600 text-lg max-w-xl mx-auto">
-              Get started in minutes — whether you&apos;re hiring or looking for work.
+              {t("pageSub")}
             </p>
           </div>
         </section>
@@ -55,20 +57,20 @@ export default function HowItWorksPage() {
                   border: "1px solid rgba(34,197,94,0.40)",
                 }}
               >
-                For Clients
+                {t("forClients")}
               </span>
-              <h2 className="text-3xl font-bold text-gray-900 mb-3">Hire Top Ethiopian Talent</h2>
+              <h2 className="text-3xl font-bold text-gray-900 mb-3">{t("clientSteps.step1Title")}</h2>
               <p className="text-gray-500 max-w-xl mx-auto">
-                Post your job and receive proposals from verified freelancers within hours.
+                {t("pageSub")}
               </p>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {[
-                { icon: UserPlus,      step: "1", title: "Create Account",  desc: "Sign up free. Verify with your phone number or National ID." },
-                { icon: Search,        step: "2", title: "Post a Job",       desc: "Describe your project, set budget in ETB, choose fixed or hourly." },
-                { icon: MessageSquare, step: "3", title: "Review & Hire",    desc: "Compare proposals, chat with freelancers in Amharic or English." },
-                { icon: CreditCard,    step: "4", title: "Pay Securely",     desc: "Fund milestones via Chapa. Release payment only when satisfied." },
+                { icon: UserPlus,      step: "1", title: t("clientSteps.step1Title"),  desc: t("clientSteps.step1Desc") },
+                { icon: Search,        step: "2", title: t("clientSteps.step2Title"),  desc: t("clientSteps.step2Desc") },
+                { icon: MessageSquare, step: "3", title: t("clientSteps.step3Title"),  desc: t("clientSteps.step3Desc") },
+                { icon: CreditCard,    step: "4", title: t("clientSteps.step3Title"),  desc: t("clientSteps.step3Desc") },
               ].map(({ icon: Icon, step, title, desc }) => (
                 <div key={step} className="glass-card rounded-2xl p-6 text-center flex flex-col items-center">
                   <div className="relative mb-5">
@@ -97,7 +99,7 @@ export default function HowItWorksPage() {
                 className="inline-block font-bold px-8 py-3.5 rounded-xl transition-colors text-white"
                 style={{ background: "#16a34a" }}
               >
-                Post a Job Now
+                {t("ctaPost")}
               </Link>
             </div>
           </div>
@@ -116,20 +118,20 @@ export default function HowItWorksPage() {
                   backdropFilter: "blur(8px)",
                 }}
               >
-                For Freelancers
+                {t("forFreelancers")}
               </span>
-              <h2 className="text-3xl font-bold text-gray-900 mb-3">Turn Your Skills Into Income</h2>
+              <h2 className="text-3xl font-bold text-gray-900 mb-3">{t("freelancerSteps.step1Title")}</h2>
               <p className="text-gray-500 max-w-xl mx-auto">
-                Join thousands of Ethiopian freelancers earning from their skills.
+                {t("ctaSub")}
               </p>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {[
-                { icon: UserPlus,      step: "1", title: "Build Profile",      desc: "Showcase skills, portfolio, and experience. Get verified for more trust." },
-                { icon: Search,        step: "2", title: "Find Jobs",           desc: "Browse thousands of jobs filtered by category, budget, and location." },
-                { icon: MessageSquare, step: "3", title: "Submit Proposal",     desc: "Write a compelling bid in Amharic or English." },
-                { icon: CreditCard,    step: "4", title: "Get Paid",            desc: "Receive payments to your Chapa wallet or bank account instantly." },
+                { icon: UserPlus,      step: "1", title: t("freelancerSteps.step1Title"), desc: t("freelancerSteps.step1Desc") },
+                { icon: Search,        step: "2", title: t("freelancerSteps.step2Title"), desc: t("freelancerSteps.step2Desc") },
+                { icon: MessageSquare, step: "3", title: t("freelancerSteps.step3Title"), desc: t("freelancerSteps.step3Desc") },
+                { icon: CreditCard,    step: "4", title: t("freelancerSteps.step3Title"), desc: t("freelancerSteps.step3Desc") },
               ].map(({ icon: Icon, step, title, desc }) => (
                 <div key={step} className="glass-card rounded-2xl p-6 text-center flex flex-col items-center">
                   <div className="relative mb-5">
@@ -158,36 +160,8 @@ export default function HowItWorksPage() {
                 className="inline-block font-bold px-8 py-3.5 rounded-xl transition-colors text-white"
                 style={{ background: "#16a34a" }}
               >
-                Start Freelancing
+                {t("ctaFind")}
               </Link>
-            </div>
-          </div>
-        </section>
-
-        {/* ── Trust Features ── */}
-        <section className="glass-section py-20">
-          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold text-gray-900 mb-3">Why Trust EthioFreelance?</h2>
-              <p className="text-gray-500">Built on transparency, security, and fairness.</p>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {[
-                { icon: Shield,      color: "rgba(22,101,52,0.82)",   iconColor: "text-emerald-300", border: "rgba(34,197,94,0.50)",  title: "Secure Escrow",       desc: "Payments held safely until work is approved. Powered by Chapa." },
-                { icon: CheckCircle, color: "rgba(14,116,144,0.82)",  iconColor: "text-sky-300",     border: "rgba(56,189,248,0.50)", title: "KYC Verified Users",  desc: "All users verify National ID and phone. Video verification available." },
-                { icon: Award,       color: "rgba(146,64,14,0.82)",   iconColor: "text-amber-300",   border: "rgba(251,191,36,0.50)", title: "Dispute Resolution",  desc: "Dedicated admin panel for fair dispute resolution with evidence submission." },
-              ].map(({ icon: Icon, color, iconColor, border, title, desc }) => (
-                <div key={title} className="glass-card rounded-2xl p-6 text-center flex flex-col items-center">
-                  <div
-                    className="w-14 h-14 rounded-2xl flex items-center justify-center mb-4 shadow-lg"
-                    style={{ background: color, border: `1px solid ${border}` }}
-                  >
-                    <Icon className={`w-7 h-7 ${iconColor}`} />
-                  </div>
-                  <h3 className="font-bold text-gray-900 mb-2">{title}</h3>
-                  <p className="text-sm text-gray-500">{desc}</p>
-                </div>
-              ))}
             </div>
           </div>
         </section>
@@ -196,15 +170,15 @@ export default function HowItWorksPage() {
         <section className="glass-section py-20">
           <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-3xl font-bold text-gray-900 text-center mb-12">
-              Frequently Asked Questions
+              {t("faqTitle")}
             </h2>
             <div className="space-y-3">
               {[
-                { q: "How much does it cost to join?",       a: "EthioFreelance is completely free to join. We only charge a 1% commission on completed projects — much lower than global platforms." },
-                { q: "How do I get paid?",                   a: "Payments are processed through Chapa, Ethiopia's leading payment gateway. You can withdraw to your bank account, telebirr, or other mobile money services." },
-                { q: "Is my National ID information safe?",  a: "Yes. Your KYC data is encrypted and stored securely, compliant with Ethiopian data protection regulations. We never share your personal information." },
-                { q: "What if there's a dispute?",           a: "We have a dedicated dispute resolution team. Both parties can submit evidence (files, chat logs, deliverables) and our admin panel will arbitrate fairly." },
-                { q: "Can I use the platform in Amharic?",   a: "Yes! EthioFreelance fully supports Amharic. You can post jobs, write proposals, and communicate entirely in Amharic." },
+                { q: t("faq.q1"), a: t("faq.a1") },
+                { q: t("faq.q2"), a: t("faq.a2") },
+                { q: t("faq.q3"), a: t("faq.a3") },
+                { q: t("faq.q4"), a: t("faq.a4") },
+                { q: t("faq.q5"), a: t("faq.a5") },
               ].map(({ q, a }) => (
                 <details
                   key={q}
@@ -235,17 +209,15 @@ export default function HowItWorksPage() {
         {/* ── CTA banner ── */}
         <section className="glass-section py-16">
           <div className="max-w-2xl mx-auto px-4 text-center">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Ready to Get Started?</h2>
-            <p className="text-gray-500 mb-8">
-              Join Ethiopia&apos;s fastest-growing freelance community today — it&apos;s free.
-            </p>
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">{t("ctaTitle")}</h2>
+            <p className="text-gray-500 mb-8">{t("ctaSub")}</p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
                 href="/register?role=client"
                 className="font-bold px-8 py-3.5 rounded-xl text-white transition-opacity hover:opacity-90"
                 style={{ background: "#16a34a" }}
               >
-                Hire a Freelancer
+                {t("ctaPost")}
               </Link>
               <Link
                 href="/register?role=freelancer"
@@ -257,7 +229,7 @@ export default function HowItWorksPage() {
                   color: "inherit",
                 }}
               >
-                Start Freelancing
+                {t("ctaFind")}
               </Link>
             </div>
           </div>

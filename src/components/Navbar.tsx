@@ -11,6 +11,7 @@ import { useTheme } from "./ThemeProvider";
 import BrandLogo from "./BrandLogo";
 import { useSession, signOut } from "next-auth/react";
 import { getNotificationsAction, markNotificationReadAction, markAllNotificationsReadAction } from "@/app/actions/message";
+import { useLocale, useTranslations } from "next-intl";
 
 // ── Notification type matching the Prisma model ───────────────────────────────
 type NavNotification = {
@@ -30,9 +31,9 @@ const NAV_CATEGORIES = [
 ];
 
 const NAV_LINKS = [
-  { label: "Browse Jobs",      href: "/jobs"         },
-  { label: "Find Freelancers", href: "/freelancers"  },
-  { label: "How It Works",     href: "/how-it-works" },
+  { labelKey: "browseJobs",      href: "/jobs"         },
+  { labelKey: "findFreelancers", href: "/freelancers"  },
+  { labelKey: "howItWorks",      href: "/how-it-works" },
 ];
 
 export default function Navbar() {
@@ -45,8 +46,25 @@ export default function Navbar() {
   const [langOpen,   setLangOpen]       = useState(false);
   const [userOpen,   setUserOpen]       = useState(false);
   const [catOpen,    setCatOpen]        = useState(false);
-  const [lang,       setLang]           = useState("EN");
   const [mobileSearch, setMobileSearch] = useState("");
+
+  // ── i18n locale ──────────────────────────────────────────────────────────
+  const currentLocale = useLocale();
+  const t = useTranslations("nav");
+
+  const languages = [
+    { code: "en", label: "English",  display: "EN"  },
+    { code: "am", label: "አማርኛ",    display: "አማ" },
+  ];
+
+  const switchLocale = useCallback((code: string) => {
+    // Set cookie so next-intl picks it up on next request, then hard-navigate
+    // to the same path so the server re-renders with the new locale.
+    document.cookie = `NEXT_LOCALE=${code};path=/;max-age=31536000;SameSite=Lax`;
+    window.location.reload();
+  }, []);
+
+  const currentLang = languages.find((l) => l.code === currentLocale) ?? languages[0];
 
   const [notifications, setNotifications] = useState<NavNotification[]>([]);
   const [notifOpen, setNotifOpen]         = useState(false);
@@ -155,18 +173,13 @@ export default function Navbar() {
         : "text-white/80 hover:bg-green-800/60 hover:text-white"
     }`;
 
-  const languages = [
-    { code: "EN", label: "English" },
-    { code: "አማ", label: "አማርኛ"   },
-  ];
-
   return (
     <nav className="bg-green-900 text-white sticky top-0 z-50 shadow-lg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="relative flex items-center justify-between min-h-[4.5rem] py-2">
 
-          {/* Logo — smaller on mobile */}
-          <BrandLogo variant="horizontal" size={52} surface="dark" priority className="sm:!h-[68px]" />
+          {/* Logo — compact on mobile */}
+          <BrandLogo variant="horizontal" size={44} surface="dark" priority className="sm:!h-[62px]" />
 
           {/* ── Desktop nav links ── */}
           <div className="hidden md:flex items-center gap-6">
@@ -177,7 +190,7 @@ export default function Navbar() {
                 onClick={() => setCatOpen((o) => !o)}
                 className={navLinkClass("/jobs") + " flex items-center gap-1 cursor-pointer"}
               >
-                Browse Jobs <ChevronDown className="w-4 h-4" />
+                {t("browseJobs")} <ChevronDown className="w-4 h-4" />
               </button>
               {catOpen && (
                 <div className="absolute top-full left-0 mt-2 w-56 bg-white text-gray-800 rounded-xl shadow-xl border border-gray-100 py-2 z-50">
@@ -195,8 +208,8 @@ export default function Navbar() {
               )}
             </div>
 
-            <Link href="/freelancers" className={navLinkClass("/freelancers")}>Find Freelancers</Link>
-            <Link href="/how-it-works" className={navLinkClass("/how-it-works")}>How It Works</Link>
+            <Link href="/freelancers" className={navLinkClass("/freelancers")}>{t("findFreelancers")}</Link>
+            <Link href="/how-it-works" className={navLinkClass("/how-it-works")}>{t("howItWorks")}</Link>
           </div>
 
           {/* ── Desktop right side ── */}
@@ -217,17 +230,20 @@ export default function Navbar() {
                 onClick={() => setLangOpen((o) => !o)}
                 className="flex items-center gap-1 text-sm hover:text-green-300 transition-colors px-2 py-1 rounded-lg hover:bg-green-800"
               >
-                <Globe className="w-4 h-4" /> {lang} <ChevronDown className="w-3 h-3" />
+                <Globe className="w-4 h-4" /> {currentLang.display} <ChevronDown className="w-3 h-3" />
               </button>
               {langOpen && (
                 <div className="absolute top-full right-0 mt-2 w-40 bg-white text-gray-800 rounded-xl shadow-xl border border-gray-100 py-2 z-50">
                   {languages.map((l) => (
                     <button
                       key={l.code}
-                      onClick={() => { setLang(l.code); setLangOpen(false); }}
-                      className="w-full text-left px-4 py-2 text-sm hover:bg-green-50 hover:text-green-800 transition-colors"
+                      onClick={() => { switchLocale(l.code); setLangOpen(false); }}
+                      className={`w-full text-left px-4 py-2 text-sm hover:bg-green-50 hover:text-green-800 transition-colors flex items-center gap-2 ${
+                        l.code === currentLocale ? "font-semibold text-green-700" : ""
+                      }`}
                     >
                       {l.label}
+                      {l.code === currentLocale && <span className="ml-auto text-green-500 text-xs">✓</span>}
                     </button>
                   ))}
                 </div>
@@ -261,12 +277,12 @@ export default function Navbar() {
                   {notifOpen && (
                     <div className="absolute top-full right-0 mt-2 w-80 bg-white text-gray-800 rounded-2xl shadow-2xl border border-gray-100 py-3.5 z-50">
                       <div className="px-4 pb-2 border-b border-gray-100 flex items-center justify-between">
-                        <span className="font-bold text-sm text-gray-900">Notifications</span>
+                        <span className="font-bold text-sm text-gray-900">{t("notifications")}</span>
                         <div className="flex items-center gap-2">
                           {unreadCount > 0 && (
                             <>
                               <span className="text-[10px] text-green-700 bg-green-50 px-2 py-0.5 rounded-full font-bold">
-                                {unreadCount} new
+                                {t("notificationsNew", { count: unreadCount })}
                               </span>
                               <button
                                 onClick={handleMarkAllAsRead}
@@ -294,7 +310,7 @@ export default function Navbar() {
                             </button>
                           ))
                         ) : (
-                          <div className="py-8 text-center text-xs text-gray-400">No notifications yet.</div>
+                          <div className="py-8 text-center text-xs text-gray-400">{t("noNotifications")}</div>
                         )}
                       </div>
                     </div>
@@ -317,22 +333,22 @@ export default function Navbar() {
                     <div className="absolute top-full right-0 mt-2 w-48 bg-white text-gray-800 rounded-xl shadow-xl border border-gray-100 py-2 z-50">
                       {(userRole === "FREELANCER" || userRole === "CLIENT") && (
                         <Link href="/dashboard" className="flex items-center gap-2 px-4 py-2 text-sm hover:bg-green-50 hover:text-green-800 transition-colors" onClick={() => setUserOpen(false)}>
-                          <User className="w-4 h-4" /> Dashboard
+                          <User className="w-4 h-4" /> {t("dashboard")}
                         </Link>
                       )}
                       {userRole === "FREELANCER" && (
                         <Link href="/profile" className="flex items-center gap-2 px-4 py-2 text-sm hover:bg-green-50 hover:text-green-800 transition-colors" onClick={() => setUserOpen(false)}>
-                          <Settings className="w-4 h-4" /> Profile Settings
+                          <Settings className="w-4 h-4" /> {t("profileSettings")}
                         </Link>
                       )}
                       {userRole === "CLIENT" && (
                         <Link href="/profile" className="flex items-center gap-2 px-4 py-2 text-sm hover:bg-green-50 hover:text-green-800 transition-colors" onClick={() => setUserOpen(false)}>
-                          <Settings className="w-4 h-4" /> Account Settings
+                          <Settings className="w-4 h-4" /> {t("profileSettings")}
                         </Link>
                       )}
                       {userRole === "ADMIN" && (
                         <Link href="/admin" className="flex items-center gap-2 px-4 py-2 text-sm hover:bg-green-50 hover:text-green-800 transition-colors" onClick={() => setUserOpen(false)}>
-                          <Settings className="w-4 h-4" /> Admin Panel
+                          <Settings className="w-4 h-4" /> {t("adminPanel")}
                         </Link>
                       )}
                       <hr className="my-1 border-gray-100" />
@@ -340,7 +356,7 @@ export default function Navbar() {
                         onClick={() => signOut()}
                         className="flex items-center gap-2 px-4 py-2 text-sm hover:bg-red-50 hover:text-red-600 transition-colors w-full text-left"
                       >
-                        <LogOut className="w-4 h-4" /> Sign Out
+                        <LogOut className="w-4 h-4" /> {t("signOut")}
                       </button>
                     </div>
                   )}
@@ -350,8 +366,8 @@ export default function Navbar() {
               <div className="w-20 h-8 rounded-lg bg-green-800 animate-pulse" />
             ) : (
               <div className="flex items-center gap-2">
-                <Link href="/login"    className="text-sm border border-green-400 text-green-400 px-3 py-1.5 rounded-lg hover:bg-green-800 transition-colors">Sign In</Link>
-                <Link href="/register" className="text-sm bg-green-400 text-green-900 font-semibold px-3 py-1.5 rounded-lg hover:bg-green-300 transition-colors">Sign Up</Link>
+                <Link href="/login"    className="text-sm border border-green-400 text-green-400 px-3 py-1.5 rounded-lg hover:bg-green-800 transition-colors">{t("signIn")}</Link>
+                <Link href="/register" className="text-sm bg-green-400 text-green-900 font-semibold px-3 py-1.5 rounded-lg hover:bg-green-300 transition-colors">{t("signUp")}</Link>
               </div>
             )}
 
@@ -360,12 +376,12 @@ export default function Navbar() {
               href={postJobHref}
               className="bg-green-400 text-green-900 font-semibold px-4 py-2 rounded-lg text-sm hover:bg-green-300 transition-colors"
             >
-              Post a Job
+              {t("postJob")}
             </Link>
           </div>
 
-          {/* Mobile hamburger — inside mobileRef so outside-click doesn't conflict */}
-          <div ref={mobileRef} className="md:hidden">
+          {/* Mobile hamburger — always pinned right via ml-auto */}
+          <div ref={mobileRef} className="md:hidden ml-auto flex-shrink-0">
             <button
               className="p-2 hover:bg-green-800 rounded-lg transition-colors"
               onClick={() => setMobileOpen((o) => !o)}
@@ -390,54 +406,54 @@ export default function Navbar() {
                     type="text"
                     value={mobileSearch}
                     onChange={(e) => setMobileSearch(e.target.value)}
-                    placeholder="Search jobs..."
+                    placeholder={t("searchPlaceholder")}
                     className="w-full bg-green-800 text-white placeholder-green-400 pl-8 pr-14 py-2 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-green-400"
                   />
                   <button
                     type="submit"
                     className="absolute right-2 top-1/2 -translate-y-1/2 bg-green-400 text-green-900 text-xs font-bold px-2 py-0.5 rounded-lg"
                   >
-                    Go
+                    {t("searchGo")}
                   </button>
                 </form>
 
                 {/* Nav links */}
-                {NAV_LINKS.map(({ label, href }) => (
+                {NAV_LINKS.map(({ labelKey, href }) => (
                   <Link
-                    key={label}
+                    key={labelKey}
                     href={href}
                     className={mobileNavLinkClass(href)}
                     onClick={() => setMobileOpen(false)}
                   >
-                    {label}
+                    {t(labelKey as Parameters<typeof t>[0])}
                   </Link>
                 ))}
 
                 {isAuthenticated ? (
                   <>
-                    <Link href="/dashboard" className={mobileNavLinkClass("/dashboard")} onClick={() => setMobileOpen(false)}>Dashboard</Link>
-                    <Link href="/messages"  className={mobileNavLinkClass("/messages")}  onClick={() => setMobileOpen(false)}>Messages</Link>
+                    <Link href="/dashboard" className={mobileNavLinkClass("/dashboard")} onClick={() => setMobileOpen(false)}>{t("dashboard")}</Link>
+                    <Link href="/messages"  className={mobileNavLinkClass("/messages")}  onClick={() => setMobileOpen(false)}>{t("messages")}</Link>
                     <hr className="border-green-800 my-1.5" />
                     <button
                       onClick={() => signOut()}
                       className="flex items-center gap-2 px-3 py-2 rounded-xl text-sm text-red-300 hover:bg-red-900/30 hover:text-red-200 transition-colors w-full"
                     >
-                      <LogOut className="w-3.5 h-3.5" /> Sign Out
+                      <LogOut className="w-3.5 h-3.5" /> {t("signOut")}
                     </button>
                   </>
                 ) : (
                   <>
                     <hr className="border-green-800 my-1.5" />
                     <div className="flex gap-2 py-1">
-                      <Link href="/login"    className="flex-1 text-center border border-green-400 text-green-400 py-2 rounded-xl text-sm hover:bg-green-800 transition-colors" onClick={() => setMobileOpen(false)}>Sign In</Link>
-                      <Link href="/register" className="flex-1 text-center bg-green-400 text-green-900 font-semibold py-2 rounded-xl text-sm hover:bg-green-300 transition-colors" onClick={() => setMobileOpen(false)}>Sign Up</Link>
+                      <Link href="/login"    className="flex-1 text-center border border-green-400 text-green-400 py-2 rounded-xl text-sm hover:bg-green-800 transition-colors" onClick={() => setMobileOpen(false)}>{t("signIn")}</Link>
+                      <Link href="/register" className="flex-1 text-center bg-green-400 text-green-900 font-semibold py-2 rounded-xl text-sm hover:bg-green-300 transition-colors" onClick={() => setMobileOpen(false)}>{t("signUp")}</Link>
                     </div>
                     <Link
                       href="/register?role=client"
                       className="flex items-center justify-center gap-2 bg-green-400/20 border border-green-400/40 text-green-300 py-2 rounded-xl text-sm font-medium hover:bg-green-400/30 transition-colors"
                       onClick={() => setMobileOpen(false)}
                     >
-                      <Briefcase className="w-3.5 h-3.5" /> Post a Job
+                      <Briefcase className="w-3.5 h-3.5" /> {t("postJob")}
                     </Link>
                   </>
                 )}
@@ -448,8 +464,27 @@ export default function Navbar() {
                   className="flex items-center gap-2 px-3 py-2 rounded-xl text-sm text-white/70 hover:bg-green-800/60 hover:text-white transition-colors w-full"
                 >
                   {theme === "light" ? <Moon className="w-3.5 h-3.5" /> : <Sun className="w-3.5 h-3.5" />}
-                  {theme === "light" ? "Dark Mode" : "Light Mode"}
+                  {theme === "light" ? t("darkMode") : t("lightMode")}
                 </button>
+
+                {/* Language toggle */}
+                <div className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-green-800/40">
+                  <Globe className="w-3.5 h-3.5 text-green-400 flex-shrink-0" />
+                  <span className="text-xs text-white/60 mr-1">Language:</span>
+                  {languages.map((l) => (
+                    <button
+                      key={l.code}
+                      onClick={() => switchLocale(l.code)}
+                      className={`px-2.5 py-1 rounded-lg text-xs font-medium transition-colors ${
+                        l.code === currentLocale
+                          ? "bg-green-400 text-green-900"
+                          : "text-white/70 hover:bg-green-700 hover:text-white"
+                      }`}
+                    >
+                      {l.label}
+                    </button>
+                  ))}
+                </div>
               </div>
             </div>
           </div>

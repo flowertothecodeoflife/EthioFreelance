@@ -2,6 +2,7 @@
 import { useState, useTransition } from "react";
 import { updateFreelancerProfile } from "@/app/actions/profile";
 import { Briefcase, DollarSign, BookOpen, Tag, Plus, X, Award, CheckCircle, AlertCircle } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 interface ProfileSettingsFormProps {
   initialData: {
@@ -13,6 +14,7 @@ interface ProfileSettingsFormProps {
 }
 
 export default function ProfileSettingsForm({ initialData }: ProfileSettingsFormProps) {
+  const t = useTranslations("profile");
   const [title, setTitle] = useState(initialData.title);
   const [bio, setBio] = useState(initialData.bio);
   const [hourlyRate, setHourlyRate] = useState(initialData.hourlyRate.toString());
@@ -70,15 +72,15 @@ export default function ProfileSettingsForm({ initialData }: ProfileSettingsForm
           <Award className="w-6 h-6 text-green-700" />
         </div>
         <div>
-          <h2 className="text-xl font-bold text-gray-900">Freelancer Profile</h2>
-          <p className="text-gray-500 text-xs">Update your professional details to attract more clients.</p>
+          <h2 className="text-xl font-bold text-gray-900">{t("pageTitle")}</h2>
+          <p className="text-gray-500 text-xs">{t("pageSub")}</p>
         </div>
       </div>
 
       {success && (
         <div className="mb-6 p-4 bg-green-50 border border-green-200 text-green-800 text-sm rounded-2xl flex items-center gap-3 animate-fade-in">
           <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0" />
-          <span className="font-semibold">{success}</span>
+          <span className="font-semibold">{success || t("successMessage")}</span>
         </div>
       )}
 
@@ -93,7 +95,7 @@ export default function ProfileSettingsForm({ initialData }: ProfileSettingsForm
         {/* Professional Title */}
         <div>
           <label className="text-xs font-bold text-gray-700 uppercase tracking-wider mb-2 block">
-            Professional Title
+            {t("titleLabel")}
           </label>
           <div className="relative">
             <Briefcase className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
@@ -101,7 +103,7 @@ export default function ProfileSettingsForm({ initialData }: ProfileSettingsForm
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              placeholder="e.g. Lead Full-Stack Developer"
+              placeholder={t("titlePlaceholder")}
               required
               className="w-full bg-gray-50 border border-gray-200 text-gray-950 pl-12 pr-4 py-3.5 rounded-2xl text-sm focus:outline-none focus:border-green-600 focus:bg-white transition-all font-medium"
             />
@@ -111,7 +113,7 @@ export default function ProfileSettingsForm({ initialData }: ProfileSettingsForm
         {/* Hourly Rate */}
         <div>
           <label className="text-xs font-bold text-gray-700 uppercase tracking-wider mb-2 block">
-            Hourly Rate (ETB)
+            {t("hourlyRateLabel")}
           </label>
           <div className="relative">
             <DollarSign className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
@@ -119,7 +121,7 @@ export default function ProfileSettingsForm({ initialData }: ProfileSettingsForm
               type="number"
               value={hourlyRate}
               onChange={(e) => setHourlyRate(e.target.value)}
-              placeholder="e.g. 500"
+              placeholder={t("hourlyRatePlaceholder")}
               required
               min="0"
               className="w-full bg-gray-50 border border-gray-200 text-gray-950 pl-12 pr-4 py-3.5 rounded-2xl text-sm focus:outline-none focus:border-green-600 focus:bg-white transition-all font-medium"
@@ -127,17 +129,17 @@ export default function ProfileSettingsForm({ initialData }: ProfileSettingsForm
           </div>
         </div>
 
-        {/* Professional Bio */}
+        {/* Bio */}
         <div>
           <label className="text-xs font-bold text-gray-700 uppercase tracking-wider mb-2 block">
-            Professional Biography
+            {t("bioLabel")}
           </label>
           <div className="relative">
             <BookOpen className="absolute left-4 top-5 w-5 h-5 text-gray-400" />
             <textarea
               value={bio}
               onChange={(e) => setBio(e.target.value)}
-              placeholder="Describe your expertise, achievements, and what value you offer to clients..."
+              placeholder={t("bioPlaceholder")}
               required
               rows={6}
               className="w-full bg-gray-50 border border-gray-200 text-gray-950 pl-12 pr-4 py-4 rounded-2xl text-sm focus:outline-none focus:border-green-600 focus:bg-white transition-all font-medium"
@@ -145,10 +147,10 @@ export default function ProfileSettingsForm({ initialData }: ProfileSettingsForm
           </div>
         </div>
 
-        {/* Interactive Skills Tags */}
+        {/* Skills */}
         <div>
           <label className="text-xs font-bold text-gray-700 uppercase tracking-wider mb-2 block">
-            Skills & Core Competencies
+            {t("skillsLabel")}
           </label>
           <div className="flex gap-2 mb-3">
             <div className="relative flex-1">
@@ -157,7 +159,7 @@ export default function ProfileSettingsForm({ initialData }: ProfileSettingsForm
                 type="text"
                 value={newSkill}
                 onChange={(e) => setNewSkill(e.target.value)}
-                placeholder="e.g. React Native, Copywriting"
+                placeholder={t("skillsPlaceholder")}
                 className="w-full bg-gray-50 border border-gray-200 text-gray-950 pl-12 pr-4 py-3.5 rounded-2xl text-sm focus:outline-none focus:border-green-600 focus:bg-white transition-all font-medium"
               />
             </div>

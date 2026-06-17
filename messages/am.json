@@ -9,29 +9,28 @@
     "dashboard": "ዳሽቦርድ",
     "messages": "መልዕክቶች",
     "profileSettings": "የመገለጫ ቅንብሮች",
-    "adminPanel": "የአስተዳዳሪ ፓነል",
+    "adminPanel": "የአስተዳደር ፓነል",
     "signOut": "ውጣ",
     "searchPlaceholder": "ስራዎችን ፈልግ...",
     "searchGo": "ፈልግ",
     "notifications": "ማሳወቂያዎች",
     "notificationsNew": "{count} አዲስ",
     "noNotifications": "እስካሁን ማሳወቂያ የለም።",
-    "darkMode": "ጨለማ ገጽታ",
-    "lightMode": "ብርሃን ገጽታ",
+    "darkMode": "ጨለማ ሁኔታ",
+    "lightMode": "ብርሃን ሁኔታ",
     "categories": {
       "itSoftware": "አይቲ እና ሶፍትዌር",
       "designCreative": "ዲዛይን እና ፈጠራ",
-      "writingContent": "የይዘት ጽሑፍ",
+      "writingContent": "ጽሑፍ እና ይዘት",
       "localServices": "የአካባቢ አገልግሎቶች",
-      "ngoRemote": "NGO እና የርቀት ስራ",
-      "dataEntry": "የውሂብ ግቤት",
-      "tutoring": "የግል ትምህርት",
+      "ngoRemote": "ኤንጂኦ እና የርቀት ስራ",
+      "dataEntry": "የመረጃ ማስገቢያ",
+      "tutoring": "ትምህርት ማስተማር",
       "governmentTasks": "የመንግስት ተግባራት"
     }
   },
-
   "footer": {
-    "tagline": "የኢትዮጵያ ቀዳሚ የፍሪላንስ ገበያ። ብቁ ባለሙያዎችን ከደንበኞች ጋር በመላ ሀገሪቱ ያገናኛል።",
+    "tagline": "የኢትዮጵያ ቀዳሚ የፍሪላንስ ገበያ። በመላው አገሪቱ ያሉ ባለሙያዎችን ከደንበኞች ጋር የሚያገናኝ።",
     "forClients": "ለደንበኞች",
     "forFreelancers": "ለፍሪላንሰሮች",
     "contactUs": "ያግኙን",
@@ -59,29 +58,27 @@
       "stories": "የስኬት ታሪኮች"
     }
   },
-
   "hero": {
     "badge": "🇪🇹 የኢትዮጵያ #1 የፍሪላንስ መድረክ",
     "headline": "ምርጥ ኢትዮጵያዊ",
     "headlineAccent": "የፍሪላንስ ባለሙያዎችን ያግኙ",
-    "sub": "በመላ ኢትዮጵያ ካሉ ብቁ ባለሙያዎች ጋር ይገናኙ። ስራ ይለጥፉ፣ ማመልከቻዎችን ይቀበሉ እና በChapa በደህንነት ይክፈሉ።",
-    "tabJobs": "ስራዎችን ያግኙ",
+    "sub": "በመላው ኢትዮጵያ ካሉ ብቁ ባለሙያዎች ጋር ይገናኙ። ስራ ይለጥፉ፣ ጥያቄዎችን ይቀበሉ፣ እና በChapa በደህና ይክፈሉ።",
+    "tabJobs": "ስራ ያግኙ",
     "tabFreelancers": "ፍሪላንሰሮችን ያግኙ",
     "searchJobPlaceholder": "ስራዎችን፣ ክህሎቶችን ወይም ምድቦችን ፈልግ...",
     "searchFreelancerPlaceholder": "ፍሪላንሰሮችን ወይም ክህሎቶችን ፈልግ...",
-    "locationAll": "መላ ኢትዮጵያ",
+    "locationAll": "መላው ኢትዮጵያ",
     "locationAddis": "አዲስ አበባ",
     "locationDire": "ድሬዳዋ",
     "locationHawassa": "ሀዋሳ",
     "locationMekelle": "መቀሌ",
     "searchButton": "ፈልግ",
-    "popularSearches": "ተወዳጅ:",
-    "popularItems": "ዌብ ልማት፣ ግራፊክ ዲዛይን፣ የይዘት ጽሑፍ፣ የውሂብ ግቤት፣ የሞባይል መተግበሪያ",
+    "popularSearches": "ታዋቂ:",
+    "popularItems": "ዌብ ልማት፣ ግራፊክ ዲዛይን፣ የይዘት ጽሑፍ፣ የመረጃ ማስገቢያ፣ የሞባይል መተግበሪያ",
     "trustBadge1": "✓ የተረጋገጡ ፍሪላንሰሮች",
-    "trustBadge2": "🔒 ደህንነቱ የተጠበቀ Escrow ክፍያ",
+    "trustBadge2": "🔒 ደህንነቱ የተጠበቀ የEscrow ክፍያ",
     "trustBadge3": "⭐ ከፍተኛ ደረጃ ያላቸው ባለሙያዎች"
   },
-
   "stats": {
     "freelancers": "ፍሪላንሰሮች",
     "jobsPosted": "የተለጠፉ ስራዎች",
@@ -89,182 +86,158 @@
     "successRate": "የስኬት መጠን",
     "successRateValue": "98%"
   },
-
   "categories": {
     "sectionTitle": "በምድብ ያስሱ",
-    "sectionSub": "በኢትዮጵያ በጣም ተፈላጊ በሆኑ የክህሎት ዘርፎች ትክክለኛውን ባለሙያ ያግኙ",
+    "sectionSub": "በኢትዮጵያ በጣም ተፈላጊ በሆኑ የክህሎት ዘርፎች ውስጥ ተገቢውን ባለሙያ ያግኙ",
     "viewAll": "ሁሉንም ምድቦች ይመልከቱ",
     "jobsCount": "{count} ስራዎች",
     "items": {
       "itSoftware": "አይቲ እና ሶፍትዌር",
       "designCreative": "ዲዛይን እና ፈጠራ",
-      "writingContent": "የይዘት ጽሑፍ",
+      "writingContent": "ጽሑፍ እና ይዘት",
       "localServices": "የአካባቢ አገልግሎቶች",
-      "ngoRemote": "NGO እና የርቀት ስራ",
-      "dataEntry": "የውሂብ ግቤት",
-      "tutoring": "የግል ትምህርት",
+      "ngoRemote": "ኤንጂኦ እና የርቀት ስራ",
+      "dataEntry": "የመረጃ ማስገቢያ",
+      "tutoring": "ትምህርት ማስተማር",
       "governmentTasks": "የመንግስት ተግባራት",
-      "marketing": "ማርኬቲንግ",
+      "marketing": "ግብይት",
       "finance": "ፋይናንስ እና ሂሳብ",
-      "legal": "ሕግ",
+      "legal": "የሕግ አገልግሎቶች",
       "engineering": "ምህንድስና"
     }
   },
-
   "featuredJobs": {
     "sectionTitle": "ተመራጭ ስራዎች",
     "sectionSub": "በተረጋገጡ ኢትዮጵያዊ ደንበኞች የተለጠፉ አዳዲስ እድሎች",
     "viewAll": "ሁሉንም ስራዎች ይመልከቱ",
     "badge": "ክፍት",
     "proposals": "{count} ማመልከቻዎች",
-    "applyNow": "አሁን ያመልክቱ",
-    "empty": "በአሁኑ ጊዜ ክፍት ስራ የለም። በኋላ ይመለሱ!"
+    "applyNow": "አሁኑኑ ያመልክቱ",
+    "empty": "በአሁኑ ጊዜ ክፍት የሆነ ስራ የለም። በቅርቡ ተመልሰው ይመልከቱ!"
   },
-
   "featuredFreelancers": {
-    "sectionTitle": "ከፍተኛ ፍሪላንሰሮች",
-    "sectionSub": "በሚቀጥለው ፕሮጀክትዎ ላይ ለመስራት ዝግጁ የሆኑ ባለሙያዎች",
+    "sectionTitle": "ምርጥ ፍሪላንሰሮች",
+    "sectionSub": "በሚቀጥለው ፕሮጀክትዎ ላይ ለመስራት ዝግጁ የሆኑ ብቁ ባለሙያዎች",
     "viewAll": "ሁሉንም ፍሪላንሰሮች ይመልከቱ",
     "verified": "የተረጋገጠ",
     "online": "በመስመር ላይ",
     "rating": "{rating} ደረጃ",
     "completedJobs": "{count} የተጠናቀቁ ስራዎች",
     "hourlyRate": "{rate} ብር/ሰዓት",
-    "hireNow": "አሁን ይቅጠሩ",
-    "empty": "ለማሳየት ፍሪላንሰር የለም።"
+    "hireNow": "አሁኑኑ ይቅጠሩ",
+    "empty": "ለማሳየት የሚቻሉ ፍሪላንሰሮች እስካሁን የሉም።"
   },
-
   "testimonials": {
-    "sectionTitle": "ተጠቃሚዎቻችን የሚሉት",
-    "sectionSub": "በመድረካችን ላይ ከሚገኙ ኢትዮጵያዊ ፍሪላንሰሮች እና ደንበኞች የተገኙ እውነተኛ ታሪኮች"
+    "sectionTitle": "ተጠቃሚዎቻችን ምን ይላሉ",
+    "sectionSub": "በመድረካችን ላይ ካሉ ኢትዮጵያዊ ፍሪላንሰሮች እና ደንበኞች የተወሰዱ እውነተኛ ታሪኮች"
   },
-
   "cta": {
-    "headline": "የኢትዮጵያ የፍሪላንስ አብዮት አካል ለመሆን ዝግጁ ነዎት?",
-    "sub": "ከፍተኛ ባለሙያዎችን ለመቅጠርም ሆነ ቀጣዩን ፕሮጀክትዎን ለማግኘት፣ EthioFreelance ከኢትዮጵያ ምርጥ ባለሙያዎች ጋር ያገናኝዎታል።",
+    "headline": "የኢትዮጵያን የፍሪላንስ አብዮት ለመቀላቀል ዝግጁ ነዎት?",
+    "sub": "ምርጥ ባለሙያዎችን ለመቅጠርም ሆነ ቀጣዩን ፕሮጀክትዎን ለማግኘት፣ EthioFreelance ከኢትዮጵያ ምርጦች ጋር ያገናኝዎታል።",
     "hireButton": "ፍሪላንሰር ይቅጠሩ",
     "freelanceButton": "ፍሪላንስ ስራ ይጀምሩ",
-    "note": "መቀላቀል ነጻ • ምንም የደንበኝነት ክፍያ የለም • 1% ኮሚሽን ብቻ ይክፈሉ"
+    "note": "ለመቀላቀል ነፃ • ምንም የደንበኝነት ክፍያ የለም • 1% ኮሚሽን ብቻ ይከፍላሉ"
   },
   "howItWorks": {
     "pageTitle": "እንዴት እንደሚሰራ",
-    "pageSub": "EthioFreelance መገናኘትን፣ መተባበርን እና ክፍያ መቀበልን በአንድ ቦታ ቀላል ያደርጋል።",
-
+    "pageSub": "EthioFreelance መገናኘትን፣ መተባበርን እና ክፍያ መቀበልን — ሁሉንም በአንድ ቦታ ቀላል ያደርገዋል።",
     "forClients": "ለደንበኞች",
     "forFreelancers": "ለፍሪላንሰሮች",
-
     "clientSteps": {
       "step1Title": "ስራ ይለጥፉ",
-      "step1Desc": "ፕሮጀክትዎን ይግለጹ፣ በጀት ያዘጋጁ እና የሚፈለጉ ክህሎቶችን ይጠቁሙ። ስራ መለጠፍ ነጻ ነው።",
-
+      "step1Desc": "ፕሮጀክትዎን ይግለጹ፣ በጀት ያዘጋጁ እና የሚፈለጉ ክህሎቶችን ይጠቁሙ። መለጠፍ ነፃ ነው።",
       "step2Title": "ማመልከቻዎችን ይገምግሙ",
-      "step2Desc": "ከብቁ ፍሪላንሰሮች ማመልከቻዎችን ይቀበሉ። መገለጫዎችን፣ ደረጃዎችን እና የማመልከቻ ደብዳቤዎችን ይገምግሙ።",
-
-      "step3Title": "ይቅጠሩ እና በደህንነት ይክፈሉ",
-      "step3Desc": "ምርጡን ፍሪላንሰር ይምረጡ፣ በChapa Escrow ገንዘብ ያስቀምጡ እና ስራው ሲጠናቀቅ ክፍያውን ይልቀቁ።"
+      "step2Desc": "ከብቁ ፍሪላንሰሮች ማመልከቻዎችን ይቀበሉ። መገለጫዎችን፣ ደረጃዎችን እና የማመልከቻ ደብዳቤዎችን ይመልከቱ።",
+      "step3Title": "ይቅጠሩ እና በደህና ይክፈሉ",
+      "step3Desc": "ምርጡን ፍሪላንሰር ይምረጡ፣ በChapa በኩል የEscrow ሂሳብ ይሙሉ እና ስራው ሲጠናቀቅ ክፍያውን ይልቀቁ።"
     },
-
     "freelancerSteps": {
       "step1Title": "መገለጫዎን ይፍጠሩ",
-      "step1Desc": "ተገቢ ደንበኞችን ለመሳብ ክህሎቶችዎን፣ ልምድዎን እና የስራ ናሙናዎችዎን ያሳዩ።",
-
+      "step1Desc": "ትክክለኛ ደንበኞችን ለመሳብ ክህሎቶችዎን፣ ልምድዎን እና የስራ ናሙናዎችዎን ያሳዩ።",
       "step2Title": "ያስሱ እና ያመልክቱ",
-      "step2Desc": "ከሙያዎ ጋር የሚስማሙ ስራዎችን ያግኙ እና ጠንካራ ማመልከቻዎችን ያስገቡ።",
-
-      "step3Title": "ይስሩ እና ይከፈሉ",
-      "step3Desc": "ፕሮጀክቱን ያጠናቅቁ፣ እንዲጸድቅ ያድርጉ እና በChapa ወይም M-Pesa በደህንነት ክፍያዎን ይቀበሉ።"
+      "step2Desc": "ከችሎታዎ ጋር የሚስማሙ ስራዎችን ያግኙ እና ጠንካራ ማመልከቻዎችን ያስገቡ።",
+      "step3Title": "ይስሩ እና ክፍያ ይቀበሉ",
+      "step3Desc": "ፕሮጀክቱን ያጠናቅቁ፣ ማጽደቅ ያግኙ እና በChapa ወይም M-Pesa በኩል በደህና ክፍያ ይቀበሉ።"
     },
-
     "faqTitle": "በተደጋጋሚ የሚጠየቁ ጥያቄዎች",
-
     "faq": {
-      "q1": "መመዝገብ ነጻ ነው?",
-      "a1": "አዎ፣ ለደንበኞችም ሆነ ለፍሪላንሰሮች መለያ መፍጠር ሙሉ በሙሉ ነጻ ነው።",
-
+      "q1": "መመዝገብ ነፃ ነው?",
+      "a1": "አዎ፣ መለያ መፍጠር ለደንበኞችም ሆነ ለፍሪላንሰሮች ሙሉ በሙሉ ነፃ ነው።",
       "q2": "ክፍያው እንዴት ይሰራል?",
-      "a2": "ደንበኞች በChapa አማካኝነት ወደ Escrow ሂሳብ ገንዘብ ያስቀምጣሉ። ስራው ከጸደቀ በኋላ ገንዘቡ ለፍሪላንሰሩ ይለቀቃል።",
-
-      "q3": "የኮሚሽን ክፍያው ስንት ነው?",
+      "a2": "ደንበኞች በChapa በኩል የEscrow ሂሳብን ይሙላሉ። ስራው ከተፈቀደ በኋላ ገንዘቡ ለፍሪላንሰሩ ይለቀቃል።",
+      "q3": "የኮሚሽን ክፍያው ምን ያህል ነው?",
       "a3": "EthioFreelance በተጠናቀቁ ግብይቶች ላይ 1% የመድረክ ክፍያ ያስከፍላል።",
-
       "q4": "መለያዬን እንዴት አረጋግጣለሁ?",
-      "a4": "ለKYC ማረጋገጫ የብሔራዊ መታወቂያ ወይም የንግድ ምዝገባ ሰነድዎን በዳሽቦርድዎ በኩል ያስገቡ።",
-
+      "a4": "ለKYC ማረጋገጫ የብሔራዊ መታወቂያ ወይም የንግድ ምዝገባ ሰነድ በዳሽቦርድዎ በኩል ያስገቡ።",
       "q5": "ከማንኛውም ከተማ ሆኜ በርቀት መስራት እችላለሁ?",
-      "a5": "በእርግጥ። በEthioFreelance ላይ ያሉ አብዛኞቹ ስራዎች በመላ ኢትዮጵያ ክልሎች ከርቀት ለመስራት ተስማሚ ናቸው።"
+      "a5": "በእርግጥ። በEthioFreelance ላይ ያሉ አብዛኛዎቹ ስራዎች በመላው ኢትዮጵያ ለርቀት ስራ ተስማሚ ናቸው።"
     },
-
     "ctaTitle": "ለመጀመር ዝግጁ ነዎት?",
-    "ctaSub": "በEthioFreelance የሚጠቀሙ ሺዎች ኢትዮጵያውያንን ይቀላቀሉ።",
+    "ctaSub": "EthioFreelance ን እየተጠቀሙ ካሉ ሺዎች ኢትዮጵያውያን ጋር ይቀላቀሉ።",
     "ctaPost": "ስራ ይለጥፉ",
     "ctaFind": "ስራዎችን ያግኙ"
   },
   "auth": {
+    "login": {
+      "title": "እንኳን በደህና ተመለሱ",
+      "sub": "ወደ EthioFreelance መለያዎ ይግቡ",
+      "tabEmail": "ኢሜይል",
+      "tabPhone": "ስልክ",
+      "emailLabel": "የኢሜይል አድራሻ",
+      "emailPlaceholder": "abebe@example.com",
+      "phonePlaceholder": "9XX XXX XXX",
+      "passwordLabel": "የይለፍ ቃል",
+      "passwordPlaceholder": "የይለፍ ቃልዎ",
+      "forgotPassword": "የይለፍ ቃል ረሱ?",
+      "signInButton": "ግባ",
+      "signingIn": "በመግባት ላይ…",
+      "noAccount": "መለያ የለዎትም?",
+      "signUp": "ይመዝገቡ",
+      "errorInvalid": "ልክ ያልሆነ ኢሜይል ወይም የይለፍ ቃል።",
+      "errorGeneric": "የሆነ ችግር ተፈጥሯል። እባክዎ እንደገና ይሞክሩ።"
+    },
     "register": {
       "title": "መለያዎን ይፍጠሩ",
-      "sub": "በመድረኩ ላይ ያሉ ሺዎች ኢትዮጵያውያንን ይቀላቀሉ",
-
-      "roleFreelancer": "ፍሪላንሰር ነኝ",
-      "roleClient": "ደንበኛ ነኝ",
-
+      "sub": "በመድረኩ ላይ ካሉ ሺዎች ኢትዮጵያውያን ጋር ይቀላቀሉ",
+      "roleFreelancer": "እኔ ፍሪላንሰር ነኝ",
+      "roleClient": "እኔ ደንበኛ ነኝ",
       "stepLabels": {
         "accountInfo": "የመለያ መረጃ",
         "verifyEmail": "ኢሜይል ያረጋግጡ",
-        "review": "ያረጋግጡ"
+        "review": "ግምገማ"
       },
-
       "freelancer": {
-        "headline": "ዛሬ ገቢ ማግኘት ይጀምሩ",
-
-        "sub": "ክህሎቶችዎን ያሳዩ እና በከፍተኛ ኢትዮጵያዊ ኩባንያዎች ይቀጠሩ።",
-
+        "headline": "ዛሬውኑ ገቢ ማግኘት ይጀምሩ",
+        "sub": "ክህሎቶችዎን ያሳዩ እና በከፍተኛ የኢትዮጵያ ኩባንያዎች ይቀጠሩ።",
         "badges": {
-          "b1": "የሚከፈልበት ስራ ያግኙ",
-          "b2": "የስራ ማህደርዎን ይገንቡ",
-          "b3": "በደህንነት ይከፈሉ"
+          "b1": "የሚከፈልባቸው ስራዎችን ያግኙ",
+          "b2": "የስራ ናሙናዎን ይገንቡ",
+          "b3": "በደህና ክፍያ ይቀበሉ"
         },
-
         "phoneLabel": "ስልክ ቁጥር (አማራጭ)",
-
-        "extraLabel": "ዋና ክህሎት / የሙያ ርዕስ",
-
-        "extraPlaceholder": "ለምሳሌ Full Stack Developer, Graphic Designer...",
-
+        "extraLabel": "ዋና ክህሎት / ሙያ ርዕስ",
+        "extraPlaceholder": "ለምሳሌ፦ Full Stack Developer, Graphic Designer…",
         "summaryRole": "የፍሪላንሰር መለያ",
-
         "step1Heading": "ስለራስዎ ይንገሩን",
-
         "step1Sub": "የተሟላ መገለጫ ያላቸው ፍሪላንሰሮች 3 እጥፍ ተጨማሪ የስራ ግብዣዎችን ያገኛሉ።",
-
         "createButton": "ፍሪላንስ ስራ ይጀምሩ 🚀"
       },
-
       "client": {
-        "headline": "ከፍተኛ ባለሙያዎችን ይቅጠሩ",
-
-        "sub": "ስራዎችን ይለጥፉ እና ከተረጋገጡ ኢትዮጵያዊ ፍሪላንሰሮች ጋር ወዲያውኑ ይገናኙ።",
-
+        "headline": "ምርጥ ባለሙያዎችን ይቅጠሩ",
+        "sub": "ስራዎችን ይለጥፉ እና ከተረጋገጡ ኢትዮጵያዊ ፍሪላንሰሮች ጋር በፍጥነት ይገናኙ።",
         "badges": {
           "b1": "ያልተገደቡ ስራዎችን ይለጥፉ",
           "b2": "ማመልከቻዎችን ይገምግሙ",
           "b3": "በChapa Escrow ይክፈሉ"
         },
-
         "phoneLabel": "የድርጅት ስልክ (አማራጭ)",
-
-        "extraLabel": "የድርጅት / የተቋም ስም",
-
-        "extraPlaceholder": "ለምሳሌ TechEthio Solutions, UNICEF Ethiopia...",
-
+        "extraLabel": "የኩባንያ / ድርጅት ስም",
+        "extraPlaceholder": "ለምሳሌ፦ TechEthio Solutions, UNICEF Ethiopia…",
         "summaryRole": "የደንበኛ መለያ",
-
         "step1Heading": "የደንበኛ መለያዎን ያዘጋጁ",
-
-        "step1Sub": "የተረጋገጡ መለያዎች ያላቸው ደንበኞች የተሻሉ ማመልከቻዎችን ይቀበላሉ።",
-
+        "step1Sub": "የተረጋገጡ መለያዎች ያላቸው ደንበኞች ከፍተኛ ጥራት ያላቸው ማመልከቻዎችን ይቀበላሉ።",
         "createButton": "መቅጠር ይጀምሩ 🎯"
       },
-
       "fields": {
         "firstName": "የመጀመሪያ ስም",
         "lastName": "የአባት ስም",
@@ -275,61 +248,556 @@
         "phonePrefix": "🇪🇹 +251",
         "required": "*"
       },
-
       "otp": {
         "heading": "ኢሜይልዎን ያረጋግጡ",
-
-        "sub": "ወደ {email} 6 አሃዝ ያለው ኮድ ልከናል",
-
+        "sub": "6 አሃዝ ያለው ኮድ ወደ {email} ልከናል",
         "label": "6 አሃዝ ያለውን ኮድ ያስገቡ",
-
         "verifyButton": "ኮዱን ያረጋግጡ",
-
-        "verifying": "በማረጋገጥ ላይ...",
-
-        "resendCooldown": "ከ {seconds} ሰከንድ በኋላ እንደገና ይላካል",
-
-        "resend": "ኮድ እንደገና ላክ",
-
-        "verified": "ኢሜይሉ ተረጋግጧል!",
-
+        "verifying": "በማረጋገጥ ላይ…",
+        "resendCooldown": "በ {seconds} ሰከንድ ውስጥ እንደገና ይላካል",
+        "resend": "ኮዱን እንደገና ላክ",
+        "verified": "ኢሜይል ተረጋግጧል!",
         "verifiedSub": "የኢሜይል አድራሻዎ ተረጋግጧል።",
-
         "backButton": "ተመለስ",
-
         "continueButton": "ቀጥል"
       },
-
       "review": {
         "name": "ስም",
         "email": "ኢሜይል",
         "title": "የሙያ ርዕስ",
-        "company": "ድርጅት",
+        "company": "ኩባንያ",
         "emailVerified": "ኢሜይል ተረጋግጧል",
         "emailVerifiedValue": "✓ ተረጋግጧል",
-        "findJobs": "ስራዎችን ያግኙ እና ይከፈሉ",
+        "findJobs": "ስራዎችን ያግኙ እና ክፍያ ይቀበሉ",
         "postJobs": "ስራዎችን ይለጥፉ እና ባለሙያዎችን ይቅጠሩ",
-        "agreeTerms": "ተስማምቻለሁ በ",
+        "agreeTerms": "ተስማምቻለሁ ከ",
         "termsLink": "የአገልግሎት ውሎች",
         "andText": "እና",
         "privacyLink": "የግላዊነት ፖሊሲ",
         "backButton": "ተመለስ",
-        "creating": "በመፍጠር ላይ..."
+        "creating": "በመፍጠር ላይ…"
       },
-
       "errors": {
-        "fillRequired": "እባክዎ ሁሉንም አስፈላጊ መረጃዎች ያስገቡ።",
+        "fillRequired": "እባክዎ ሁሉንም አስፈላጊ መስኮች ይሙሉ።",
         "invalidEmail": "እባክዎ ትክክለኛ የኢሜይል አድራሻ ያስገቡ።",
         "passwordShort": "የይለፍ ቃል ቢያንስ 8 ቁምፊዎች ሊኖሩት ይገባል።",
         "verifyFirst": "እባክዎ መጀመሪያ ኢሜይልዎን ያረጋግጡ።",
         "agreeTerms": "የአገልግሎት ውሎችን መቀበል አለብዎት።",
         "otpIncomplete": "ሙሉውን 6 አሃዝ ኮድ ያስገቡ።"
       },
-
       "footer": "መለያ አለዎት?",
       "footerLink": "ግባ",
-
-      "etBuilt": "🇪🇹 ለኢትዮጵያ የተገነባ • በChapa በብር ይክፈሉ"
+      "etBuilt": "🇪🇹 ለኢትዮጵያ የተገነባ • በChapa በETB ይክፈሉ"
+    },
+    "forgotPassword": {
+      "title": "የይለፍ ቃልዎን ዳግም ያስጀምሩ",
+      "sub": "የዳግም ማስጀመሪያ ኮድ ለመቀበል ኢሜይልዎን ያስገቡ",
+      "emailLabel": "የኢሜይል አድራሻ",
+      "emailPlaceholder": "abebe@example.com",
+      "sendButton": "የዳግም ማስጀመሪያ ኮድ ላክ",
+      "sending": "በመላክ ላይ…",
+      "otpHeading": "ኢሜይልዎን ይመልከቱ",
+      "otpSub": "6 አሃዝ ያለው ኮድ ወደ {email} ልከናል",
+      "otpLabel": "6 አሃዝ ያለውን ኮድ ያስገቡ",
+      "verifyButton": "ኮዱን ያረጋግጡ",
+      "verifying": "በማረጋገጥ ላይ…",
+      "resendCooldown": "በ {seconds} ሰከንድ ውስጥ እንደገና ይላካል",
+      "resend": "ኮዱን እንደገና ላክ",
+      "newPasswordHeading": "አዲስ የይለፍ ቃል ያዘጋጁ",
+      "newPasswordLabel": "አዲስ የይለፍ ቃል",
+      "newPasswordPlaceholder": "ቢያንስ 8 ቁምፊዎች",
+      "confirmPasswordLabel": "የይለፍ ቃሉን ያረጋግጡ",
+      "confirmPasswordPlaceholder": "የይለፍ ቃልዎን ይድገሙ",
+      "resetButton": "የይለፍ ቃል ዳግም አስጀምር",
+      "resetting": "በማስጀመር ላይ…",
+      "successHeading": "የይለፍ ቃል ተቀይሯል!",
+      "successSub": "የይለፍ ቃልዎ በተሳካ ሁኔታ ተዘምኗል።",
+      "backToLogin": "ወደ መግቢያ ተመለስ",
+      "rememberPassword": "የይለፍ ቃልዎን ያስታውሳሉ?",
+      "signIn": "ግባ",
+      "errors": {
+        "enterEmail": "እባክዎ የኢሜይል አድራሻዎን ያስገቡ።",
+        "invalidEmail": "እባክዎ ትክክለኛ የኢሜይል አድራሻ ያስገቡ።",
+        "otpIncomplete": "ሙሉውን 6 አሃዝ ኮድ ያስገቡ።",
+        "passwordShort": "የይለፍ ቃል ቢያንስ 8 ቁምፊዎች ሊኖሩት ይገባል።",
+        "passwordMismatch": "የይለፍ ቃሎቹ አይመሳሰሉም።"
+      }
     }
+  },
+  "jobs": {
+    "pageTitle": "ስራዎችን ያስሱ",
+    "pageSub": "ከመቶዎች ኢትዮጵያዊ ደንበኞች ቀጣዩን እድልዎን ያግኙ",
+    "searchPlaceholder": "በስራ ርዕስ፣ ክህሎት ወይም ቁልፍ ቃል ይፈልጉ…",
+    "searchButton": "ፈልግ",
+    "filterCategory": "ምድብ",
+    "filterType": "የስራ አይነት",
+    "filterLocation": "አካባቢ",
+    "filterBudget": "በጀት",
+    "allCategories": "ሁሉም ምድቦች",
+    "allTypes": "ሁሉም የስራ አይነቶች",
+    "allLocations": "ሁሉም አካባቢዎች",
+    "typeFixed": "ቋሚ ዋጋ",
+    "typeHourly": "በሰዓት",
+    "budgetAny": "ማንኛውም በጀት",
+    "budget1": "ከ1,000 ብር በታች",
+    "budget2": "1,000 – 5,000 ብር",
+    "budget3": "5,000 – 20,000 ብር",
+    "budget4": "20,000+ ብር",
+    "resultsCount": "{count} ስራዎች ተገኝተዋል",
+    "sortLabel": "አስተካክል በ",
+    "sortNewest": "አዲሶቹ በመጀመሪያ",
+    "sortBudgetHigh": "በጀት: ከፍተኛ ወደ ዝቅተኛ",
+    "sortBudgetLow": "በጀት: ዝቅተኛ ወደ ከፍተኛ",
+    "proposalsCount": "{count} ማመልከቻዎች",
+    "postedBy": "የተለጠፈው በ",
+    "verified": "የተረጋገጠ",
+    "applyNow": "አሁኑኑ ያመልክቱ",
+    "viewDetails": "ዝርዝር ይመልከቱ",
+    "fixed": "ቋሚ",
+    "hourly": "በሰዓት",
+    "emptyTitle": "ምንም ስራ አልተገኘም",
+    "emptySub": "የማጣሪያ ቅንብሮችዎን ወይም የፍለጋ ቃላትዎን ለመቀየር ይሞክሩ።",
+    "prevPage": "ቀዳሚ",
+    "nextPage": "ቀጣይ",
+    "pageIndicator": "ገጽ {current} ከ {total}"
+  },
+  "jobDetail": {
+    "backToJobs": "← ወደ ስራዎች ተመለስ",
+    "proposals": "{count} ማመልከቻዎች",
+    "posted": "የተለጠፈው {date}",
+    "budget": "በጀት",
+    "type": "አይነት",
+    "location": "አካባቢ",
+    "category": "ምድብ",
+    "skills": "የሚፈለጉ ክህሎቶች",
+    "aboutClient": "ስለ ደንበኛው",
+    "memberSince": "አባል የሆነበት ከ {date} ጀምሮ",
+    "verified": "የተረጋገጠ",
+    "unverified": "ያልተረጋገጠ",
+    "statusOpen": "ክፍት",
+    "statusInProgress": "በሂደት ላይ",
+    "statusCompleted": "ተጠናቋል",
+    "statusCancelled": "ተሰርዟል",
+    "milestones": "የስራ ደረጃዎች",
+    "milestoneAmount": "{amount} ብር",
+    "milestoneDue": "የመጨረሻ ቀን: {date}",
+    "ownerPanel": {
+      "title": "ማመልከቻዎች ({count})",
+      "empty": "እስካሁን ምንም ማመልከቻ የለም።",
+      "status": {
+        "pending": "በመጠባበቅ ላይ",
+        "shortlisted": "ለአጭር ዝርዝር ተመርጧል",
+        "accepted": "ተቀባይነት አግኝቷል",
+        "rejected": "ውድቅ ተደርጓል"
+      },
+      "accept": "ተቀበል",
+      "reject": "ውድቅ አድርግ",
+      "shortlist": "ለአጭር ዝርዝር ምረጥ",
+      "viewProfile": "መገለጫ ይመልከቱ",
+      "fundEscrow": "Escrow ይሙሉ",
+      "releasePayment": "ክፍያ ይልቀቁ",
+      "confirmRelease": "መልቀቁን ያረጋግጡ",
+      "cancelRelease": "ሰርዝ"
+    },
+    "applyPanel": {
+      "title": "ማመልከቻ ያስገቡ",
+      "alreadyApplied": "ለዚህ ስራ አስቀድመው አመልክተዋል።",
+      "withdrawn": "ማመልከቻዎን አንስተዋል።",
+      "bidLabel": "የእርስዎ ዋጋ (ብር)",
+      "bidPlaceholder": "የሚጠይቁትን ዋጋ ያስገቡ",
+      "coverLabel": "የማመልከቻ ደብዳቤ",
+      "coverPlaceholder": "ለዚህ ስራ ምርጥ ተስማሚ ለምን እንደሆኑ ያብራሩ…",
+      "attachments": "አባሪ ፋይሎች (አማራጭ)",
+      "attachButton": "ፋይሎችን ያያይዙ",
+      "submitButton": "ማመልከቻ አስገባ",
+      "submitting": "በማስገባት ላይ…",
+      "withdrawButton": "ማመልከቻን አንሳ",
+      "withdrawing": "በማንሳት ላይ…",
+      "loginPrompt": "ለዚህ ስራ ለማመልከት ይግቡ።",
+      "loginLink": "ግባ"
+    },
+    "payment": {
+      "title": "Escrow ይሙሉ",
+      "amount": "መጠን: {amount} ብር",
+      "selectMethod": "የክፍያ ዘዴ ይምረጡ",
+      "chapa": "Chapa",
+      "mpesa": "M-Pesa",
+      "phoneLabel": "የM-Pesa ስልክ ቁጥር",
+      "phonePlaceholder": "2547XXXXXXXX",
+      "payButton": "አሁኑኑ ይክፈሉ",
+      "paying": "በሂደት ላይ…",
+      "polling": "የM-Pesa ማረጋገጫን በመጠባበቅ ላይ…",
+      "successTitle": "ክፍያው ተሳክቷል",
+      "successSub": "Escrow ተሞልቷል። ስራው አሁን ሊጀምር ይችላል።",
+      "errorTitle": "ክፍያው አልተሳካም",
+      "errorSub": "እባክዎ እንደገና ይሞክሩ ወይም ሌላ ዘዴ ይጠቀሙ።",
+      "cancel": "ሰርዝ"
+    }
+  },
+  "freelancers": {
+    "pageTitle": "ፍሪላንሰሮችን ያግኙ",
+    "pageSub": "በመላው ኢትዮጵያ ያሉ ብቁ ባለሙያዎችን ያስሱ",
+    "searchPlaceholder": "በስም፣ በክህሎት ወይም በሙያ ርዕስ ይፈልጉ…",
+    "searchButton": "ፈልግ",
+    "filterSkill": "ክህሎት",
+    "filterRating": "ዝቅተኛ ደረጃ",
+    "filterRate": "የሰዓት ክፍያ",
+    "allSkills": "ሁሉም ክህሎቶች",
+    "anyRating": "ማንኛውም ደረጃ",
+    "anyRate": "ማንኛውም ክፍያ",
+    "rating4plus": "4+ ኮከቦች",
+    "rating3plus": "3+ ኮከቦች",
+    "rate1": "ከ100 ብር/ሰዓት በታች",
+    "rate2": "100 – 500 ብር/ሰዓት",
+    "rate3": "500+ ብር/ሰዓት",
+    "resultsCount": "{count} ፍሪላንሰሮች ተገኝተዋል",
+    "verified": "የተረጋገጠ",
+    "online": "በመስመር ላይ",
+    "completedJobs": "{count} ስራዎች",
+    "rating": "{rating} ★",
+    "hourlyRate": "{rate} ብር/ሰዓት",
+    "viewProfile": "መገለጫ ይመልከቱ",
+    "hireNow": "አሁኑኑ ይቅጠሩ",
+    "emptyTitle": "ምንም ፍሪላንሰር አልተገኘም",
+    "emptySub": "የተለያዩ የፍለጋ ቃላት ወይም ማጣሪያዎችን ይሞክሩ።"
+  },
+  "freelancerProfile": {
+    "backToFreelancers": "← ወደ ፍሪላንሰሮች ተመለስ",
+    "notFound": "ፍሪላንሰሩ አልተገኘም።",
+    "verified": "የተረጋገጠ",
+    "online": "በመስመር ላይ",
+    "offline": "ከመስመር ውጭ",
+    "memberSince": "አባል የሆነበት ከ {date} ጀምሮ",
+    "rating": "{rating} / 5",
+    "completedJobs": "{count} የተጠናቀቁ ስራዎች",
+    "hourlyRate": "{rate} ብር/ሰዓት",
+    "hireButton": "{name}ን ይቅጠሩ",
+    "messageButton": "መልዕክት ላክ",
+    "tabAbout": "ስለ እኔ",
+    "tabPortfolio": "የስራ ናሙና",
+    "tabReviews": "ግምገማዎች",
+    "aboutHeading": "ስለ እኔ",
+    "skillsHeading": "ክህሎቶች",
+    "noAbout": "እስካሁን የግል መግለጫ አልተሰጠም።",
+    "noSkills": "ምንም ክህሎቶች አልተዘረዘሩም።",
+    "noPortfolio": "እስካሁን ምንም የስራ ናሙና የለም።",
+    "noReviews": "እስካሁን ምንም ግምገማ የለም።"
+  },
+  "dashboard": {
+    "greeting": "እንኳን ደህና ተመለሱ፣ {name}!",
+    "subClient": "ስራዎችዎን ያስተዳድሩ እና ምርጥ ባለሙያዎችን ያግኙ።",
+    "subFreelancer": "ማመልከቻዎችዎን እና ገቢዎን ይከታተሉ።",
+    "tabs": {
+      "overview": "አጠቃላይ እይታ",
+      "jobs": "የእኔ ስራዎች",
+      "proposals": "ማመልከቻዎች",
+      "messages": "መልዕክቶች",
+      "wallet": "የገንዘብ ቦርሳ"
+    },
+    "stats": {
+      "activeJobs": "በሂደት ላይ ያሉ ስራዎች",
+      "totalSpent": "ጠቅላላ ወጪ",
+      "hiredFreelancers": "የተቀጠሩ ፍሪላንሰሮች",
+      "pendingProposals": "በመጠባበቅ ላይ ያሉ ማመልከቻዎች",
+      "activeProposals": "ንቁ ማመልከቻዎች",
+      "totalEarned": "ጠቅላላ ገቢ",
+      "completedJobs": "የተጠናቀቁ ስራዎች",
+      "successRate": "የስኬት መጠን"
+    },
+    "jobs": {
+      "postNew": "አዲስ ስራ ይለጥፉ",
+      "emptyTitle": "እስካሁን ምንም ስራ አልተለጠፈም",
+      "emptySub": "ማመልከቻዎችን ለመቀበል የመጀመሪያ ስራዎን ይለጥፉ።",
+      "status": {
+        "open": "ክፍት",
+        "inProgress": "በሂደት ላይ",
+        "completed": "ተጠናቋል",
+        "cancelled": "ተሰርዟል"
+      },
+      "proposals": "{count} ማመልከቻዎች",
+      "viewJob": "ይመልከቱ",
+      "editJob": "አርትዕ",
+      "deleteJob": "ሰርዝ"
+    },
+    "proposals": {
+      "emptyTitle": "እስካሁን ምንም ማመልከቻ የለም",
+      "emptySub": "ስራዎችን ያስሱ እና የመጀመሪያ ማመልከቻዎን ያስገቡ።",
+      "status": {
+        "pending": "በመጠባበቅ ላይ",
+        "shortlisted": "ለአጭር ዝርዝር ተመርጧል",
+        "accepted": "ተቀባይነት አግኝቷል",
+        "rejected": "ውድቅ ተደርጓል",
+        "withdrawn": "ተነስቷል"
+      },
+      "bid": "የቀረበ ዋጋ: {amount} ብር",
+      "submitted": "የቀረበው {date}",
+      "viewJob": "ስራውን ይመልከቱ",
+      "withdraw": "ማመልከቻን አንሳ",
+      "withdrawing": "በማንሳት ላይ…"
+    },
+    "wallet": {
+      "balance": "ያለ ቀሪ ሂሳብ",
+      "currency": "ብር",
+      "escrowHeld": "በEscrow ውስጥ ያለ",
+      "totalEarned": "ጠቅላላ ገቢ",
+      "withdrawButton": "ገንዘብ አውጣ",
+      "history": "የግብይት ታሪክ",
+      "emptyHistory": "እስካሁን ምንም ግብይት የለም።",
+      "type": {
+        "escrowDeposit": "የEscrow ተቀማጭ",
+        "escrowRelease": "የEscrow ልቀት",
+        "withdrawal": "ገንዘብ ማውጣት"
+      },
+      "status": {
+        "pending": "በመጠባበቅ ላይ",
+        "completed": "ተጠናቋል",
+        "failed": "አልተሳካም"
+      }
+    },
+    "pagination": {
+      "prev": "ቀዳሚ",
+      "next": "ቀጣይ",
+      "page": "ገጽ {current} ከ {total}"
+    }
+  },
+  "messages": {
+    "pageTitle": "መልዕክቶች",
+    "searchPlaceholder": "ውይይቶችን ይፈልጉ…",
+    "noConversations": "እስካሁን ምንም ውይይት የለም።",
+    "startConversation": "የፍሪላንሰር መገለጫን በመጎብኘት ውይይት ይጀምሩ።",
+    "selectConversation": "መልዕክት ለመላላክ አንድ ውይይት ይምረጡ።",
+    "online": "በመስመር ላይ",
+    "offline": "ለመጨረሻ ጊዜ የታየው {time}",
+    "inputPlaceholder": "መልዕክት ይጻፉ…",
+    "sendButton": "ላክ",
+    "emptyChatTitle": "እስካሁን ምንም መልዕክት የለም",
+    "emptyChatSub": "ውይይቱን ለመጀመር መልዕክት ይላኩ።",
+    "loadingError": "መልዕክቶችን መጫን አልተሳካም። እባክዎ ገጹን ያድሱ።"
+  },
+  "profile": {
+    "pageTitle": "የመገለጫ ቅንብሮች",
+    "pageSub": "ተጨማሪ ደንበኞችን ለመሳብ የፍሪላንሰር መገለጫዎን ያዘምኑ",
+    "titleLabel": "የሙያ ርዕስ",
+    "titlePlaceholder": "ለምሳሌ፦ Full Stack Developer, Graphic Designer",
+    "bioLabel": "የግል መግለጫ",
+    "bioPlaceholder": "ለደንበኞች ስለ ልምድዎ፣ ክህሎቶችዎ እና ልዩ የሚያደርጉዎትን ነገሮች ያስረዱ…",
+    "skillsLabel": "ክህሎቶች",
+    "skillsPlaceholder": "ክህሎት ያክሉ እና Enter ይጫኑ",
+    "hourlyRateLabel": "የሰዓት ክፍያ (ብር)",
+    "hourlyRatePlaceholder": "ለምሳሌ፦ 250",
+    "saveButton": "ለውጦችን አስቀምጥ",
+    "saving": "በማስቀመጥ ላይ…",
+    "successMessage": "መገለጫው በተሳካ ሁኔታ ተዘምኗል!",
+    "errorMessage": "መገለጫውን ማዘመን አልተሳካም። እባክዎ እንደገና ይሞክሩ።"
+  },
+  "postJob": {
+    "pageTitle": "ስራ ይለጥፉ",
+    "pageSub": "ፕሮጀክትዎን ይግለጹ እና ተስማሚ ፍሪላንሰርን ያግኙ",
+    "stepLabels": {
+      "jobDetails": "የስራ ዝርዝሮች",
+      "requirements": "መስፈርቶች",
+      "review": "ግምገማ እና ለጥፍ"
+    },
+    "step1": {
+      "heading": "ስለ ፕሮጀክትዎ ይንገሩን",
+      "titleLabel": "የስራ ርዕስ",
+      "titlePlaceholder": "ለምሳሌ፦ React Native Mobile App ገንቡ",
+      "descriptionLabel": "የስራ መግለጫ",
+      "descriptionPlaceholder": "የሚሰራውን ስራ፣ የሚያስረክቡ ውጤቶችን እና ማንኛውንም ልዩ መስፈርቶችን ይግለጹ…",
+      "categoryLabel": "ምድብ",
+      "typeLabel": "የስራ አይነት",
+      "typeFixed": "ቋሚ ዋጋ",
+      "typeHourly": "በሰዓት ክፍያ",
+      "budgetLabel": "በጀት (ብር)",
+      "budgetPlaceholder": "ለምሳሌ፦ 5000",
+      "locationLabel": "አካባቢ / ርቀት ስራ",
+      "locationPlaceholder": "ለምሳሌ፦ አዲስ አበባ ወይም በርቀት"
+    },
+    "step2": {
+      "heading": "መስፈርቶችን ይግለጹ",
+      "skillsLabel": "የሚፈለጉ ክህሎቶች",
+      "skillsPlaceholder": "ክህሎት ያክሉ እና Enter ይጫኑ",
+      "milestonesLabel": "የስራ ደረጃዎች (አማራጭ)",
+      "addMilestone": "የስራ ደረጃ ጨምር",
+      "milestoneTitle": "የደረጃ ርዕስ",
+      "milestoneTitlePlaceholder": "ለምሳሌ፦ የዲዛይን ሞክአፕ",
+      "milestoneAmount": "መጠን (ብር)",
+      "milestoneDue": "የመጨረሻ ቀን (አማራጭ)",
+      "removeMilestone": "አስወግድ"
+    },
+    "step3": {
+      "heading": "የስራ ማስታወቂያዎን ይገምግሙ",
+      "title": "ርዕስ",
+      "category": "ምድብ",
+      "type": "አይነት",
+      "budget": "በጀት",
+      "location": "አካባቢ",
+      "skills": "ክህሎቶች",
+      "milestones": "የስራ ደረጃዎች",
+      "noMilestones": "የለም"
+    },
+    "nextButton": "ቀጣይ",
+    "backButton": "ተመለስ",
+    "postButton": "ስራውን ለጥፍ",
+    "posting": "በመለጠፍ ላይ…",
+    "successTitle": "ስራው ተለጥፏል!",
+    "successSub": "ስራዎ አሁን በቀጥታ ይታያል እና ማመልከቻዎችን እየተቀበለ ነው።",
+    "viewJob": "ስራውን ይመልከቱ",
+    "postAnother": "ሌላ ስራ ይለጥፉ",
+    "errors": {
+      "titleRequired": "የስራ ርዕስ አስፈላጊ ነው።",
+      "descriptionRequired": "መግለጫ አስፈላጊ ነው።",
+      "categoryRequired": "እባክዎ አንድ ምድብ ይምረጡ።",
+      "budgetRequired": "እባክዎ ትክክለኛ በጀት ያስገቡ።",
+      "locationRequired": "አካባቢ አስፈላጊ ነው።",
+      "skillsRequired": "ቢያንስ አንድ የሚፈለግ ክህሎት ያክሉ።"
+    }
+  },
+  "admin": {
+    "login": {
+      "title": "የአስተዳዳሪ መዳረሻ",
+      "sub": "ፍቃድ ለተሰጣቸው ሰራተኞች ብቻ",
+      "usernameLabel": "የተጠቃሚ ስም",
+      "usernamePlaceholder": "admin",
+      "passwordLabel": "የይለፍ ቃል",
+      "passwordPlaceholder": "••••••••",
+      "loginButton": "አረጋግጥ",
+      "authenticating": "በማረጋገጥ ላይ…",
+      "errorInvalid": "የተሳሳተ የመግቢያ መረጃ።",
+      "errorGeneric": "ማረጋገጥ አልተሳካም። እባክዎ እንደገና ይሞክሩ።",
+      "secureNote": "🔒 ደህንነቱ የተጠበቀ ግንኙነት"
+    },
+    "navbar": {
+      "title": "ኢትዮፍሪላንስ",
+      "badge": "v1.0-sec",
+      "console": "የክወናዎች መቆጣጠሪያ",
+      "secureProtocol": "ደህንነቱ የተጠበቀ ፕሮቶኮል ንቁ ነው",
+      "administrator": "የስርዓት አስተዳዳሪ",
+      "disconnect": "ከፖርታሉ ውጣ",
+      "disconnecting": "በመውጣት ላይ…"
+    },
+    "dashboard": {
+      "title": "የክወናዎች ዳሽቦርድ",
+      "sub": "የመድረኩን ሙሉ ቁጥጥር እና አስተዳደር",
+      "tabs": {
+        "overview": "አጠቃላይ እይታ",
+        "users": "ተጠቃሚዎች",
+        "jobs": "ስራዎች",
+        "transactions": "ግብይቶች",
+        "kyc": "የKYC ግምገማ",
+        "notifications": "ማሳወቂያ ላክ"
+      },
+      "stats": {
+        "totalUsers": "ጠቅላላ ተጠቃሚዎች",
+        "totalJobs": "ጠቅላላ ስራዎች",
+        "totalRevenue": "ጠቅላላ ገቢ (ብር)",
+        "pendingKyc": "በመጠባበቅ ላይ ያሉ KYCዎች"
+      },
+      "users": {
+        "heading": "የተጠቃሚዎች አስተዳደር",
+        "searchPlaceholder": "ተጠቃሚዎችን ፈልግ…",
+        "colName": "ስም",
+        "colEmail": "ኢሜይል",
+        "colRole": "ሚና",
+        "colKyc": "KYC",
+        "colJoined": "የተቀላቀለበት ቀን",
+        "colActions": "ድርጊቶች",
+        "deleteButton": "ሰርዝ",
+        "confirmDeleteTitle": "ተጠቃሚን ሰርዝ",
+        "confirmDeleteMessage": "{name}ን መሰረዝ እርግጠኛ ነዎት? ይህ ሊመለስ አይችልም።",
+        "confirmDelete": "ሰርዝ",
+        "cancelDelete": "ይቅር",
+        "empty": "ምንም ተጠቃሚዎች አልተገኙም።"
+      },
+      "jobs": {
+        "heading": "የስራዎች አስተዳደር",
+        "colTitle": "ርዕስ",
+        "colClient": "ደንበኛ",
+        "colCategory": "ምድብ",
+        "colStatus": "ሁኔታ",
+        "colBudget": "በጀት (ብር)",
+        "colPosted": "የተለጠፈበት ቀን",
+        "colActions": "ድርጊቶች",
+        "deleteButton": "ሰርዝ",
+        "empty": "ምንም ስራዎች አልተገኙም።"
+      },
+      "transactions": {
+        "heading": "ግብይቶች",
+        "colId": "መለያ",
+        "colUser": "ተጠቃሚ",
+        "colJob": "ስራ",
+        "colType": "አይነት",
+        "colAmount": "መጠን (ብር)",
+        "colStatus": "ሁኔታ",
+        "colDate": "ቀን",
+        "empty": "ምንም ግብይቶች አልተገኙም።",
+        "type": {
+          "escrowDeposit": "ወደ ኤስክሮው ተቀማጭ",
+          "escrowRelease": "ከኤስክሮው የተለቀቀ",
+          "withdrawal": "ገንዘብ ማውጣት"
+        }
+      },
+      "kyc": {
+        "heading": "የKYC ግምገማ",
+        "colUser": "ተጠቃሚ",
+        "colEmail": "ኢሜይል",
+        "colStatus": "ሁኔታ",
+        "colSubmitted": "የቀረበበት ቀን",
+        "colActions": "ድርጊቶች",
+        "approveButton": "አጽድቅ",
+        "rejectButton": "ውድቅ አድርግ",
+        "status": {
+          "none": "የለም",
+          "pending": "በመጠባበቅ ላይ",
+          "approved": "ጸድቋል",
+          "rejected": "ተቀባይነት አላገኘም"
+        },
+        "empty": "በመጠባበቅ ላይ ያሉ የKYC ማስገቢያዎች የሉም።"
+      },
+      "notifications": {
+        "heading": "የመድረክ ማሳወቂያ ላክ",
+        "targetLabel": "ለማን ይላክ",
+        "targetAll": "ሁሉም ተጠቃሚዎች",
+        "targetFreelancers": "ሁሉም ፍሪላንሰሮች",
+        "targetClients": "ሁሉም ደንበኞች",
+        "titleLabel": "የማሳወቂያ ርዕስ",
+        "titlePlaceholder": "ለምሳሌ፡ የመድረክ ጥገና ማሳወቂያ",
+        "messageLabel": "መልዕክት",
+        "messagePlaceholder": "የማሳወቂያ መልዕክትዎን ይጻፉ…",
+        "sendButton": "ማሳወቂያ ላክ",
+        "sending": "በመላክ ላይ…",
+        "successMessage": "ማሳወቂያው በተሳካ ሁኔታ ተልኳል።",
+        "errorMessage": "ማሳወቂያውን መላክ አልተሳካም።"
+      }
+    }
+  },
+  "common": {
+    "loading": "በመጫን ላይ…",
+    "error": "የሆነ ችግር ተፈጥሯል።",
+    "retry": "እንደገና ሞክር",
+    "notFound": "ገጹ አልተገኘም።",
+    "backHome": "ወደ መነሻ ገጽ ተመለስ",
+    "save": "አስቀምጥ",
+    "cancel": "ይቅር",
+    "delete": "ሰርዝ",
+    "edit": "አርትዕ",
+    "view": "ይመልከቱ",
+    "submit": "አስገባ",
+    "confirm": "አረጋግጥ",
+    "close": "ዝጋ",
+    "search": "ፈልግ",
+    "filter": "አጣራ",
+    "clear": "አጽዳ",
+    "next": "ቀጣይ",
+    "back": "ተመለስ",
+    "yes": "አዎ",
+    "no": "አይ",
+    "or": "ወይም",
+    "and": "እና",
+    "etb": "ብር",
+    "perHour": "/ሰዓት",
+    "verified": "የተረጋገጠ",
+    "online": "መስመር ላይ",
+    "offline": "ከመስመር ውጪ"
   }
 }

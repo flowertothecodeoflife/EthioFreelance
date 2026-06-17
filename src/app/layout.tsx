@@ -4,6 +4,8 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import SessionProviderWrapper from "@/components/SessionProviderWrapper";
 import ParallaxBackground from "@/components/ParallaxBackground";
+import { NextIntlClientProvider } from "next-intl";
+import { getMessages, getLocale } from "next-intl/server";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,23 +36,28 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const locale = await getLocale();
+  const messages = await getMessages();
+
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang={locale} suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         suppressHydrationWarning
       >
-        <SessionProviderWrapper>
-          <ThemeProvider>
-            <ParallaxBackground />
-            {children}
-          </ThemeProvider>
-        </SessionProviderWrapper>
+        <NextIntlClientProvider locale={locale} messages={messages}>
+          <SessionProviderWrapper>
+            <ThemeProvider>
+              <ParallaxBackground />
+              {children}
+            </ThemeProvider>
+          </SessionProviderWrapper>
+        </NextIntlClientProvider>
       </body>
     </html>
   );

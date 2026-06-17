@@ -1,8 +1,10 @@
 import Link from "next/link";
 import { ArrowRight, Briefcase, User } from "lucide-react";
 import BrandLogo from "@/components/BrandLogo";
+import { getTranslations } from "next-intl/server";
 
-export default function CTASection() {
+export default async function CTASection() {
+  const t = await getTranslations("cta");
   return (
     <section className="glass-section py-20">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -34,11 +36,10 @@ export default function CTASection() {
             </div>
 
             <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
-              Ready to Join Ethiopia&apos;s Freelance Revolution?
+              {t("headline")}
             </h2>
             <p className="text-emerald-200 text-lg mb-10 max-w-2xl mx-auto leading-relaxed">
-              Whether you&apos;re looking to hire top talent or find your next project,
-              EthioFreelance connects you with the best of Ethiopia.
+              {t("sub")}
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -53,7 +54,7 @@ export default function CTASection() {
                 }}
               >
                 <Briefcase className="w-5 h-5" />
-                Hire a Freelancer
+                {t("hireButton")}
                 <ArrowRight className="w-4 h-4" />
               </Link>
               <Link
@@ -68,13 +69,13 @@ export default function CTASection() {
                 }}
               >
                 <User className="w-5 h-5" />
-                Start Freelancing
+                {t("freelanceButton")}
                 <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
 
             <p className="text-emerald-400/80 text-sm mt-7">
-              Free to join • No subscription required • Pay only 1% commission
+              {t("note")}
             </p>
           </div>
         </div>

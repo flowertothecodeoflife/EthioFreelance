@@ -8,6 +8,8 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 
+import { useTranslations } from "next-intl";
+
 // ─── Constants ────────────────────────────────────────────────────────────────
 
 const PAGE_SIZE = 10;
@@ -90,6 +92,7 @@ function mapDbJob(job: any) {
 // ─── Component ────────────────────────────────────────────────────────────────
 
 export default function JobsListing({ initialJobs = [], dbHasJobs = false }: { initialJobs?: any[]; dbHasJobs?: boolean }) {
+  const t = useTranslations("jobs");
   const router       = useRouter();
   const searchParams = useSearchParams();
   const [isNavigating, startNavigating] = useTransition();
@@ -154,11 +157,11 @@ export default function JobsListing({ initialJobs = [], dbHasJobs = false }: { i
       {/* Header */}
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-green-900 mb-1">
-          {activeCat === "All" ? "Browse Jobs" : activeCat}
+          {activeCat === "All" ? t("pageTitle") : activeCat}
         </h1>
         <p className="text-gray-500 text-sm">
-          {filtered.length} job{filtered.length !== 1 ? "s" : ""}{" "}
-          {activeCat !== "All" ? `in ${activeCat}` : "available in Ethiopia"}
+          {t("resultsCount", { count: filtered.length })}{" "}
+          {activeCat !== "All" ? `in ${activeCat}` : ""}
           {isUsingMock && (
             <span className="ml-2 text-xs bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full font-medium">
               Sample data
@@ -176,7 +179,7 @@ export default function JobsListing({ initialJobs = [], dbHasJobs = false }: { i
             value={search}
             onChange={e => setSearch(e.target.value)}
             onKeyDown={e => e.key === "Enter" && handleSearch()}
-            placeholder="Search jobs by title or skill..."
+            placeholder={t("searchPlaceholder")}
             className="w-full bg-white border border-gray-200 pl-12 pr-4 py-3 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-green-400"
           />
           {search && (

@@ -4,6 +4,7 @@ import { Search, TrendingUp, Shield, Zap, Star, ArrowRight, Users, Briefcase } f
 import { useRouter } from "next/navigation";
 import { useTheme } from "@/components/ThemeProvider";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 
 interface HeroStats {
   totalFreelancers: number;
@@ -15,10 +16,7 @@ interface HeroSectionProps {
   stats?: HeroStats;
 }
 
-const popularSearches = [
-  "Web Developer", "Graphic Designer", "Amharic Translator", "Data Entry",
-  "Video Editor", "Accountant", "Tutor", "Content Writer",
-];
+
 
 /** Format a number compactly: 1500 → "1.5k+", 42 → "42" */
 function fmt(n: number): string {
@@ -45,6 +43,10 @@ export default function HeroSection({ stats }: HeroSectionProps) {
   const { theme } = useTheme();
   const router = useRouter();
   const isDark = theme === "dark";
+  const t = useTranslations("hero");
+  const ts = useTranslations("stats");
+
+  const popularItems = t("popularItems").split(",").map((s) => s.trim());
 
   const handleSearch = useCallback(() => {
     const base = activeTab === "jobs" ? "/jobs" : "/freelancers";
@@ -57,29 +59,29 @@ export default function HeroSection({ stats }: HeroSectionProps) {
   const pills = [
     {
       value: stats ? fmt(stats.totalFreelancers) : "—",
-      label: "Verified Freelancers",
-      color: "#22c55e",   // green-500
+      label: ts("freelancers"),
+      color: "#22c55e",
       pos: "-top-4 -left-6",
       icon: <Users className="w-3 h-3" style={{ color: "#22c55e" }} />,
     },
     {
       value: stats ? fmt(stats.totalJobs) : "—",
-      label: "Jobs Posted",
-      color: "#60a5fa",   // blue-400
+      label: ts("jobsPosted"),
+      color: "#60a5fa",
       pos: "-top-2 -right-8",
       icon: <Briefcase className="w-3 h-3" style={{ color: "#60a5fa" }} />,
     },
     {
       value: stats ? fmt(stats.completedJobs) : "—",
-      label: "Completed Jobs",
-      color: "#f59e0b",   // amber-400
+      label: ts("completedJobs"),
+      color: "#f59e0b",
       pos: "-bottom-2 -left-8",
       icon: <TrendingUp className="w-3 h-3" style={{ color: "#f59e0b" }} />,
     },
     {
-      value: "4.8 ★",
-      label: "Platform Rating",
-      color: "#a78bfa",   // violet-400
+      value: ts("successRateValue"),
+      label: ts("successRate"),
+      color: "#a78bfa",
       pos: "-bottom-4 -right-4",
       icon: <Star className="w-3 h-3" style={{ color: "#a78bfa" }} />,
     },
@@ -95,7 +97,7 @@ export default function HeroSection({ stats }: HeroSectionProps) {
           ══════════════════════════════════════ */}
           <div className="w-full lg:w-[55%] text-center lg:text-left">
 
-            {/* Badge — solid green bg so it pops in both day and night */}
+            {/* Badge */}
             <div
               className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-sm font-semibold mb-5"
               style={{
@@ -109,20 +111,17 @@ export default function HeroSection({ stats }: HeroSectionProps) {
                 className="w-2 h-2 rounded-sm rotate-45 animate-pulse flex-shrink-0 inline-block"
                 style={{ backgroundColor: "#4ade80" }}
               />
-              Ethiopia&apos;s #1 Freelancing Platform 🇪🇹
+              {t("badge")}
             </div>
 
             {/* Headline */}
             <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-[3.4rem] font-extrabold leading-tight mb-4 text-gray-900">
-              Find Top Ethiopian{" "}
-              <span className="text-green-600">Freelancers</span>{" "}
-              <span className="block">or Land Your Next</span>
-              <span className="text-green-600">Dream Job</span>
+              {t("headline")}{" "}
+              <span className="text-green-600">{t("headlineAccent")}</span>
             </h1>
 
             <p className="text-gray-600 text-base sm:text-lg mb-7 max-w-xl mx-auto lg:mx-0 leading-relaxed">
-              ከምርጥ ኢትዮጵያዊ ፍሪላንሰሮች ጋር ይገናኙ። Pay securely with Chapa.
-              Work in Amharic or English.
+              {t("sub")}
             </p>
 
             {/* Search Tabs */}
@@ -145,7 +144,7 @@ export default function HeroSection({ stats }: HeroSectionProps) {
                       : "text-gray-600 hover:text-green-700 hover:bg-white/40"
                   }`}
                 >
-                  {tab === "jobs" ? "Find Jobs" : "Find Freelancers"}
+                  {tab === "jobs" ? t("tabJobs") : t("tabFreelancers")}
                 </button>
               ))}
             </div>
@@ -159,7 +158,7 @@ export default function HeroSection({ stats }: HeroSectionProps) {
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
                   onKeyDown={(e) => e.key === "Enter" && handleSearch()}
-                  placeholder={activeTab === "jobs" ? "Job title or skill…" : "Freelancer skill…"}
+                  placeholder={activeTab === "jobs" ? t("searchJobPlaceholder") : t("searchFreelancerPlaceholder")}
                   className="w-full bg-white text-gray-800 pl-9 pr-3 py-3 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-green-500 shadow-sm border border-gray-200"
                 />
               </div>
@@ -171,14 +170,14 @@ export default function HeroSection({ stats }: HeroSectionProps) {
                 aria-label="Search"
               >
                 <Search className="w-4 h-4" />
-                <span className="hidden sm:inline">Search</span>
+                <span className="hidden sm:inline">{t("searchButton")}</span>
               </button>
             </div>
 
             {/* Popular searches */}
             <div className="flex flex-wrap gap-1.5 mb-8 justify-center lg:justify-start">
-              <span className="text-gray-500 text-xs self-center">Popular:</span>
-              {popularSearches.map((term) => (
+              <span className="text-gray-500 text-xs self-center">{t("popularSearches")}</span>
+              {popularItems.map((term) => (
                 <button
                   key={term}
                   onClick={() => { setQuery(term); setTimeout(handleSearch, 0); }}
@@ -198,15 +197,15 @@ export default function HeroSection({ stats }: HeroSectionProps) {
             <div className="flex flex-wrap gap-4 text-xs text-gray-500 justify-center lg:justify-start">
               <div className="flex items-center gap-1.5">
                 <Shield className="w-3.5 h-3.5 text-green-600 flex-shrink-0" />
-                Secure Chapa Payments
+                {t("trustBadge1")}
               </div>
               <div className="flex items-center gap-1.5">
                 <TrendingUp className="w-3.5 h-3.5 text-green-600 flex-shrink-0" />
-                {stats ? `${fmt(stats.totalJobs)} Active Jobs` : "10,000+ Active Jobs"}
+                {t("trustBadge2")}
               </div>
               <div className="flex items-center gap-1.5">
                 <Zap className="w-3.5 h-3.5 text-green-600 flex-shrink-0" />
-                Hire in 24 Hours
+                {t("trustBadge3")}
               </div>
             </div>
           </div>

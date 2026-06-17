@@ -8,12 +8,14 @@ import {
 } from "lucide-react";
 import { sendOtp, verifyOtp, resetPassword } from "@/app/actions/auth";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 // 3 steps: 1 = enter email, 2 = enter OTP, 3 = set new password
 type Step = 1 | 2 | 3;
 
 export default function ForgotPasswordForm() {
   const router = useRouter();
+  const t = useTranslations("auth.forgotPassword");
   const [isPending, startTransition] = useTransition();
 
   const [step, setStep]               = useState<Step>(1);
@@ -30,7 +32,7 @@ export default function ForgotPasswordForm() {
   // ── Send OTP ────────────────────────────────────────────────────────────────
   const handleSendOtp = () => {
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      setError("Please enter a valid email address.");
+      setError(t("errors.invalidEmail"));
       return;
     }
     setError("");
@@ -91,7 +93,7 @@ export default function ForgotPasswordForm() {
   // ── Verify OTP ──────────────────────────────────────────────────────────────
   const handleVerifyOtp = () => {
     const code = otp.join("");
-    if (code.length < 6) { setError("Please enter the full 6-digit code."); return; }
+    if (code.length < 6) { setError(t("errors.otpIncomplete")); return; }
     setError("");
     startTransition(async () => {
       const res = await verifyOtp(email, code, "PASSWORD_RESET");
@@ -108,11 +110,11 @@ export default function ForgotPasswordForm() {
   // ── Reset password ──────────────────────────────────────────────────────────
   const handleResetPassword = () => {
     if (!newPassword || newPassword.length < 8) {
-      setError("Password must be at least 8 characters.");
+      setError(t("errors.passwordShort"));
       return;
     }
     if (newPassword !== confirmPass) {
-      setError("Passwords do not match.");
+      setError(t("errors.passwordMismatch"));
       return;
     }
     setError("");
@@ -129,11 +131,11 @@ export default function ForgotPasswordForm() {
         <div className="w-16 h-16 bg-green-700 rounded-2xl flex items-center justify-center mx-auto mb-4">
           <KeyRound className="w-8 h-8 text-white" />
         </div>
-        <h1 className="text-3xl font-bold text-green-900 mb-2">Reset Password</h1>
+        <h1 className="text-3xl font-bold text-green-900 mb-2">{t("title")}</h1>
         <p className="text-gray-500 text-sm">
-          {step === 1 && "Enter your email to receive a verification code."}
-          {step === 2 && "Enter the 6-digit code we sent to your email."}
-          {step === 3 && "Choose a new password for your account."}
+          {step === 1 && t("sub")}
+          {step === 2 && t("otpSub", { email })}
+          {step === 3 && t("newPasswordHeading")}
         </p>
       </div>
 
@@ -160,7 +162,7 @@ export default function ForgotPasswordForm() {
           <div className="space-y-4">
             <div>
               <label className="text-sm font-medium text-gray-700 mb-1.5 block">
-                Email Address
+                {t("emailLabel")}
               </label>
               <div className="relative">
                 <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
@@ -169,7 +171,7 @@ export default function ForgotPasswordForm() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   onKeyDown={(e) => e.key === "Enter" && handleSendOtp()}
-                  placeholder="abebe@example.com"
+                  placeholder={t("emailPlaceholder")}
                   className="w-full border border-gray-200 pl-10 pr-4 py-3 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-green-400"
                 />
               </div>
@@ -181,8 +183,8 @@ export default function ForgotPasswordForm() {
               className="w-full bg-green-700 text-white font-bold py-3 rounded-xl hover:bg-green-800 transition-colors flex items-center justify-center gap-2 disabled:opacity-60"
             >
               {isPending
-                ? <><Loader2 className="w-4 h-4 animate-spin" /> Sending...</>
-                : <>Send Reset Code <ArrowRight className="w-4 h-4" /></>
+                ? <><Loader2 className="w-4 h-4 animate-spin" /> {t("sending")}</>
+                : <>{t("sendButton")} <ArrowRight className="w-4 h-4" /></>
               }
             </button>
           </div>
@@ -196,13 +198,12 @@ export default function ForgotPasswordForm() {
                 <ShieldCheck className="w-6 h-6 text-green-700" />
               </div>
               <p className="text-sm text-gray-500">
-                Code sent to <strong className="text-gray-800">{email}</strong>
+                {t("otpHeading")} <strong className="text-gray-800">{email}</strong>
               </p>
-            </div>
 
             <div>
               <label className="text-sm font-medium text-gray-700 mb-3 block text-center">
-                Enter 6-digit code
+                {t("otpLabel")}
               </label>
               <div className="flex gap-2 justify-center" onPaste={handleOtpPaste}>
                 {otp.map((digit, i) => (
@@ -229,12 +230,12 @@ export default function ForgotPasswordForm() {
               disabled={isPending || otp.join("").length < 6}
               className="w-full bg-green-700 text-white font-bold py-3 rounded-xl hover:bg-green-800 transition-colors flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
             >
-              {isPending ? <><Loader2 className="w-4 h-4 animate-spin" /> Verifying...</> : "Verify Code"}
+              {isPending ? <><Loader2 className="w-4 h-4 animate-spin" /> {t("verifying")}</> : t("verifyButton")}
             </button>
 
             <div className="text-center">
               {resendCooldown > 0 ? (
-                <p className="text-xs text-gray-400">Resend in {resendCooldown}s</p>
+                <p className="text-xs text-gray-400">{t("resendCooldown", { seconds: resendCooldown })}</p>
               ) : (
                 <button
                   type="button"
@@ -242,7 +243,7 @@ export default function ForgotPasswordForm() {
                   disabled={isPending}
                   className="text-sm text-green-700 hover:underline font-medium flex items-center gap-1 mx-auto disabled:opacity-50"
                 >
-                  <RefreshCw className="w-3.5 h-3.5" /> Resend code
+                  <RefreshCw className="w-3.5 h-3.5" /> {t("resend")}
                 </button>
               )}
             </div>
@@ -252,7 +253,7 @@ export default function ForgotPasswordForm() {
               onClick={() => { setStep(1); setOtp(["","","","","",""]); setError(""); }}
               className="w-full text-sm text-gray-400 hover:text-gray-600 transition-colors"
             >
-              ← Use a different email
+              ← {t("backToLogin")}
             </button>
           </div>
         )}
@@ -267,14 +268,14 @@ export default function ForgotPasswordForm() {
 
             <div>
               <label className="text-sm font-medium text-gray-700 mb-1.5 block">
-                New Password <span className="text-red-500">*</span>
+                {t("newPasswordLabel")} <span className="text-red-500">*</span>
               </label>
               <div className="relative">
                 <input
                   type={showPass ? "text" : "password"}
                   value={newPassword}
                   onChange={(e) => setNewPassword(e.target.value)}
-                  placeholder="Min. 8 characters"
+                  placeholder={t("newPasswordPlaceholder")}
                   className="w-full border border-gray-200 px-4 py-3 pr-10 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-green-400"
                 />
                 <button type="button" onClick={() => setShowPass(!showPass)} className="absolute right-3 top-1/2 -translate-y-1/2">
@@ -285,14 +286,14 @@ export default function ForgotPasswordForm() {
 
             <div>
               <label className="text-sm font-medium text-gray-700 mb-1.5 block">
-                Confirm Password <span className="text-red-500">*</span>
+                {t("confirmPasswordLabel")} <span className="text-red-500">*</span>
               </label>
               <div className="relative">
                 <input
                   type={showConfirm ? "text" : "password"}
                   value={confirmPass}
                   onChange={(e) => setConfirmPass(e.target.value)}
-                  placeholder="Repeat your password"
+                  placeholder={t("confirmPasswordPlaceholder")}
                   className={`w-full border px-4 py-3 pr-10 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-green-400 ${
                     confirmPass && confirmPass !== newPassword ? "border-red-300 bg-red-50" : "border-gray-200"
                   }`}
@@ -302,7 +303,7 @@ export default function ForgotPasswordForm() {
                 </button>
               </div>
               {confirmPass && confirmPass !== newPassword && (
-                <p className="text-xs text-red-600 mt-1">Passwords do not match</p>
+                <p className="text-xs text-red-600 mt-1">{t("errors.passwordMismatch")}</p>
               )}
             </div>
 
@@ -313,8 +314,8 @@ export default function ForgotPasswordForm() {
               className="w-full bg-green-700 text-white font-bold py-3 rounded-xl hover:bg-green-800 transition-colors flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
             >
               {isPending
-                ? <><Loader2 className="w-4 h-4 animate-spin" /> Updating...</>
-                : "Set New Password"
+                ? <><Loader2 className="w-4 h-4 animate-spin" /> {t("resetting")}</>
+                : t("resetButton")
               }
             </button>
           </div>
@@ -322,8 +323,8 @@ export default function ForgotPasswordForm() {
       </div>
 
       <p className="text-center text-sm text-gray-500 mt-6">
-        Remember your password?{" "}
-        <Link href="/login" className="text-green-700 font-semibold hover:underline">Sign In</Link>
+        {t("rememberPassword")}{" "}
+        <Link href="/login" className="text-green-700 font-semibold hover:underline">{t("signIn")}</Link>
       </p>
     </div>
   );

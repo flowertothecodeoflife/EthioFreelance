@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Star, CheckCircle, ArrowRight, Briefcase } from "lucide-react";
 import ScrollStrip from "@/components/ui/ScrollStrip";
+import { useTranslations } from "next-intl";
 
 interface FreelancerItem {
   id: string;
@@ -50,6 +51,7 @@ const MOCK: FreelancerItem[] = [
 ];
 
 export default function FeaturedFreelancers({ freelancers }: Props) {
+  const t = useTranslations("featuredFreelancers");
   const list = freelancers && freelancers.length > 0 ? freelancers : MOCK;
   const isLive = freelancers && freelancers.length > 0;
 
@@ -59,9 +61,9 @@ export default function FeaturedFreelancers({ freelancers }: Props) {
 
         <div className="flex items-end justify-between mb-10">
           <div>
-            <h2 className="text-3xl font-bold text-gray-900 mb-2">Top Freelancers</h2>
+            <h2 className="text-3xl font-bold text-gray-900 mb-2">{t("sectionTitle")}</h2>
             <p className="text-gray-500">
-              Verified professionals ready to work on your project
+              {t("sectionSub")}
               {isLive && (
                 <span
                   className="ml-2 text-xs font-medium px-2 py-0.5 rounded-full"
@@ -86,7 +88,7 @@ export default function FeaturedFreelancers({ freelancers }: Props) {
               border: "1px solid rgba(255,255,255,0.55)",
             }}
           >
-            View all <ArrowRight className="w-3.5 h-3.5" />
+            {t("viewAll")} <ArrowRight className="w-3.5 h-3.5" />
           </Link>
         </div>
 
@@ -129,7 +131,7 @@ export default function FeaturedFreelancers({ freelancers }: Props) {
                       </div>
                       <p className="text-xs text-gray-500 truncate mt-0.5">{title}</p>
                       {f.isOnline
-                        ? <span className="text-[10px] text-emerald-400 font-medium">● Online</span>
+                        ? <span className="text-[10px] text-emerald-400 font-medium">● {t("online")}</span>
                         : <span className="text-[10px] text-gray-400">● Offline</span>
                       }
                     </div>
@@ -179,9 +181,13 @@ export default function FeaturedFreelancers({ freelancers }: Props) {
                       )}
                     </div>
                     <div className="text-right">
-                      <div className="text-xs font-bold text-emerald-500">{formatRate(hourlyRate)}</div>
+                      <div className="text-xs font-bold text-emerald-500">
+                        {hourlyRate && hourlyRate > 0
+                          ? t("hourlyRate", { rate: hourlyRate.toLocaleString() })
+                          : "Negotiable"}
+                      </div>
                       <div className="text-[10px] text-gray-400 flex items-center gap-0.5 justify-end">
-                        <Briefcase className="w-2.5 h-2.5" /> {completedJobs} jobs
+                        <Briefcase className="w-2.5 h-2.5" /> {t("completedJobs", { count: completedJobs })}
                       </div>
                     </div>
                   </div>
@@ -203,7 +209,7 @@ export default function FeaturedFreelancers({ freelancers }: Props) {
               }}
             >
               <ArrowRight className="w-8 h-8" />
-              <span className="text-sm font-bold">Browse all freelancers</span>
+              <span className="text-sm font-bold">{t("viewAll")}</span>
             </div>
           </Link>
         </ScrollStrip>
