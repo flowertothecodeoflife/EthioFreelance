@@ -25,6 +25,9 @@ export async function uploadAvatar(
   const ext  = mimeType === "image/png" ? "png" : mimeType === "image/webp" ? "webp" : "jpg";
   const path = `${userId}.${ext}`;
 
+  // Convert Buffer → Uint8Array so it satisfies the BodyInit type in all TS targets
+  const body = new Uint8Array(buffer.buffer, buffer.byteOffset, buffer.byteLength);
+
   const res = await fetch(
     `${SUPABASE_URL}/storage/v1/object/${BUCKET}/${path}`,
     {
@@ -34,7 +37,7 @@ export async function uploadAvatar(
         "Content-Type":   mimeType,
         "x-upsert":       "true",  // overwrite existing
       },
-      body: buffer,
+      body,
     }
   );
 
