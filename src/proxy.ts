@@ -38,12 +38,6 @@ export const proxy = auth((req) => {
       const loginUrl = new URL("/admin/login", nextUrl.origin);
       return NextResponse.redirect(loginUrl);
     }
-  } else {
-    if (req.cookies.has("admin_session")) {
-      const response = NextResponse.next();
-      response.cookies.delete("admin_session");
-      return response;
-    }
   }
 
   // ── Locale persistence ─────────────────────────────────────────────────

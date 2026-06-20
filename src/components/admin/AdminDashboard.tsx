@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition, useMemo } from "react";
+import React, { useState, useTransition, useMemo } from "react";
 import {
   Users, Briefcase, DollarSign, AlertTriangle, TrendingUp,
   CheckCircle, XCircle, Eye, Shield, Flag, BarChart3,
@@ -602,9 +602,8 @@ function JobsTab({ initialJobs }: { initialJobs: AdminJob[] }) {
                   const isExpanded = expandedId === job.id;
 
                   return (
-                    <>
+                    <React.Fragment key={job.id}>
                       <tr
-                        key={job.id}
                         className={`hover:bg-gray-50/50 transition-colors ${isLoading ? "opacity-60" : ""}`}
                       >
                         {/* Title + category */}
@@ -715,7 +714,7 @@ function JobsTab({ initialJobs }: { initialJobs: AdminJob[] }) {
 
                       {/* Expanded row — description + skills */}
                       {isExpanded && (
-                        <tr key={`${job.id}-expanded`} className="bg-gray-50/60">
+                        <tr className="bg-gray-50/60">
                           <td colSpan={7} className="px-5 py-4">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                               <div>
@@ -740,7 +739,7 @@ function JobsTab({ initialJobs }: { initialJobs: AdminJob[] }) {
                           </td>
                         </tr>
                       )}
-                    </>
+                    </React.Fragment>
                   );
                 })}
               </tbody>

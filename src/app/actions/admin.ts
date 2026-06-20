@@ -5,14 +5,16 @@ import { cookies } from "next/headers";
 import { KycStatus, JobStatus } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 
+import { verifyAdminSession } from "@/lib/adminSession";
+
 // ─── Auth guard ───────────────────────────────────────────────────────────────
-// Admin routes use a cookie-based session (separate from NextAuth).
-// Every action verifies this before touching the DB.
+// Admin routes use a HMAC-signed cookie session (separate from NextAuth).
+// Every action verifies the signature before touching the DB.
 
 async function requireAdminSession(): Promise<void> {
   const cookieStore = await cookies();
   const session = cookieStore.get("admin_session")?.value;
-  if (session !== "authenticated") {
+  if (!verifyAdminSession(session)) {
     throw new Error("Unauthorized: admin session required.");
   }
 }

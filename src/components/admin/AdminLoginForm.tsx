@@ -14,7 +14,6 @@ export default function AdminLoginForm() {
   useEffect(() => {
     if (state?.success) {
       router.push("/admin");
-      router.refresh();
     }
   }, [state, router]);
 
