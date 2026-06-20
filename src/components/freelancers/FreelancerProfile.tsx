@@ -129,6 +129,8 @@ export default function FreelancerProfile({ freelancer }: FreelancerProfileProps
                 {avatar}
               </div>
             )}
+
+            <div className="flex items-center justify-center gap-2 mb-1">
               <h1 className="text-xl font-bold text-gray-900">{freelancer.name}</h1>
               {isVerified && (
                 <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" aria-label="KYC Verified" />
@@ -145,7 +147,7 @@ export default function FreelancerProfile({ freelancer }: FreelancerProfileProps
                 <span className="text-gray-400 text-sm">({completedJobs} jobs)</span>
               </div>
             ) : (
-              <p className="text-sm text-gray-400 mb-4">No ratings yet</p>
+              <p className="text-sm text-gray-400 mb-4">{t("noReviews")}</p>
             )}
 
             {/* CTA buttons */}
