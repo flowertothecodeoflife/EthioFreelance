@@ -25,17 +25,17 @@ export async function uploadAvatar(
   const ext  = mimeType === "image/png" ? "png" : mimeType === "image/webp" ? "webp" : "jpg";
   const path = `${userId}.${ext}`;
 
-  // Convert Buffer → Uint8Array so it satisfies the BodyInit type in all TS targets
-  const body = new Uint8Array(buffer.buffer, buffer.byteOffset, buffer.byteLength);
+  // Blob is universally valid as BodyInit across all TS DOM lib versions
+  const body = new Blob([buffer], { type: mimeType });
 
   const res = await fetch(
     `${SUPABASE_URL}/storage/v1/object/${BUCKET}/${path}`,
     {
       method:  "POST",
       headers: {
-        "Authorization":  `Bearer ${SUPABASE_SERVICE_KEY}`,
-        "Content-Type":   mimeType,
-        "x-upsert":       "true",  // overwrite existing
+        "Authorization": `Bearer ${SUPABASE_SERVICE_KEY}`,
+        "Content-Type":  mimeType,
+        "x-upsert":      "true",
       },
       body,
     }
