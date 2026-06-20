@@ -3,7 +3,7 @@
  * Uses the service role key so uploads work from server actions.
  *
  * Required env vars (add to .env.local):
- *   SUPABASE_URL        = https://<project-ref>.supabase.co
+ *   SUPABASE_URL         = https://<project-ref>.supabase.co
  *   SUPABASE_SERVICE_KEY = <service_role_jwt>
  *
  * Create a bucket called "avatars" in Supabase → Storage with:
@@ -12,21 +12,22 @@
  *   - Allowed MIME: image/jpeg, image/png, image/webp
  */
 
-const SUPABASE_URL       = process.env.SUPABASE_URL!;
+const SUPABASE_URL        = process.env.SUPABASE_URL!;
 const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_KEY!;
-const BUCKET              = "avatars";
+const BUCKET               = "avatars";
 
-/** Upload a file buffer and return the public URL. */
+/**
+ * Upload a file and return the public URL.
+ * Accepts a plain ArrayBuffer so the DOM BodyInit type is satisfied
+ * without any Buffer/Uint8Array conversion issues.
+ */
 export async function uploadAvatar(
   userId: string,
-  buffer: Buffer,
+  arrayBuffer: ArrayBuffer,
   mimeType: string
 ): Promise<string> {
   const ext  = mimeType === "image/png" ? "png" : mimeType === "image/webp" ? "webp" : "jpg";
   const path = `${userId}.${ext}`;
-
-  // Blob is universally valid as BodyInit across all TS DOM lib versions
-  const body = new Blob([buffer], { type: mimeType });
 
   const res = await fetch(
     `${SUPABASE_URL}/storage/v1/object/${BUCKET}/${path}`,
@@ -37,7 +38,7 @@ export async function uploadAvatar(
         "Content-Type":  mimeType,
         "x-upsert":      "true",
       },
-      body,
+      body: arrayBuffer,
     }
   );
 
@@ -46,13 +47,11 @@ export async function uploadAvatar(
     throw new Error(`Supabase upload failed: ${err}`);
   }
 
-  // Construct public URL
   return `${SUPABASE_URL}/storage/v1/object/public/${BUCKET}/${path}`;
 }
 
-/** Delete the avatar file from storage. */
+/** Delete the avatar file from storage (tries all extensions). */
 export async function deleteAvatar(userId: string): Promise<void> {
-  // Try both extensions
   for (const ext of ["jpg", "png", "webp"]) {
     await fetch(
       `${SUPABASE_URL}/storage/v1/object/${BUCKET}/${userId}.${ext}`,

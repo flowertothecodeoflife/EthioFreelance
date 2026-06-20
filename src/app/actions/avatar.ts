@@ -23,8 +23,8 @@ export async function updateAvatarAction(formData: FormData) {
     if (file.size > MAX_BYTES)
       return { error: `File too large. Maximum size is 2 MB.` };
 
-    const buffer    = Buffer.from(await file.arrayBuffer());
-    const publicUrl = await uploadAvatar(userId, buffer, file.type);
+    const arrayBuffer = await file.arrayBuffer();
+    const publicUrl   = await uploadAvatar(userId, arrayBuffer, file.type);
 
     await prisma.user.update({
       where: { id: userId },
