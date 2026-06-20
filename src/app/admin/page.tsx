@@ -4,6 +4,7 @@ import AdminNavbar from "@/components/admin/AdminNavbar";
 import AdminDashboard from "@/components/admin/AdminDashboard";
 import Footer from "@/components/Footer";
 import { getUsers, getDashboardStats, getAllJobs, getAllTransactions } from "@/app/actions/admin";
+import { verifyAdminSession } from "@/lib/adminSession";
 
 export const metadata = { title: "Admin Dashboard | EthioFreelance" };
 
@@ -11,7 +12,7 @@ export default async function AdminPage() {
   const cookieStore = await cookies();
   const adminSession = cookieStore.get("admin_session")?.value;
 
-  if (adminSession !== "authenticated") {
+  if (!verifyAdminSession(adminSession)) {
     redirect("/admin/login");
   }
 
