@@ -2,28 +2,7 @@
 
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { createHmac, timingSafeEqual } from "crypto";
-
-// Derive a signing secret from env — falls back to a dev-only value
-const ADMIN_SECRET = process.env.ADMIN_SESSION_SECRET ?? "dev-secret-change-in-prod";
-
-function sign(value: string): string {
-  return createHmac("sha256", ADMIN_SECRET).update(value).digest("hex");
-}
-
-export function verifyAdminSession(cookieValue: string | undefined): boolean {
-  if (!cookieValue) return false;
-  const parts = cookieValue.split(".");
-  if (parts.length !== 2) return false;
-  const [payload, sig] = parts;
-  try {
-    const expected = sign(payload);
-    // timingSafeEqual prevents timing attacks
-    return timingSafeEqual(Buffer.from(sig, "hex"), Buffer.from(expected, "hex"));
-  } catch {
-    return false;
-  }
-}
+import { sign } from "@/lib/adminSession";
 
 export async function loginAdmin(prevState: any, formData: FormData) {
   try {
@@ -41,7 +20,7 @@ export async function loginAdmin(prevState: any, formData: FormData) {
       return { error: "Invalid username or password." };
     }
 
-    // Sign the payload so the cookie can't be forged by setting it to "authenticated"
+    // Sign the payload so the cookie can't be forged
     const payload = "authenticated";
     const sessionValue = `${payload}.${sign(payload)}`;
 
