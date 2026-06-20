@@ -51,19 +51,17 @@ export default async function CategoriesSection({ catCounts = {} }: Props) {
         </div>
 
         <ScrollStrip className="-mx-4 px-4 sm:-mx-0 sm:px-0">
-          {CATEGORIES.map(({ icon: Icon, tKey, label, key, color, href }) => {
+          {CATEGORIES.filter(({ key }) => (catCounts[key] ?? 0) > 0).map(({ icon: Icon, tKey, label, key, color, href }) => {
             const count = catCounts[key] ?? 0;
             const displayLabel = tKey ? t(`items.${tKey}`) : label;
             return (
               <Link key={label} href={href} className="group flex-shrink-0 snap-start w-40 sm:w-44">
                 <div className="glass-card rounded-2xl p-5 h-full flex flex-col items-center text-center gap-3">
-                  {/* Icon bubble — scale only on pointer devices to prevent mobile tap delay */}
                   <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${color} flex items-center justify-center shadow-lg transition-transform duration-200 [@media(hover:hover)]:group-hover:scale-110`}>
                     <Icon className="w-7 h-7 text-white" />
                   </div>
                   <div>
                     <div className="text-sm font-semibold text-gray-800 leading-tight mb-1.5">{displayLabel}</div>
-                    {/* Count pill */}
                     <span
                       className="text-xs font-semibold px-2.5 py-0.5 rounded-full"
                       style={{
@@ -74,7 +72,7 @@ export default async function CategoriesSection({ catCounts = {} }: Props) {
                         color: "inherit",
                       }}
                     >
-                      {count > 0 ? t("jobsCount", { count }) : "Browse"}
+                      {t("jobsCount", { count })}
                     </span>
                   </div>
                 </div>

@@ -15,6 +15,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   // Explicitly pass the secret so NextAuth finds it regardless of
   // whether Vercel has it as AUTH_SECRET or NEXTAUTH_SECRET
   secret: process.env.AUTH_SECRET ?? process.env.NEXTAUTH_SECRET,
+  // Required in local dev and behind proxies (Vercel sets this automatically)
+  trustHost: true,
   providers: [
     Credentials({
       name: "Credentials",

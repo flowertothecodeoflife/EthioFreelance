@@ -102,50 +102,36 @@ export default function FreelancersListing({ initialFreelancers = [] }: Freelanc
   const [selectedCat, setSelectedCat] = useState("All Skills");
   const [selectedLoc, setSelectedLoc] = useState("All Ethiopia");
   const [selectedRate, setSelectedRate] = useState("Any Rate");
-  const [verifiedOnly, setVerifiedOnly] = useState(false);
   const [availableOnly, setAvailableOnly] = useState(false);
   const [showFilters, setShowFilters]   = useState(false);
   const [sortBy, setSortBy]             = useState("rating");
 
   const rateRange = RATE_RANGES.find((r) => r.label === selectedRate) ?? RATE_RANGES[0];
 
-  // ── Filter + sort (memoised so it only recalculates when deps change) ────────
+  // ── Filter + sort ────────────────────────────────────────────────────────────
   const filtered = useMemo(() => {
     let list = source.filter((f) => {
       const skills = f.profile?.skills ?? [];
       const title  = f.profile?.title  ?? "";
       const rate   = f.profile?.hourlyRate ?? 0;
 
-      // Search: name, title, or any skill
       const matchSearch =
         !search ||
         f.name.toLowerCase().includes(search.toLowerCase()) ||
         title.toLowerCase().includes(search.toLowerCase()) ||
         skills.some((s) => s.toLowerCase().includes(search.toLowerCase()));
 
-      // Category: check if any of the freelancer's skills match the category's keyword list
       const matchCat =
         selectedCat === "All Skills" ||
         (CATEGORY_SKILL_MAP[selectedCat] ?? []).some((kw) =>
           skills.some((s) => s.toLowerCase().includes(kw.toLowerCase()))
         );
 
-      // Location: DB freelancers don't have a location field — skip this filter for DB data
-      // For mock data the location is embedded; for DB data we show all
-      const matchLoc =
-        selectedLoc === "All Ethiopia" ||
-        isUsingMock; // DB freelancers have no location field yet — show all
-
-      // Rate range
+      const matchLoc = selectedLoc === "All Ethiopia" || isUsingMock;
       const matchRate = rate >= rateRange.min && rate <= rateRange.max;
-
-      // KYC verified
-      const matchVerified = !verifiedOnly || f.kycStatus === "APPROVED";
-
-      // Online / available
       const matchAvailable = !availableOnly || f.isOnline;
 
-      return matchSearch && matchCat && matchLoc && matchRate && matchVerified && matchAvailable;
+      return matchSearch && matchCat && matchLoc && matchRate && matchAvailable;
     });
 
     // Sort
@@ -158,7 +144,7 @@ export default function FreelancersListing({ initialFreelancers = [] }: Freelanc
     });
 
     return list;
-  }, [source, search, selectedCat, selectedLoc, rateRange, verifiedOnly, availableOnly, sortBy, isUsingMock]);
+  }, [source, search, selectedCat, selectedLoc, rateRange, availableOnly, sortBy, isUsingMock]);
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -169,7 +155,7 @@ export default function FreelancersListing({ initialFreelancers = [] }: Freelanc
           {t("resultsCount", { count: filtered.length })}
           {isUsingMock && (
             <span className="ml-2 text-xs bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full font-medium">
-              Sample data
+              {t("anyRating")}
             </span>
           )}
         </p>
@@ -200,15 +186,15 @@ export default function FreelancersListing({ initialFreelancers = [] }: Freelanc
               : "bg-white border-gray-200 text-gray-700 hover:border-green-400"
           }`}
         >
-          <SlidersHorizontal className="w-4 h-4" /> Filters
+          <SlidersHorizontal className="w-4 h-4" /> {t("filterSkill")}
         </button>
       </div>
 
       {/* Filters panel */}
       {showFilters && (
-        <div className="bg-white border border-gray-200 rounded-2xl p-5 mb-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="bg-white border border-gray-200 rounded-2xl p-5 mb-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           <div>
-            <label className="text-xs font-semibold text-gray-500 mb-1.5 block">LOCATION</label>
+            <label className="text-xs font-semibold text-gray-500 mb-1.5 block">{t("filterRating")}</label>
             <select
               value={selectedLoc}
               onChange={(e) => setSelectedLoc(e.target.value)}
@@ -219,7 +205,7 @@ export default function FreelancersListing({ initialFreelancers = [] }: Freelanc
           </div>
 
           <div>
-            <label className="text-xs font-semibold text-gray-500 mb-1.5 block">HOURLY RATE</label>
+            <label className="text-xs font-semibold text-gray-500 mb-1.5 block">{t("filterRate")}</label>
             <select
               value={selectedRate}
               onChange={(e) => setSelectedRate(e.target.value)}
@@ -230,16 +216,16 @@ export default function FreelancersListing({ initialFreelancers = [] }: Freelanc
           </div>
 
           <div>
-            <label className="text-xs font-semibold text-gray-500 mb-1.5 block">SORT BY</label>
+            <label className="text-xs font-semibold text-gray-500 mb-1.5 block">{t("filterSkill")}</label>
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
               className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-400"
             >
-              <option value="rating">Highest Rated</option>
-              <option value="rate-high">Rate: High to Low</option>
-              <option value="rate-low">Rate: Low to High</option>
-              <option value="jobs">Most Jobs Completed</option>
+              <option value="rating">{t("rating")} ▲</option>
+              <option value="rate-high">{t("hourlyRate", { rate: "↓" })}</option>
+              <option value="rate-low">{t("hourlyRate", { rate: "↑" })}</option>
+              <option value="jobs">{t("completedJobs", { count: 0 })}</option>
             </select>
           </div>
 
@@ -247,20 +233,11 @@ export default function FreelancersListing({ initialFreelancers = [] }: Freelanc
             <label className="flex items-center gap-2 cursor-pointer select-none">
               <input
                 type="checkbox"
-                checked={verifiedOnly}
-                onChange={(e) => setVerifiedOnly(e.target.checked)}
-                className="w-4 h-4 accent-green-600 rounded"
-              />
-              <span className="text-sm text-gray-700">KYC Verified Only</span>
-            </label>
-            <label className="flex items-center gap-2 cursor-pointer select-none">
-              <input
-                type="checkbox"
                 checked={availableOnly}
                 onChange={(e) => setAvailableOnly(e.target.checked)}
                 className="w-4 h-4 accent-green-600 rounded"
               />
-              <span className="text-sm text-gray-700">Online Now</span>
+              <span className="text-sm text-gray-700">{t("online")}</span>
             </label>
           </div>
         </div>
@@ -290,10 +267,10 @@ export default function FreelancersListing({ initialFreelancers = [] }: Freelanc
           <p className="text-lg font-medium">{t("emptyTitle")}</p>
           <p className="text-sm mt-1">{t("emptySub")}</p>
           <button
-            onClick={() => { setSearch(""); setSelectedCat("All Skills"); setSelectedLoc("All Ethiopia"); setSelectedRate("Any Rate"); setVerifiedOnly(false); setAvailableOnly(false); }}
+            onClick={() => { setSearch(""); setSelectedCat("All Skills"); setSelectedLoc("All Ethiopia"); setSelectedRate("Any Rate"); setAvailableOnly(false); }}
             className="mt-4 text-sm text-green-700 font-semibold hover:underline"
           >
-            Clear all filters
+            {t("allSkills")}
           </button>
         </div>
       ) : (
@@ -329,17 +306,13 @@ export default function FreelancersListing({ initialFreelancers = [] }: Freelanc
                       <h3 className="font-semibold text-gray-900 group-hover:text-green-700 transition-colors truncate">
                         {f.name}
                       </h3>
-                      {isVerified && (
-                        <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0" aria-label="KYC Verified" />
-                      )}
                     </div>
                     <p className="text-sm text-gray-500 truncate">{title}</p>
-                    {/* DB freelancers don't have location yet — show online status instead */}
                     <div className="flex items-center gap-1 mt-1">
                       {f.isOnline ? (
-                        <span className="text-xs text-green-500 font-medium">● Online</span>
+                        <span className="text-xs text-green-500 font-medium">● {t("online")}</span>
                       ) : (
-                        <span className="text-xs text-gray-400">● Offline</span>
+                        <span className="text-xs text-gray-400">● {t("offline")}</span>
                       )}
                     </div>
                   </div>
@@ -358,7 +331,7 @@ export default function FreelancersListing({ initialFreelancers = [] }: Freelanc
                     </span>
                   )}
                   {skills.length === 0 && (
-                    <span className="text-xs text-gray-400 italic">No skills listed</span>
+                    <span className="text-xs text-gray-400 italic">{t("anyRate")}</span>
                   )}
                 </div>
 

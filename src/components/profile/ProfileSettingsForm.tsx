@@ -3,6 +3,7 @@ import { useState, useTransition } from "react";
 import { updateFreelancerProfile } from "@/app/actions/profile";
 import { Briefcase, DollarSign, BookOpen, Tag, Plus, X, Award, CheckCircle, AlertCircle } from "lucide-react";
 import { useTranslations } from "next-intl";
+import AvatarUpload from "./AvatarUpload";
 
 interface ProfileSettingsFormProps {
   initialData: {
@@ -10,6 +11,8 @@ interface ProfileSettingsFormProps {
     bio: string;
     skills: string[];
     hourlyRate: number;
+    avatarUrl?: string | null;
+    name?: string;
   };
 }
 
@@ -76,6 +79,12 @@ export default function ProfileSettingsForm({ initialData }: ProfileSettingsForm
           <p className="text-gray-500 text-xs">{t("pageSub")}</p>
         </div>
       </div>
+
+      {/* Avatar upload */}
+      <AvatarUpload
+        currentUrl={initialData.avatarUrl ?? null}
+        name={initialData.name ?? "User"}
+      />
 
       {success && (
         <div className="mb-6 p-4 bg-green-50 border border-green-200 text-green-800 text-sm rounded-2xl flex items-center gap-3 animate-fade-in">

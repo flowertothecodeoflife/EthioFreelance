@@ -7,6 +7,7 @@ import {
   Clock, Award, ChevronRight, ExternalLink,
   User, Phone, Mail, Calendar, Layers,
 } from "lucide-react";
+import Image from "next/image";
 import { useTranslations } from "next-intl";
 
 // ─── Types (match getFreelancerProfile return shape) ─────────────────────────
@@ -17,6 +18,7 @@ export interface FreelancerData {
   email: string;
   phone: string | null;
   kycStatus: string;
+  avatarUrl?: string | null;
   createdAt: string | Date;
   profile: {
     id: string;
@@ -57,11 +59,6 @@ function memberSince(date: string | Date): string {
   return new Date(date).toLocaleDateString("en-US", { month: "long", year: "numeric" });
 }
 
-function formatRate(rate: number | null): string {
-  if (!rate || rate === 0) return "Negotiable";
-  return `ETB ${rate.toLocaleString()}/hr`;
-}
-
 // Star row helper
 function StarRow({ rating, size = "sm" }: { rating: number; size?: "sm" | "md" }) {
   const cls = size === "md" ? "w-5 h-5" : "w-4 h-4";
@@ -83,7 +80,6 @@ export default function FreelancerProfile({ freelancer }: FreelancerProfileProps
   const t = useTranslations("freelancerProfile");
   const [activeTab, setActiveTab] = useState("Overview");
 
-  // Derived values — all from real data with safe fallbacks
   const profile       = freelancer.profile;
   const title         = profile?.title         ?? "Freelancer";
   const bio           = profile?.bio           ?? null;
@@ -96,7 +92,8 @@ export default function FreelancerProfile({ freelancer }: FreelancerProfileProps
   const avatar        = initials(freelancer.name);
   const joined        = memberSince(freelancer.createdAt);
 
-  const tabs = ["Overview", "Portfolio", "Reviews"];
+  const tabKeys   = ["Overview", "Portfolio", "Reviews"] as const;
+  const tabLabels = [t("tabAbout"), t("tabPortfolio"), t("tabReviews")];
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -116,11 +113,22 @@ export default function FreelancerProfile({ freelancer }: FreelancerProfileProps
 
           {/* Profile card */}
           <div className="bg-white rounded-2xl border border-gray-100 p-6 text-center">
-            <div className={`w-24 h-24 ${color} rounded-2xl flex items-center justify-center text-white font-bold text-3xl mx-auto mb-4 shadow-md`}>
-              {avatar}
-            </div>
-
-            <div className="flex items-center justify-center gap-2 mb-1">
+            {freelancer.avatarUrl ? (
+              <div className="w-24 h-24 rounded-2xl overflow-hidden mx-auto mb-4 shadow-md border-2 border-green-100">
+                <Image
+                  src={freelancer.avatarUrl}
+                  alt={freelancer.name}
+                  width={96}
+                  height={96}
+                  className="w-full h-full object-cover"
+                  unoptimized
+                />
+              </div>
+            ) : (
+              <div className={`w-24 h-24 ${color} rounded-2xl flex items-center justify-center text-white font-bold text-3xl mx-auto mb-4 shadow-md`}>
+                {avatar}
+              </div>
+            )}
               <h1 className="text-xl font-bold text-gray-900">{freelancer.name}</h1>
               {isVerified && (
                 <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" aria-label="KYC Verified" />
@@ -146,36 +154,36 @@ export default function FreelancerProfile({ freelancer }: FreelancerProfileProps
                 href="/messages"
                 className="flex-1 bg-green-700 text-white font-semibold py-2.5 rounded-xl hover:bg-green-800 transition-colors text-sm flex items-center justify-center gap-1.5"
               >
-                <MessageSquare className="w-4 h-4" /> Message
+                <MessageSquare className="w-4 h-4" /> {t("messageButton")}
               </Link>
               <Link
                 href="/post-job"
                 className="flex-1 border border-green-700 text-green-700 font-semibold py-2.5 rounded-xl hover:bg-green-50 transition-colors text-sm flex items-center justify-center"
               >
-                Hire Now
+                {t("hireButton", { name: freelancer.name.split(" ")[0] })}
               </Link>
             </div>
           </div>
 
           {/* Stats card */}
           <div className="bg-white rounded-2xl border border-gray-100 p-5">
-            <h3 className="font-semibold text-gray-900 mb-4">Stats</h3>
+            <h3 className="font-semibold text-gray-900 mb-4">{t("skillsHeading")}</h3>
             <div className="space-y-3">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2 text-sm text-gray-500">
-                  <Briefcase className="w-4 h-4 text-green-600" /> Jobs Completed
+                  <Briefcase className="w-4 h-4 text-green-600" /> {t("completedJobs", { count: completedJobs })}
                 </div>
                 <span className="text-sm font-semibold text-gray-800">{completedJobs}</span>
               </div>
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2 text-sm text-gray-500">
-                  <Award className="w-4 h-4 text-green-600" /> Member Since
+                  <Award className="w-4 h-4 text-green-600" /> {t("memberSince", { date: "" }).split(" ")[0]}
                 </div>
                 <span className="text-sm font-semibold text-gray-800">{joined}</span>
               </div>
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2 text-sm text-gray-500">
-                  <Layers className="w-4 h-4 text-green-600" /> Skills
+                  <Layers className="w-4 h-4 text-green-600" /> {t("skillsHeading")}
                 </div>
                 <span className="text-sm font-semibold text-gray-800">{skills.length}</span>
               </div>
@@ -184,7 +192,7 @@ export default function FreelancerProfile({ freelancer }: FreelancerProfileProps
 
           {/* Contact info card */}
           <div className="bg-white rounded-2xl border border-gray-100 p-5">
-            <h3 className="font-semibold text-gray-900 mb-3">Contact</h3>
+            <h3 className="font-semibold text-gray-900 mb-3">{t("messageButton")}</h3>
             <div className="space-y-2.5">
               {/* Email — masked to prevent harvesting */}
               <div className="flex items-center gap-2 text-sm text-gray-500 min-w-0">
@@ -192,7 +200,7 @@ export default function FreelancerProfile({ freelancer }: FreelancerProfileProps
                 <span className="truncate italic">
                   {freelancer.email.replace(/^(.).*@(.).*/,
                     (_, a, b) => `${a}•••@${b}•••`)}
-                  {" "}· <Link href="/messages" className="text-green-700 hover:underline font-medium not-italic">Send a message</Link>
+                  {" "}· <Link href="/messages" className="text-green-700 hover:underline font-medium not-italic">{t("messageButton")}</Link>
                 </span>
               </div>
               {freelancer.phone && (
@@ -203,31 +211,17 @@ export default function FreelancerProfile({ freelancer }: FreelancerProfileProps
               )}
               <div className="flex items-center gap-2 text-sm text-gray-600">
                 <Calendar className="w-4 h-4 text-green-600 flex-shrink-0" />
-                <span>Joined {joined}</span>
+                <span>{t("memberSince", { date: joined })}</span>
               </div>
             </div>
           </div>
 
-          {/* KYC status */}
-          <div className="bg-white rounded-2xl border border-gray-100 p-5">
-            <h3 className="font-semibold text-gray-900 mb-3">Verification</h3>
-            {isVerified ? (
-              <div className="flex items-center gap-2 text-sm text-green-600">
-                <CheckCircle className="w-4 h-4" />
-                <span className="font-medium">Identity Verified (KYC)</span>
-              </div>
-            ) : (
-              <div className="flex items-center gap-2 text-sm text-gray-400">
-                <User className="w-4 h-4" />
-                <span>Not yet verified</span>
-              </div>
-            )}
-          </div>
-
           {/* Rate card */}
           <div className="bg-green-50 border border-green-200 rounded-2xl p-5 text-center">
-            <div className="text-2xl font-bold text-green-700 mb-1">{formatRate(hourlyRate)}</div>
-            <div className="text-sm text-gray-500">Hourly Rate</div>
+            <div className="text-2xl font-bold text-green-700 mb-1">
+              {hourlyRate && hourlyRate > 0 ? `ETB ${hourlyRate.toLocaleString()}/hr` : "—"}
+            </div>
+            <div className="text-sm text-gray-500">{t("hourlyRate", { rate: "" }).trim()}</div>
           </div>
         </div>
 
@@ -236,17 +230,17 @@ export default function FreelancerProfile({ freelancer }: FreelancerProfileProps
 
           {/* Tabs */}
           <div className="flex gap-1 bg-gray-100 rounded-xl p-1">
-            {tabs.map((tab) => (
+            {tabKeys.map((key, i) => (
               <button
-                key={tab}
-                onClick={() => setActiveTab(tab)}
+                key={key}
+                onClick={() => setActiveTab(key)}
                 className={`flex-1 py-2 rounded-lg text-sm font-medium transition-all ${
-                  activeTab === tab
+                  activeTab === key
                     ? "bg-white text-green-800 shadow-sm"
                     : "text-gray-500 hover:text-gray-700"
                 }`}
               >
-                {tab}
+                {tabLabels[i]}
               </button>
             ))}
           </div>
@@ -256,20 +250,20 @@ export default function FreelancerProfile({ freelancer }: FreelancerProfileProps
             <>
               {/* Bio */}
               <div className="bg-white rounded-2xl border border-gray-100 p-6">
-                <h2 className="font-bold text-gray-900 mb-3">About Me</h2>
+                <h2 className="font-bold text-gray-900 mb-3">{t("aboutHeading")}</h2>
                 {bio ? (
                   <p className="text-gray-600 text-sm leading-relaxed whitespace-pre-line">{bio}</p>
                 ) : (
                   <div className="text-center py-8 text-gray-400">
                     <User className="w-8 h-8 mx-auto mb-2 opacity-30" />
-                    <p className="text-sm">This freelancer hasn't added a bio yet.</p>
+                    <p className="text-sm">{t("noAbout")}</p>
                   </div>
                 )}
               </div>
 
               {/* Skills */}
               <div className="bg-white rounded-2xl border border-gray-100 p-6">
-                <h2 className="font-bold text-gray-900 mb-4">Skills</h2>
+                <h2 className="font-bold text-gray-900 mb-4">{t("skillsHeading")}</h2>
                 {skills.length > 0 ? (
                   <div className="flex flex-wrap gap-2">
                     {skills.map((skill) => (
@@ -284,7 +278,7 @@ export default function FreelancerProfile({ freelancer }: FreelancerProfileProps
                 ) : (
                   <div className="text-center py-8 text-gray-400">
                     <Layers className="w-8 h-8 mx-auto mb-2 opacity-30" />
-                    <p className="text-sm">No skills listed yet.</p>
+                    <p className="text-sm">{t("noSkills")}</p>
                   </div>
                 )}
               </div>
@@ -294,16 +288,10 @@ export default function FreelancerProfile({ freelancer }: FreelancerProfileProps
           {/* ── Portfolio tab ── */}
           {activeTab === "Portfolio" && (
             <div className="bg-white rounded-2xl border border-gray-100 p-6">
-              <h2 className="font-bold text-gray-900 mb-2">Portfolio</h2>
-              <p className="text-xs text-gray-400 mb-6">
-                Portfolio projects are not yet supported. Coming soon.
-              </p>
+              <h2 className="font-bold text-gray-900 mb-6">{t("tabPortfolio")}</h2>
               <div className="text-center py-12 text-gray-400">
                 <ExternalLink className="w-10 h-10 mx-auto mb-3 opacity-20" />
-                <p className="text-sm font-medium">No portfolio items yet</p>
-                <p className="text-xs mt-1">
-                  {freelancer.name.split(" ")[0]} hasn't added any portfolio projects.
-                </p>
+                <p className="text-sm font-medium">{t("noPortfolio")}</p>
               </div>
             </div>
           )}
@@ -312,21 +300,18 @@ export default function FreelancerProfile({ freelancer }: FreelancerProfileProps
           {activeTab === "Reviews" && (
             <div className="bg-white rounded-2xl border border-gray-100 p-6">
               <div className="flex items-center justify-between mb-6">
-                <h2 className="font-bold text-gray-900">Client Reviews</h2>
+                <h2 className="font-bold text-gray-900">{t("tabReviews")}</h2>
                 {rating > 0 && (
                   <div className="flex items-center gap-2">
                     <StarRow rating={rating} />
                     <span className="font-bold text-gray-800 text-sm">{rating.toFixed(1)}</span>
-                    <span className="text-gray-400 text-xs">({completedJobs} completed)</span>
+                    <span className="text-gray-400 text-xs">({completedJobs} {t("completedJobs", { count: completedJobs })})</span>
                   </div>
                 )}
               </div>
               <div className="text-center py-12 text-gray-400">
                 <Star className="w-10 h-10 mx-auto mb-3 opacity-20" />
-                <p className="text-sm font-medium">No reviews yet</p>
-                <p className="text-xs mt-1">
-                  Reviews will appear here after completed jobs.
-                </p>
+                <p className="text-sm font-medium">{t("noReviews")}</p>
               </div>
             </div>
           )}

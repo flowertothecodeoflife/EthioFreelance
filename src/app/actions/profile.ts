@@ -134,6 +134,7 @@ export async function getFreelancerProfile(userId: string) {
         email: true,
         phone: true,
         kycStatus: true,
+        avatarUrl: true,
         createdAt: true,
         profile: true,
       },

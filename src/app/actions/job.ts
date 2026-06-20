@@ -177,12 +177,12 @@ export async function getJobById(id: string) {
     });
 
     if (!job) {
-      return { error: "Job not found." };
+      return { success: false, error: "Job not found." };
     }
 
     return { success: true, job };
   } catch (err: any) {
     console.error("Get job details error:", err);
-    return { error: err.message || "Failed to fetch job details." };
+    return { success: false, error: err.message || "Failed to fetch job details." };
   }
 }

@@ -10,6 +10,7 @@ import {
   CreditCard, ArrowDownCircle, ArrowUpCircle, Wallet,
 } from "lucide-react";
 import { updateKycStatus, deleteUser, updateJobStatus, releaseEscrow } from "@/app/actions/admin";
+import { useTranslations } from "next-intl";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -170,7 +171,7 @@ function initials(name: string): string {
   return name.split(" ").map((n) => n[0]).join("").slice(0, 2).toUpperCase();
 }
 
-const TABS = ["Overview", "Users", "Jobs", "Disputes", "Payments", "Analytics"];
+const TABS = ["Overview", "Users", "Jobs", "Payments"];
 
 // ─── PaymentsTab component ────────────────────────────────────────────────────
 
@@ -1059,6 +1060,7 @@ function UsersTab({ initialUsers }: { initialUsers: AdminUser[] }) {
 // ─── Main AdminDashboard component ───────────────────────────────────────────
 
 export default function AdminDashboard({ initialUsers = [], initialJobs = [], initialTransactions = [], stats }: AdminDashboardProps) {
+  const t = useTranslations("admin.dashboard");
   const [activeTab, setActiveTab] = useState("Overview");
 
   // ── Real stat values with safe fallbacks ────────────────────────────────────
@@ -1070,13 +1072,16 @@ export default function AdminDashboard({ initialUsers = [], initialJobs = [], in
   const pendingKyc     = stats?.pendingKyc     ?? initialUsers.filter((u) => u.kycStatus === "PENDING").length;
   const txPending      = stats?.txPending      ?? 0;
 
+  const tabKeys   = ["Overview", "Users", "Jobs", "Payments"] as const;
+  const tabLabels = [t("tabs.overview"), t("tabs.users"), t("tabs.jobs"), t("tabs.transactions")];
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       {/* Header */}
       <div className="flex items-center justify-between mb-8 flex-wrap gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Admin Dashboard</h1>
-          <p className="text-gray-500 text-sm">EthioFreelance Back Office</p>
+          <h1 className="text-2xl font-bold text-gray-900">{t("title")}</h1>
+          <p className="text-gray-500 text-sm">{t("sub")}</p>
         </div>
         {pendingKyc > 0 && (
           <button
@@ -1095,23 +1100,23 @@ export default function AdminDashboard({ initialUsers = [], initialJobs = [], in
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
         {[
           {
-            icon: Users, label: "Total Users", value: totalUsers,
+            icon: Users, label: t("stats.totalUsers"), value: totalUsers,
             sub: `${stats?.totalFreelancers ?? "—"} freelancers · ${stats?.totalClients ?? "—"} clients`,
             color: "text-blue-600", bg: "bg-blue-50",
           },
           {
-            icon: Briefcase, label: "Active Jobs", value: activeJobs,
+            icon: Briefcase, label: t("stats.totalJobs"), value: activeJobs,
             sub: `${stats?.completedJobs ?? "—"} completed · ${stats?.cancelledJobs ?? "—"} cancelled`,
             color: "text-green-600", bg: "bg-green-50",
           },
           {
-            icon: DollarSign, label: "Total GMV", value: gmv,
+            icon: DollarSign, label: t("stats.totalRevenue"), value: gmv,
             sub: `${escrowPending} in escrow · ${txPending} pending`,
             color: "text-purple-600", bg: "bg-purple-50",
           },
           {
-            icon: AlertTriangle, label: "Open Disputes", value: disputes,
-            sub: `${pendingKyc} KYC review${pendingKyc !== 1 ? "s" : ""} pending`,
+            icon: AlertTriangle, label: t("stats.pendingKyc"), value: disputes,
+            sub: `${pendingKyc} pending`,
             color: "text-red-600", bg: "bg-red-50",
           },
         ].map(({ icon: Icon, label, value, sub, color, bg }) => (
@@ -1128,21 +1133,15 @@ export default function AdminDashboard({ initialUsers = [], initialJobs = [], in
 
       {/* Tabs */}
       <div className="flex gap-1 bg-gray-100 rounded-xl p-1 mb-6 overflow-x-auto scrollbar-hide">
-        {TABS.map((tab) => (
+        {tabKeys.map((key, i) => (
           <button
-            key={tab}
-            onClick={() => setActiveTab(tab)}
+            key={key}
+            onClick={() => setActiveTab(key)}
             className={`flex-shrink-0 px-4 py-2 rounded-lg text-sm font-medium transition-all relative ${
-              activeTab === tab ? "bg-white text-green-800 shadow-sm" : "text-gray-500 hover:text-gray-700"
+              activeTab === key ? "bg-white text-green-800 shadow-sm" : "text-gray-500 hover:text-gray-700"
             }`}
           >
-            {tab}
-            {/* Badge for pending KYC on Users tab */}
-            {tab === "Users" && pendingKyc > 0 && (
-              <span className="absolute -top-1 -right-1 w-4 h-4 bg-yellow-500 text-white text-[9px] font-bold rounded-full flex items-center justify-center">
-                {pendingKyc}
-              </span>
-            )}
+            {tabLabels[i]}
           </button>
         ))}
       </div>
@@ -1153,8 +1152,8 @@ export default function AdminDashboard({ initialUsers = [], initialJobs = [], in
           {/* Recent registrations */}
           <div className="bg-white rounded-2xl border border-gray-100 p-5">
             <div className="flex items-center justify-between mb-4">
-              <h2 className="font-bold text-gray-900">Recent Registrations</h2>
-              <button onClick={() => setActiveTab("Users")} className="text-sm text-green-700 hover:underline">View all</button>
+              <h2 className="font-bold text-gray-900">{t("users.heading")}</h2>
+              <button onClick={() => setActiveTab("Users")} className="text-sm text-green-700 hover:underline">{t("tabs.users")}</button>
             </div>
             <div className="space-y-3">
               {initialUsers.slice(0, 5).map((user) => (
@@ -1203,46 +1202,14 @@ export default function AdminDashboard({ initialUsers = [], initialJobs = [], in
             </div>
           </div>
 
-          {/* Disputes */}
-          <div className="bg-white rounded-2xl border border-gray-100 p-5">
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="font-bold text-gray-900">Active Disputes</h2>
-              <button onClick={() => setActiveTab("Disputes")} className="text-sm text-green-700 hover:underline">View all</button>
-            </div>
-            <div className="space-y-3">
-              {MOCK_DISPUTES.map((d) => (
-                <div key={d.id} className="p-3 bg-gray-50 rounded-xl">
-                  <div className="flex items-start justify-between mb-2">
-                    <div>
-                      <div className="text-sm font-medium text-gray-900">{d.job}</div>
-                      <div className="text-xs text-gray-400">{d.client} vs {d.freelancer}</div>
-                    </div>
-                    <div className="flex gap-1.5 flex-shrink-0">
-                      <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${DISPUTE_STYLES[d.priority]}`}>{d.priority}</span>
-                      <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${DISPUTE_STYLES[d.status]}`}>{d.status}</span>
-                    </div>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs font-semibold text-green-700">{d.amount}</span>
-                    <div className="flex gap-1">
-                      <button className="p-1 hover:bg-green-100 rounded-lg transition-colors"><CheckCircle className="w-4 h-4 text-green-500" /></button>
-                      <button className="p-1 hover:bg-red-100 rounded-lg transition-colors"><XCircle className="w-4 h-4 text-red-400" /></button>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
           {/* Platform health */}
           <div className="bg-white rounded-2xl border border-gray-100 p-5">
             <h2 className="font-bold text-gray-900 mb-4">Platform Health</h2>
             <div className="space-y-4">
               {[
-                { label: "KYC Verification Rate", value: initialUsers.length > 0 ? Math.round((initialUsers.filter(u => u.kycStatus === "APPROVED").length / initialUsers.length) * 100) : 0, color: "bg-green-500" },
-                { label: "Job Completion Rate",   value: 91, color: "bg-blue-500"   },
-                { label: "Dispute Resolution",    value: 95, color: "bg-purple-500" },
-                { label: "User Satisfaction",     value: 88, color: "bg-yellow-500" },
+                { label: "Job Completion Rate", value: initialJobs.length > 0 ? Math.round((initialJobs.filter(j => j.status === "COMPLETED").length / initialJobs.length) * 100) : 0, color: "bg-blue-500" },
+                { label: "Dispute Resolution",  value: 95, color: "bg-purple-500" },
+                { label: "User Satisfaction",   value: 88, color: "bg-yellow-500" },
               ].map(({ label, value, color }) => (
                 <div key={label}>
                   <div className="flex justify-between text-sm mb-1">
@@ -1251,28 +1218,6 @@ export default function AdminDashboard({ initialUsers = [], initialJobs = [], in
                   </div>
                   <div className="bg-gray-100 rounded-full h-2">
                     <div className={`${color} h-2 rounded-full transition-all`} style={{ width: `${value}%` }} />
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Fraud alerts */}
-          <div className="bg-white rounded-2xl border border-gray-100 p-5">
-            <div className="flex items-center gap-2 mb-4">
-              <Shield className="w-5 h-5 text-red-500" />
-              <h2 className="font-bold text-gray-900">Fraud Alerts</h2>
-            </div>
-            <div className="space-y-3">
-              {MOCK_FRAUD.map((alert, i) => (
-                <div key={i} className="flex items-center justify-between p-3 bg-red-50 rounded-xl border border-red-100">
-                  <div>
-                    <div className="text-sm font-medium text-red-800">{alert.type}</div>
-                    <div className="text-xs text-red-500">{alert.user} • {alert.time}</div>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${DISPUTE_STYLES[alert.severity]}`}>{alert.severity}</span>
-                    <button className="text-xs text-red-600 hover:underline font-medium">Review</button>
                   </div>
                 </div>
               ))}
@@ -1291,50 +1236,9 @@ export default function AdminDashboard({ initialUsers = [], initialJobs = [], in
         <JobsTab initialJobs={initialJobs} />
       )}
 
-      {/* ── Analytics tab ── */}
-      {activeTab === "Analytics" && (
-        <div className="bg-white rounded-2xl border border-gray-100 p-6">
-          <div className="flex items-center gap-2 mb-6">
-            <BarChart3 className="w-5 h-5 text-green-600" />
-            <h2 className="font-bold text-gray-900">Platform Analytics</h2>
-          </div>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-            {[
-              { label: "Total Users",      value: totalUsers.toString()                                          },
-              { label: "Active Jobs",      value: activeJobs.toString()                                          },
-              { label: "KYC Approved",     value: (stats?.totalUsers && stats?.pendingKyc != null ? (stats.totalUsers - stats.pendingKyc).toString() : initialUsers.filter(u => u.kycStatus === "APPROVED").length.toString()) },
-              { label: "Total GMV",        value: gmv                                                            },
-            ].map(({ label, value }) => (
-              <div key={label} className="bg-green-50 rounded-xl p-4 text-center">
-                <div className="text-2xl font-bold text-green-900 mb-1">{value}</div>
-                <div className="text-xs text-gray-500 flex items-center justify-center gap-1">
-                  <TrendingUp className="w-3 h-3 text-green-600" /> {label}
-                </div>
-              </div>
-            ))}
-          </div>
-          <div className="text-center text-gray-400 py-12 border-2 border-dashed border-gray-200 rounded-xl">
-            <BarChart3 className="w-12 h-12 mx-auto mb-3 opacity-30" />
-            <p className="text-sm">Charts will render here with a charting library (e.g. Recharts)</p>
-          </div>
-        </div>
-      )}
-
       {/* ── Payments tab — real data ── */}
       {activeTab === "Payments" && (
         <PaymentsTab initialTransactions={initialTransactions} />
-      )}
-
-      {/* ── Placeholder tabs ── */}
-      {activeTab === "Disputes" && (
-        <div className="bg-white rounded-2xl border border-gray-100 p-6">
-          <h2 className="font-bold text-gray-900 mb-4">Disputes Management</h2>
-          <div className="text-center py-12 text-gray-400">
-            <div className="text-5xl mb-3">⚖️</div>
-            <p className="font-medium text-gray-600">Disputes management panel</p>
-            <p className="text-sm mt-1">Coming in the next implementation phase.</p>
-          </div>
-        </div>
       )}
     </div>
   );

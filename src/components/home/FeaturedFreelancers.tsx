@@ -51,7 +51,8 @@ const MOCK: FreelancerItem[] = [
 ];
 
 export default function FeaturedFreelancers({ freelancers }: Props) {
-  const t = useTranslations("featuredFreelancers");
+  const t  = useTranslations("featuredFreelancers");
+  const tc = useTranslations("common");
   const list = freelancers && freelancers.length > 0 ? freelancers : MOCK;
   const isLive = freelancers && freelancers.length > 0;
 
@@ -132,7 +133,7 @@ export default function FeaturedFreelancers({ freelancers }: Props) {
                       <p className="text-xs text-gray-500 truncate mt-0.5">{title}</p>
                       {f.isOnline
                         ? <span className="text-[10px] text-emerald-400 font-medium">● {t("online")}</span>
-                        : <span className="text-[10px] text-gray-400">● Offline</span>
+                        : <span className="text-[10px] text-gray-400">● {tc("offline")}</span>
                       }
                     </div>
                   </div>
@@ -161,7 +162,7 @@ export default function FeaturedFreelancers({ freelancers }: Props) {
                       </span>
                     )}
                     {skills.length === 0 && (
-                      <span className="text-[10px] text-gray-400 italic">No skills listed</span>
+                      <span className="text-[10px] text-gray-400 italic">{tc("no")}</span>
                     )}
                   </div>
 
@@ -177,14 +178,14 @@ export default function FeaturedFreelancers({ freelancers }: Props) {
                           <span className="text-sm font-bold text-gray-800">{rating.toFixed(1)}</span>
                         </>
                       ) : (
-                        <span className="text-xs text-gray-400">New</span>
+                        <span className="text-xs text-gray-400">{t("rating", { rating: "—" })}</span>
                       )}
                     </div>
                     <div className="text-right">
                       <div className="text-xs font-bold text-emerald-500">
                         {hourlyRate && hourlyRate > 0
                           ? t("hourlyRate", { rate: hourlyRate.toLocaleString() })
-                          : "Negotiable"}
+                          : tc("etb")}
                       </div>
                       <div className="text-[10px] text-gray-400 flex items-center gap-0.5 justify-end">
                         <Briefcase className="w-2.5 h-2.5" /> {t("completedJobs", { count: completedJobs })}

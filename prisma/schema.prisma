@@ -58,6 +58,7 @@ model User {
   passwordHash String
   role         Role       @default(FREELANCER)
   kycStatus    KycStatus  @default(NONE)
+  avatarUrl    String?
   isOnline     Boolean    @default(false)
   lastActive   DateTime   @default(now())
   createdAt    DateTime   @default(now())

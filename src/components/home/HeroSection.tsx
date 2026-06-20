@@ -46,8 +46,6 @@ export default function HeroSection({ stats }: HeroSectionProps) {
   const t = useTranslations("hero");
   const ts = useTranslations("stats");
 
-  const popularItems = t("popularItems").split(",").map((s) => s.trim());
-
   const handleSearch = useCallback(() => {
     const base = activeTab === "jobs" ? "/jobs" : "/freelancers";
     const params = new URLSearchParams();
@@ -172,25 +170,6 @@ export default function HeroSection({ stats }: HeroSectionProps) {
                 <Search className="w-4 h-4" />
                 <span className="hidden sm:inline">{t("searchButton")}</span>
               </button>
-            </div>
-
-            {/* Popular searches */}
-            <div className="flex flex-wrap gap-1.5 mb-8 justify-center lg:justify-start">
-              <span className="text-gray-500 text-xs self-center">{t("popularSearches")}</span>
-              {popularItems.map((term) => (
-                <button
-                  key={term}
-                  onClick={() => { setQuery(term); setTimeout(handleSearch, 0); }}
-                  className="text-xs px-2.5 py-1 rounded-full transition-colors text-gray-700 hover:text-green-700"
-                  style={{
-                    background: "var(--glass-bg)",
-                    border: "1px solid var(--glass-border)",
-                    backdropFilter: "var(--glass-blur)",
-                  }}
-                >
-                  {term}
-                </button>
-              ))}
             </div>
 
             {/* Trust badges */}

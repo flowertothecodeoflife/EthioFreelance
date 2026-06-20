@@ -9,7 +9,6 @@ import {
 } from "lucide-react";
 import { releaseEscrowPayment } from "@/app/actions/payment";
 import { useTranslations } from "next-intl";
-
 interface DashboardProps {
   data?: {
     user: {
@@ -63,9 +62,16 @@ const statusColors: Record<string, string> = {
 
 export default function Dashboard({ data }: DashboardProps) {
   const t = useTranslations("dashboard");
+  const tc = useTranslations("common");
   // Stable keys for state comparison — translated labels for display
   const tabKeys   = ["Overview", "My Jobs", "Proposals", "Earnings", "Messages"] as const;
-  const tabLabels = [t("tabs.overview"), t("tabs.jobs"), t("tabs.proposals"), "Earnings", t("tabs.messages")];
+  const tabLabels = [
+    t("tabs.overview"),
+    t("tabs.jobs"),
+    t("tabs.proposals"),
+    t("tabs.wallet"),   // "Earnings" → wallet namespace key
+    t("tabs.messages"),
+  ];
   const [activeTab, setActiveTab] = useState<typeof tabKeys[number]>("Overview");
   const [releasingJobId, setReleasingJobId] = useState<string | null>(null);
   const [releaseError, setReleaseError] = useState("");
@@ -191,7 +197,7 @@ export default function Dashboard({ data }: DashboardProps) {
             <h1 className="text-2xl font-bold text-gray-900">{t("greeting", { name: userName.split(" ")[0] })} 👋</h1>
             <div className="flex items-center gap-2 text-sm text-gray-500 flex-wrap">
               <CheckCircle className={`w-4 h-4 ${isVerified ? "text-green-500" : "text-gray-400"}`} />
-              <span>{isVerified ? "Verified" : "Unverified"} {isClient ? "Client" : "Freelancer"}</span>
+              <span>{isVerified ? tc("verified") : "Unverified"} {isClient ? "Client" : "Freelancer"}</span>
               <span>•</span>
               <Star className="w-4 h-4 text-yellow-400 fill-yellow-400" />
               <span>{ratingValue} Rating</span>
@@ -207,11 +213,11 @@ export default function Dashboard({ data }: DashboardProps) {
           </Link>
           {isClient ? (
             <Link href="/post-job" className="flex items-center gap-2 bg-green-700 text-white font-semibold px-4 py-2.5 rounded-xl hover:bg-green-800 transition-colors text-sm shadow-md">
-              <Plus className="w-4 h-4" /> Post a Job
+              <Plus className="w-4 h-4" /> {t("jobs.postNew")}
             </Link>
           ) : (
             <Link href="/jobs" className="flex items-center gap-2 bg-green-700 text-white font-semibold px-4 py-2.5 rounded-xl hover:bg-green-800 transition-colors text-sm shadow-md">
-              <Plus className="w-4 h-4" /> Find Jobs
+              <Plus className="w-4 h-4" /> {t("tabs.jobs")}
             </Link>
           )}
         </div>
@@ -222,7 +228,7 @@ export default function Dashboard({ data }: DashboardProps) {
         {[
           {
             icon: DollarSign,
-            label: isClient ? "Total Spent" : "Total Earned",
+            label: isClient ? t("stats.totalSpent") : t("stats.totalEarned"),
             value: totalEarnedStr,
             sub: isClient ? "All time project spend" : "+ETB 8,000 this month",
             color: "text-green-600",
@@ -230,7 +236,7 @@ export default function Dashboard({ data }: DashboardProps) {
           },
           {
             icon: Briefcase,
-            label: isClient ? "Posted Jobs" : "Active Jobs",
+            label: isClient ? t("stats.activeJobs") : t("stats.activeProposals"),
             value: data?.stats?.activeJobsCount.toString() || "0",
             sub: isClient ? "Active listings" : "Current contracts",
             color: "text-blue-600",
@@ -238,7 +244,7 @@ export default function Dashboard({ data }: DashboardProps) {
           },
           {
             icon: CheckCircle,
-            label: "Completed",
+            label: t("stats.completedJobs"),
             value: data?.stats?.completedJobsCount.toString() || "0",
             sub: "All time",
             color: "text-teal-600",
@@ -246,7 +252,7 @@ export default function Dashboard({ data }: DashboardProps) {
           },
           {
             icon: Star,
-            label: "Rating",
+            label: t("stats.successRate"),
             value: ratingValue.toString(),
             sub: isClient ? "Client rating" : "Freelancer rating",
             color: "text-yellow-500",
@@ -285,9 +291,9 @@ export default function Dashboard({ data }: DashboardProps) {
           {/* Active Jobs */}
           <div className="lg:col-span-2 bg-white rounded-2xl border border-gray-100 p-5 shadow-sm">
             <div className="flex items-center justify-between mb-4">
-              <h2 className="font-bold text-gray-900">{isClient ? "My Job Postings" : "Active Jobs"}</h2>
+              <h2 className="font-bold text-gray-900">{isClient ? t("jobs.postNew") : t("tabs.jobs")}</h2>
               <button onClick={() => setActiveTab("My Jobs")} className="text-sm text-green-700 hover:underline flex items-center gap-1 font-semibold">
-                View all <ChevronRight className="w-3 h-3" />
+                {t("pagination.next")} <ChevronRight className="w-3 h-3" />
               </button>
             </div>
             <div className="space-y-4">

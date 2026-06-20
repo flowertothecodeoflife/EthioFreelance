@@ -2,11 +2,26 @@ import NextAuth from "next-auth";
 import { authConfig } from "./auth.config";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import { createHmac, timingSafeEqual } from "crypto";
 
 const { auth } = NextAuth(authConfig);
 
 const SUPPORTED_LOCALES = ["en", "am"] as const;
 const DEFAULT_LOCALE    = "en";
+const ADMIN_SECRET = process.env.ADMIN_SESSION_SECRET ?? "dev-secret-change-in-prod";
+
+function verifyAdminCookie(value: string | undefined): boolean {
+  if (!value) return false;
+  const parts = value.split(".");
+  if (parts.length !== 2) return false;
+  const [payload, sig] = parts;
+  try {
+    const expected = createHmac("sha256", ADMIN_SECRET).update(payload).digest("hex");
+    return timingSafeEqual(Buffer.from(sig, "hex"), Buffer.from(expected, "hex"));
+  } catch {
+    return false;
+  }
+}
 
 /**
  * Reads the preferred locale from the NEXT_LOCALE cookie,
@@ -33,7 +48,7 @@ export const proxy = auth((req) => {
     if (isAdminLoginRoute) return NextResponse.next();
 
     const adminSession = req.cookies.get("admin_session")?.value;
-    if (adminSession !== "authenticated") {
+    if (!verifyAdminCookie(adminSession)) {
       const loginUrl = new URL("/admin/login", nextUrl.origin);
       return NextResponse.redirect(loginUrl);
     }

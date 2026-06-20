@@ -39,6 +39,16 @@ export async function registerUser(formData: any) {
       return { error: "Missing required fields" };
     }
 
+    // Server-side email format validation
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      return { error: "Please enter a valid email address." };
+    }
+
+    // Password length check
+    if (typeof password === "string" && password.length < 8) {
+      return { error: "Password must be at least 8 characters." };
+    }
+
     const fullName = `${firstName} ${lastName}`;
 
     // Normalize phone number (e.g. +251912345678)

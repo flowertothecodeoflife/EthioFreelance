@@ -111,11 +111,6 @@ export default async function Footer() {
           <p className="text-green-400 text-sm">
             {t("copyright")}
           </p>
-          <div className="flex gap-6">
-            {[[t("privacyPolicy"), "/privacy"], [t("termsOfService"), "/terms"], [t("cookiePolicy"), "/cookie-policy"]].map(([item]) => (
-              <span key={item} className="text-green-600 text-sm cursor-default">{item}</span>
-            ))}
-          </div>
           <div className="flex gap-2 text-xs text-green-500">
             <span>{t("madeIn")}</span>
           </div>

@@ -27,7 +27,12 @@ export default async function ProfilePage() {
     redirect("/login");
   }
 
-  // Clients get their own settings form instead of being bounced to /dashboard
+  // ADMIN accounts have no profile form — send them to the admin panel
+  if (user.role === "ADMIN") {
+    redirect("/admin");
+  }
+
+  // Clients get their own settings form
   if (user.role === "CLIENT") {
     const clientData = {
       name: user.name,
@@ -54,6 +59,8 @@ export default async function ProfilePage() {
     bio: user.profile?.bio || "",
     skills: user.profile?.skills || [],
     hourlyRate: user.profile?.hourlyRate || 0,
+    avatarUrl: user.avatarUrl ?? null,
+    name: user.name,
   };
 
   return (

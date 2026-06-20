@@ -200,6 +200,7 @@ export default function ForgotPasswordForm() {
               <p className="text-sm text-gray-500">
                 {t("otpHeading")} <strong className="text-gray-800">{email}</strong>
               </p>
+            </div>
 
             <div>
               <label className="text-sm font-medium text-gray-700 mb-3 block text-center">

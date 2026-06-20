@@ -17,22 +17,56 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const siteUrl = process.env.NEXT_PUBLIC_BASE_URL ?? "http://localhost:3000";
+const siteUrl = process.env.NEXT_PUBLIC_BASE_URL ?? "https://ethiofreelance.et";
 
 export const metadata: Metadata = {
-  title: "EthioFreelance - Ethiopia's #1 Freelancing Platform",
+  title: {
+    default: "EthioFreelance — Ethiopia's #1 Freelancing Platform",
+    template: "%s | EthioFreelance",
+  },
   description:
-    "Connect with top Ethiopian freelancers and clients. Find jobs in IT, design, writing, translation, and more. Pay with Chapa.",
-  keywords: "Ethiopia freelance, Ethiopian freelancers, Chapa payment, Amharic freelance platform",
+    "Ethiopia's premier freelance marketplace. Connect with verified Ethiopian freelancers for IT, design, writing, translation, and more. Pay securely with Chapa in ETB.",
+  keywords: [
+    "Ethiopia freelance", "Ethiopian freelancers", "hire freelancers Ethiopia",
+    "Chapa payment", "ETB payment", "Amharic freelance", "remote work Ethiopia",
+    "IT jobs Ethiopia", "graphic design Ethiopia", "freelance jobs Addis Ababa",
+  ],
+  authors: [{ name: "EthioFreelance" }],
+  creator: "EthioFreelance",
+  metadataBase: new URL(siteUrl),
+  alternates: { canonical: "/" },
   icons: {
     icon: "/circular-logo.png",
     apple: "/circular-logo.png",
   },
   openGraph: {
-    title: "EthioFreelance - Ethiopia's #1 Freelancing Platform",
+    type: "website",
+    locale: "en_ET",
+    url: siteUrl,
+    siteName: "EthioFreelance",
+    title: "EthioFreelance — Ethiopia's #1 Freelancing Platform",
     description:
-      "Connect with top Ethiopian freelancers and clients. Find jobs in IT, design, writing, translation, and more. Pay with Chapa.",
-    images: [{ url: `${siteUrl}/horizontal-logo.png`, width: 628, height: 195, alt: "EthioFreelance" }],
+      "Connect with top Ethiopian freelancers. Post jobs, get proposals, and pay securely via Chapa in Ethiopian Birr.",
+    images: [
+      {
+        url: `${siteUrl}/horizontal-logo.png`,
+        width: 628,
+        height: 195,
+        alt: "EthioFreelance — Ethiopia's Freelance Marketplace",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "EthioFreelance — Ethiopia's #1 Freelancing Platform",
+    description:
+      "Connect with top Ethiopian freelancers. Pay securely with Chapa.",
+    images: [`${siteUrl}/horizontal-logo.png`],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true },
   },
 };
 
